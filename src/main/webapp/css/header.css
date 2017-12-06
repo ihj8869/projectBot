@@ -1,0 +1,59 @@
+/* BASIC css start */
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(http://jjy9831.linkfile.co.kr/font/NotoSansKR-Regular.woff2) format('woff2'),
+    url(http://jjy9831.linkfile.co.kr/font/NotoSansKR-Regular.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+#preview_wrap {display: none; }
+#header { position:relative; width:100%; z-index:1 font-family:'Noto Sans KR';}
+#header .hdTop_wrap { position:relative; top:0; left:0; right:0; width:100%; height:45px; border-bottom:0px solid #b1b1b1; background:#fff; z-index:1; }
+#header .hdTop_wrap .hdTop { margin:0 auto; position:relative; }
+
+
+#header .hdTop_wrap .hdTop_left { float:left;  padding:0 10px 0 20px;  }
+#header .hdTop_wrap .hdTop_left ul li { float:left; }
+#header .hdTop_wrap .hdTop_left ul li a { display:block; padding-right:10px; font-size:12px; color:#b1b1b1; font-family:'Noto Sans KR'; line-height:45px ;letter-spacing:1.3px;    }
+#header .hdTop_wrap .hdTop_left ul li a:hover { color:#ccc }
+#header .hdTop_wrap .hdTop_left ul li.dotted {padding-top:15px;}
+
+#header .hdTop_wrap .hdTop_right {zoom: 1; top:0px; right:130px; position: absolute;}
+#header .hdTop_wrap .hdTop_right ul li.log .point{position:absolute;left: 10px;top:35px;display:inline-block;width:38px;height:21px;font-family: Dotum, µ¸¿ò; line-height:24px; background:url(http://www.lylon.co.kr/design/jjh9831/170720_renew/icon/point_bg.png) no-repeat 0 0;color:#fff;font-weight:normal;letter-spacing:1px;text-align:center;font-size:8px;}
+#header .hdTop_wrap .hdTop_right a{display:block;  }
+#header .hdTop_wrap .hdTop_right ul li { float: left; }
+#header .hdTop_wrap .hdTop_right ul li a { display:block; padding-left:15px; font-size:12px; color:#b1b1b1; font-family:'Noto Sans KR'; line-height:45px; letter-spacing:1.3px;}
+#header .hdTop_wrap .hdTop_right ul li a:hover { color:#ccc }
+#header .hdTop_wrap .hdTop_right ul li.topSrc { margin-top: 15px; position: relative;}
+#header .hdTop_wrap .hdTop_right ul li.log {position:relative;}
+#header .hdTop_wrap .hdTop_right ul li.dotted {padding-top:15px;}
+
+
+#layerSrc .lSrcWrap .closeSrc { cursor: pointer; }
+#layerSrc { display:none; position: absolute; top: 19px;left: -57px;}
+#layerSrc .srcIcon {margin-left: 60px;display: block;}
+#layerSrc .srcIcon img { display: block;}
+#layerSrc .lSrcWrap { background-color: #eee; width: 270px;height: 44px;line-height: 44px;}
+#layerSrc .lSrcWrap h2 { display: inline; float: left;margin: 0 10px 0 15px;}
+#layerSrc .lSrcWrap input { float: left;height: 22px;line-height: 21px;margin-top: 10px;background: #eee;width: 165px;}
+#layerSrc .lSrcWrap a {float: left;padding-left: 0 !important;color: #666 !important;line-height: 44px !important;}
+#layerSrc .lSrcWrap .closeSrc {position: absolute;top: 7px; right: 2px;width: 16px;height: 16px;line-height: 16px;text-align: center;font-size: 12px; }
+
+#header .hdLogo_wrap { margin-top:30px;   width:100%; height:145px; border-bottom:1px solid #dadada; background:#fff ; }
+#header .hdLogo_wrap .hdLogo { margin:0 auto; position:relative; width:1200px; text-align:center }
+#header .hdLogo_wrap .hdLogo .t_logo { padding-top:10px;}
+
+#header .hdBottom_wrap { width:100%; height:47px; border-bottom:1px solid #dadada; background:#fff; margin-top:0px; }
+#header .hdBottom_wrap .hdMenu { margin:  auto; position:relative; width:1450px; overflow:hidden ;   }
+#header .hdBottom_wrap .hdMenu ul { margin-left: 51px;  }
+#header .hdBottom_wrap .hdMenu ul li { float:left }
+#header .hdBottom_wrap .hdMenu ul li a { display:block; padding-right: 44px; font-size:13px; color:#666; font-family:'Noto Sans KR'; line-height:47px;letter-spacing:1px;  font-weight: 300; }
+#header .hdBottom_wrap .hdMenu ul li a:hover { color:#ccc }
+
+
+
+
+/* BASIC css end */
+

@@ -1,0 +1,198 @@
+/* BASIC css start */
+/* BASIC css start */
+.main_prod_tit { margin:0 0 50px 0px; width:100%; text-align:center;  width: 1300px; }
+.bestTit { margin: 150px 0 0 0; font-family: 'Noto Sans KR' ,Ubuntu; font-size:12px; font-weight:600; letter-spacing:1.2px; color:#5a5a5a;}
+.newTit { margin: 150px 0 0 0; font-family: 'Noto Sans KR' ,Ubuntu; font-size:12px; font-weight:600; letter-spacing:1.2px; color:#5a5a5a;}
+.accTit { margin: 150px 0 0 0; font-family: 'Noto Sans KR' ,Ubuntu; font-size:12px; font-weight:600; letter-spacing:1.2px; color:#5a5a5a;}
+
+#main  { position: relative; min-height: 650px; padding: 0 0px 0 0px; margin: 56px auto 0; width: 1349px;  }
+#main .visual { }
+#main #stepBanner,
+#main #mainBanner,
+#main #headline,
+#main #moveProduct { position: relative; margin-top: 20px; }
+
+.maintopwrap{width:1349px; margin:0px 20px 20px 0px;  overflow:hidden;  }
+.bx-wrapper {
+    position: relative;
+    padding: 0;
+    *zoom: 1;
+    height:714px;
+    width:1349px;
+    margin:0 auto;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    float:left;
+}
+.bx-wrapper img {
+    height:714px;
+    width:1349px;
+    display: block;
+}
+.bxslider {
+    margin: 0px;
+    padding: 0px 0 0 0px;
+}
+ul.bxslider {
+    list-style: none;
+}
+.bx-viewport {
+    /*fix other elements on the page moving (on Chrome)*/
+    -webkit-transform: translatez(0);
+    height:714px;
+    width:1349px;
+}
+/** THEME
+===================================*/
+.bx-wrapper {
+    background: #fff;
+}
+.bx-wrapper .bx-pager,
+.bx-wrapper .bx-controls-auto {
+    position: absolute;
+    bottom: 20px;
+    right:20px;
+    z-index:10000;
+    display:block;
+}
+
+/* PAGER */
+.bx-wrapper .bx-pager {
+    text-align: center;
+    font-size: .85em;
+    font-family: Arial;
+    font-weight: bold;
+    color: #fff;
+    padding-top: 20px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a {
+    background: #fff;
+    text-indent: -9999px;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border:1px solid #000;
+    margin: 0 3px;
+    outline: 0;
+    border-radius: 0px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a:hover,
+.bx-wrapper .bx-pager.bx-default-pager a.active,
+.bx-wrapper .bx-pager.bx-default-pager a:focus {
+    background: #000;
+}
+.bx-wrapper .bx-pager-item,
+.bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+}
+.bx-wrapper .bx-pager-item {
+    font-size: 0;
+    line-height: 0;
+}
+
+/* PAGER WITH AUTO-CONTROLS HYBRID LAYOUT */
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+    text-align: left;
+    width: 80%;
+}
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+    right: 0;
+    width: 35px;
+}
+
+
+
+
+.main_top_right{width:419px; float:left; margin-left:8px;}
+.main_top_right_top{overflow:hidden;}
+.main_top_right .ntc{width:206px; overflow:hidden; float:left; text-align:left;}
+.main_top_right .ntc h2{padding-left:20px; padding-top:50px; font-size:13px; font-weight:900; color:#000;}
+.main_top_right .ntc h2 a{float:right;}
+.main_top_right .ntc ul{margin-top:10px; padding-left:20px;}
+.main_top_right .ntc ul li{margin-bottom:5px;}
+
+
+.main_top_right_mid{overflow:hidden; margin-top:7px;}
+.main_top_right_bottom{overflow:hidden; margin-top:7px; height:191px;}
+
+
+
+
+.best_title{text-align:center; margin:800px 0 20px 0;}
+.best-listcate{width: 1280rgin: 0 auto; overflow: hidden; margin-top:20px; }
+.best-listcate .listcate{float:left;}
+.best-listcate ul{ width:1278px; float:left; overflow:hidden; border-top: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf; vertical-align: baseline; }
+.best-listcate ul li{width:158.5px; float:left;  height:35px; line-height:35px;  text-align:center; border-left:1px solid #dfdfdf; border-bottom:1px solid #dfdfdf; background:#f6f6f6; cursor:pointer;}
+.best-listcate ul li.active{background:#fff; border-bottom:0px;}
+
+
+.swiper-container {width: 1280px;  margin: 0 0 0 -4px; overflow:hidden;}
+.swiper-container ul{overflow:hidden;}
+.swiper-container ul li{}
+
+.swiper-container li .best_wrap{position:relative;}
+.swiper-container li.first .best_wrap {margin-top: 5px;}
+.best-list li.first .best_wrap {margin-top: 5px; }
+
+.best_cotainer li.first .best_wrap {margin-top: 5px; }
+
+.swiper-container li.first .image{overflow: hidden;}
+.swiper-container li.first{width: 251px; height:680px; float: left; overflow: hidden;}
+.swiper-container li.other{width: 251px;  margin-top:5px; margin-left:5px; float: left; height:100%; }
+.
+.swiper-container li .best_wrap{overflow:hidden;}
+.swiper-container li .best_wrap .image{overflow:hidden;}
+.swiper-container li img{width: 100%;}
+.swiper-container li a:hover img{opacity: 0.3; filter: alpha(opacity=50);}
+.best-list li img{width:100%;}
+.best_cotainer li img{width:100%;}
+.best-list li img{width:100%;}
+.best li a{display:block; overflow:hidden;}
+
+.swiper-container .swiper-slide{float: left;}
+
+.swiper-wrapper {
+    position: relative;
+    width: 100%;
+    -webkit-transition-property: -webkit-transform, left, top;
+    -webkit-transition-duration: 0s;
+    -webkit-transform: translate3d(0px,0,0);
+    -webkit-transition-timing-function: ease;
+    -moz-transition-property: -moz-transform, left, top;
+    -moz-transition-duration: 0s;
+    -moz-transform: translate3d(0px,0,0);
+    -moz-transition-timing-function: ease;
+    -o-transition-property: -o-transform, left, top;
+    -o-transition-duration: 0s;
+    -o-transform: translate3d(0px,0,0);
+    -o-transition-timing-function: ease;
+    -o-transform: translate(0px,0px);
+    -ms-transition-property: -ms-transform, left, top;
+    -ms-transition-duration: 0s;
+    -ms-transform: translate3d(0px,0,0);
+    -ms-transition-timing-function: ease;
+    transition-property: transform, left, top;
+    transition-duration: 0s;
+    transform: translate3d(0px,0,0);
+    transition-timing-function: ease;
+}
+
+
+
+.etc{position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; text-align:left; background:url() repeat;}
+.etcwrap{padding:0 10px; position:absolute; top:75%;}
+.swiper-container li.first .etcwrap{top:70%}
+.etc span{display:block; margin-bottom:5px; color:#000; font-size:12px; font-weight:bold;}
+.etc span.dsc{font-size:12px; color:#222;}
+.etc span.price{color:#696969; font-size:12px; margin-top:5px;}
+.etc span.dsctxt{margin-top:15px; color:#222; font-size: 11px; line-height: 18px;}
+
+
+
+/* BASIC css end */
+
+
+/* BASIC css end */
+

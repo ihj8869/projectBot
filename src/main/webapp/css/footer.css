@@ -1,0 +1,46 @@
+/* BASIC css start */
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(http://jjy9831.linkfile.co.kr/font/NotoSansKR-Regular.woff2) format('woff2'),
+    url(http://jjy9831.linkfile.co.kr/font/NotoSansKR-Regular.woff) format('woff'),
+    url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+
+/* BASIC css start */
+/* footer */
+
+
+.afooter_info{width:100%;background:#fff;border-top:1px solid #e5e5e5;color:#8a8a8a; box-shadow: 0px 0px 5px 1px #f4f4f4;  behavior: url( "/design/jjh9831/170720_renew/PIE.htc" ); z-index:1; margin-top:10px;}
+
+
+#footer {  position:relative; width:100%; padding:100px 0;  background:#fff; text-align:left;    width: 1300px; z-index:100; }
+#footer .bt_abottom {position:relative; margin-top:35px;}
+#footer .bt_abottom dl {margin-bottom:20px;}
+#footer .bt_abottom dl dt {color:#000; font-size:13px;  font-family:'Noto Sans KR';  font-weight:400; line-height:22px; margin-bottom:10px;}
+#footer .bt_abottom dl dd {color:#b1b1b1; font-size:12px; font-family:'Noto Sans KR';  font-weight:300; line-height:22px;}
+#footer .bt_abottom dl dd.freechk img {font-size:0;}
+#footer .bt_abottom a {color:inherit; font-size:inherit; font-family:'Noto Sans KR'; line-height:inherit; vertical-align:initial;}
+#footer .bt_abottom .bt_lol {float:left;}
+#footer .bt_abottom .bt_lol.cs {width:245px;}
+#footer .bt_abottom .bt_lol.info {width:330px;}
+
+
+
+#footer .bt_abottom .bt_lol.account {width:245px;}
+#footer .bt_abottom .bt_lol.shopmenu {width:205px;  }
+#footer .bt_abottom .bt_lol.secondmenu {float:left; width:170px; }
+#footer .bt_abottom .company_info {clear:both; position:relative;}
+#footer .bt_abottom .company_info dl {margin:0;}
+#footer .bt_abottom .copyright {color:#737373; font-size:11px; font-family:'Noto Sans KR';  font-weight:400; line-height:22px;}
+#footer .bt_abottom .infomation {position:absolute; right:67px; top:0; z-index:5; padding:10px 0 20px;}
+#footer .bt_abottom .infomationp {margin-top:5px; color:#999; font-size:12px; font-weight:300; line-height:16px;}
+/* BASIC css end */
+
+
+
+
+/* BASIC css end */
+

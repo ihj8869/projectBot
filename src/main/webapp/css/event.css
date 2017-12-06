@@ -1,0 +1,9 @@
+/* BASIC css start */
+
+
+#specialEvt .tit-pop { text-align: left; z-index: 1500;}
+#specialEvt .close-wrap { position: relative; color: #000; background-color: #ffffff; }
+#specialEvt .close-wrap .close { position: relative; text-align: left; }
+#specialEvt .close-wrap .close .btn-close { position: absolute; right: 0px; top: 0px; }
+/* BASIC css end */
+
