@@ -120,7 +120,7 @@ body,#fancybox-overlay{min-width:0px !important}
 </head>
 
 <body>
-
+<input type="button" href="manageMember.do" value="test">
 <div class="social_login_ct_wrap">
     <div class="pagepop_wrap">
         <div class="social_login_cont join_cont">

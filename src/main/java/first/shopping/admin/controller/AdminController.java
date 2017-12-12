@@ -26,6 +26,12 @@ public class AdminController {
 	@Resource(name="adminService")
 	private AdminService adminService;
 	
+	@RequestMapping(value="loginPro.do")
+	public String loginProcess(@RequestParam(value="email")String email,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
+		System.out.println("@@@@@@@@컨트롤러@@@@@@@@");
+		return "redirect:/manageMember.do";
+	}
+//===================================================================================================
 	@RequestMapping(value="/manageMember.do") //index.jsp에서 admin 클릭 (전체 회원정보), 회원검색(이름,아이디로), 페이징
     public ModelAndView selectMemberList(@RequestParam(value="name",required=false)String name,
 			@RequestParam(value="id",required=false)String id,@RequestParam(value="page",required=false)String page) throws Exception{

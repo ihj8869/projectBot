@@ -13,7 +13,10 @@
     
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	if($("#email").val()==''){
+		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
+		document.location.href="/first/index.jsp"
+	}
 	$(".isDel").children().next().each(function(){ //삭제된 회원은 빨갛게
 		if($(this).val()=='Y'){
 			$(this).parent().parent().attr('class','error');
@@ -109,6 +112,9 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 </head>
 
 <body>
+${email} 님 환영합니다.
+<input type="hidden" id="email" value="${email}">
+<br>
 ${map}
 	
 	<h2 class="ui block header"><i id="sidebar" class="sidebar icon" style="zoom: 0.5; cursor: pointer;"></i>관리자 페이지</h2>
