@@ -26,7 +26,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 			
 			if(email.equals("admin@naver.com")&&password.equals("1234")){ //로그인 성공
 				request.getSession().setAttribute("email", email);
-				request.getSession().setMaxInactiveInterval(3); //초단위
+				request.getSession().setMaxInactiveInterval(60*60); //초단위
 				return true; 
 				
 			}else {

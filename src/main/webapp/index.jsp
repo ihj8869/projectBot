@@ -3,8 +3,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원 관리</title>
+<meta name="viewport" content="user-scalable=no, 
+initial-scale=1.0,
+maximum-scale=1.0,
+minimum-scale=1.0,
+width=device-width,
+height=device-height" http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>아름다운가게 재고관리시스템</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
@@ -45,9 +50,10 @@ body .container .half {
   padding: 58px 40px 0;
 }
 body .container .half.bg {
-  background-image: url("img/bot.jpg");
-  background-size: 250px;
+  background-image: url("img/login.jpg");
+  background-size: 300px;
   background-repeat: no-repeat;
+  margin-top: 100px;
 }
 body .container h1 {
   font-size: 18px;
@@ -61,6 +67,7 @@ body .container h1 {
 }
 body .container .tabs {
   width: 100%;
+  
   margin-bottom: 29px;
   border-bottom: 1px solid #d9d9d9;
 }
@@ -289,7 +296,7 @@ body .container .content .signup-cont {
 
 <section class="container">
 	<article class="half">
-		<h1>Azure</h1>
+		<h1>아름다운가게<br>재고관리시스템</h1>
 		<div class="tabs">
 			<span class="tab signin active"><a href="#signin">Sign in</a></span>
 			<span class="tab signup"><a href="#signup">Sign up</a></span>
@@ -297,7 +304,7 @@ body .container .content .signup-cont {
 		<div class="content">
 			<div class="signin-cont cont">
 				<form action="loginPro.do" method="post">
-					<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+					<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your id">
 					<label for="email">Your email</label>
 				    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
 					<label for="password">Your password</label>
@@ -347,8 +354,8 @@ $('.tabs .tab').click(function(){
     }
 });
 $('.container .bg').mousemove(function(e){ //로그인 화면 오른쪽 마우스 이벤트
-    var amountMovedX = (e.pageX * +1 / 20); //e.pageX는 마우스 커서좌표
-    var amountMovedY = (e.pageY * +1 / 9);
+    var amountMovedX = (e.pageX * +1 / 50); //e.pageX는 마우스 커서좌표
+    var amountMovedY = (e.pageY * +1 / 20);
     $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
 });
 </script>
