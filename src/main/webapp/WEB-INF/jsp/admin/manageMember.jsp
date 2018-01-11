@@ -122,21 +122,24 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 			<i class="home icon"></i> Home
 		</a>
 		<a href="manageMember.do" class="item"> 
-			<i class="shop icon"></i> 품목코드관리
+			<i class="barcode icon"></i> 코드관리
 		</a> 
-		<a href="#" class="item"> 
-			<i class="shipping icon"></i> 상품관리
+		<a href="managePd.do" class="item"> 
+			<i class="shop icon"></i> 입고재고관리
 		</a>
-		<a class="item"> 
-			<i class="won icon"></i> 매출분석
+		<a href="#" class="item"> 
+			<i class="bar chart icon"></i> 통계관리
+		</a>
+		<a href="#" class="item"> 
+			<i class="users icon"></i> 사용자관리
 		</a>
 	</div>
 	
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-	  <h2 class="ui dividing header" style="font-weight: 100;">코드관리</h2>
+	  <h2 class="ui dividing header" style="font-weight: 100;">입고재고관리</h2>
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
-				<td>이름</td>
+				<td>코드</td>
 				<td>
 					<div class="ui input">
 						<input id="searchName" name="search" type="text">

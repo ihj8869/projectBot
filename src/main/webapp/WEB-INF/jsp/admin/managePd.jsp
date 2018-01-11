@@ -3,8 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원 관리</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" content="text/html; charset=UTF-8">
+<title>아름다운가게 재고관리시스템</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
@@ -24,74 +24,82 @@ $(document).ready(function() {
 </head>
 
 <body>
-${list}
-	<h2 class="ui block header"><i id="sidebar" class="sidebar icon" style="zoom: 0.5; cursor: pointer;"></i>관리자 페이지</h2>
+<%-- ${list} --%>
+	<h2 class="ui block header"><i id="sidebar" class="sidebar icon" style="zoom: 0.5; cursor: pointer;"></i>아름다운가게 재고관리시스템</h2>
 
 	<div class="ui left demo vertical inverted sidebar labeled icon menu">
-		<a href="index.jsp" class="item"> 
+		<a href="main.do" class="item"> 
 			<i class="home icon"></i> Home
 		</a>
 		<a href="manageMember.do" class="item"> 
-			<i class="users icon"></i> 회원관리
+			<i class="barcode icon"></i> 코드관리
 		</a> 
 		<a href="managePd.do" class="item"> 
-			<i class="shop icon"></i> 상품관리
+			<i class="shop icon"></i> 입고재고관리
 		</a>
-		<a class="item"> 
-			<i class="shipping icon"></i> 배송관리
+		<a href="#" class="item"> 
+			<i class="bar chart icon"></i> 통계관리
+		</a>
+		<a href="#" class="item"> 
+			<i class="users icon"></i> 사용자관리
 		</a>
 	</div>
 	
-	<table class="ui celled table">
-  <thead>
-  	<tr>
-    	<th>NAME</th>
-    	<th>PRICE</th>
-    	<th>INFO</th>
-  	</tr>
-  </thead>
-  <tbody>
-  	<c:choose>
-  		<c:when test="${fn:length(list) > 0}">
-  			<c:forEach items="${list}" var="row">
-  				<tr>
-  					<td>
-  						${row.NAME}
-  					</td>
-  					<td>
-  						${row.PRICE}
-  					</td>
-  					<td>
-  						${row.INFO}
-  					</td>
-  				</tr>
-  			</c:forEach>
-  		</c:when>
-  		<c:otherwise>
+	<div style="padding-top: 3%; padding-left: 3%; padding-right: 3%; padding-bottom: 3%;">
+	  <h2 class="ui dividing header" style="font-weight: 100;">입고재고관리</h2>
+	  <table class="ui fixed single line celled table" style="width: 50%;" align="right">
+	  	<tr>
+			<!-- <td>코드</td>
+			<td>
+				<div class="ui input">
+					<input id="searchName" name="search" type="text">
+				</div>
+			</td>
+			<td>아이디</td>
+			<td>
+				<div class="ui input">
+					<input id="searchId" name="search" type="text">
+				</div>
+			</td>
+			<td><i id="search" class="search icon" style="cursor: pointer;"></i></td> -->
+		</tr>
+	  </table>
+	  <table class="ui unstackable table">
+	  	<thead>
   			<tr>
-				<td colspan="10">조회된 결과가 없습니다.</td>
-			</tr>
-  		</c:otherwise>
-    </c:choose>
-  </tbody>
-  
-  <tfoot>
-    <tr><th colspan="3">
-      <div class="ui right floated pagination menu">
-        <a class="icon item">
-          <i class="left chevron icon"></i>
-        </a>
-        <a class="item">1</a>
-        <a class="item">2</a>
-        <a class="item">3</a>
-        <a class="item">4</a>
-        <a class="icon item">
-          <i class="right chevron icon"></i>
-        </a>
-      </div>
-    </th>
-  </tr></tfoot>
-</table>
+    			<th>상품구분</th>
+    			<th>판매수량</th>
+    			<th>창고수량</th>
+    			<th>재고수량</th>
+    			<th>재고확인일</th>
+    			<th></th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<c:choose>
+  				<c:when test="${fn:length(list) > 0}">
+  					<c:forEach items="${list}" var="row">
+  						<tr>
+  							<td>${row.NAME}</td>
+  							<td>	${row.PRU_NO}</td>
+  							<td>${row.BC_CODE}</td>
+  							<td>	${row.MC_CODE}</td>
+  							<td>${row.INFO}</td>
+  							<td>
+  								<i class="edit icon" style="zoom:2.0; cursor: pointer;"></i>
+  							</td>
+  						</tr>
+  					</c:forEach>
+  				</c:when>
+  				<c:otherwise>
+  					<tr>
+						<td colspan="10">조회된 결과가 없습니다.</td>
+					</tr>
+  				</c:otherwise>
+    		</c:choose>
+  		</tbody>
+	  </table>
+	</div>
 	
 </body>
 </html>

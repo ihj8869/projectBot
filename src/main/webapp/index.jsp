@@ -3,12 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="viewport" content="user-scalable=no, 
-initial-scale=1.0,
-maximum-scale=1.0,
-minimum-scale=1.0,
-width=device-width,
-height=device-height" http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" content="text/html; charset=UTF-8">
 <title>아름다운가게 재고관리시스템</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>

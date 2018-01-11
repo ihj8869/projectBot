@@ -69,8 +69,12 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#sidebar").click(function(){ //사이드바 클릭시
+	$("#sidebar").click(function(){ //사이드바 클릭
 		$('.ui.labeled.icon.sidebar').sidebar('toggle');
+	});
+	
+	$("#todayBtn").click(function(){ //오늘 버튼 클릭
+		document.location.href="main.do";
 	});
 });
 </script>
@@ -89,7 +93,7 @@ $(document).ready(function(){
 		<a href="manageMember.do" class="item"> 
 			<i class="barcode icon"></i> 코드관리
 		</a> 
-		<a href="#" class="item"> 
+		<a href="managePd.do" class="item"> 
 			<i class="shop icon"></i> 입고재고관리
 		</a>
 		<a href="#" class="item"> 
@@ -104,13 +108,18 @@ $(document).ready(function(){
 		<div id="content" style="width:100%;">
 			<table width="100%" border="0" cellspacing="1" cellpadding="1">
 				<tr>
-					<td align ="right">
-						<input type="button" onclick="javascript:location.href='main.do'" value="오늘"/>
+					<td align="right">
+						<h3>
+						<i class="shipping icon" style="zoom:1.8;"></i>입고
+						<i class="shop icon" style="zoom:1.8;"></i>재고&nbsp;&nbsp;
+						<button class="ui button" id="todayBtn" type="button">오늘</button>&nbsp;&nbsp;
+						<!-- type="button"으로 form안에 있는 버튼이 submit 되는걸 방지 -->
+						</h3>
 					</td>
 				</tr>
 			</table>
 			<!--날짜 네비게이션  -->
-			<table width="100%" border="0" cellspacing="1" cellpadding="1" id="KOO" bgcolor="#F3F9D7" style="border:1px solid #CED99C">
+			<table width="100%" border="0" cellspacing="1" cellpadding="1" id="KOO">
 				<tr>
 					<td height="60">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -118,31 +127,33 @@ $(document).ready(function(){
 								<td height="10"></td>
 							</tr>
 							<tr>
-								<td align="center" >
+								<td align="center" style="font-size: 20pt">
+								<h2 class="ui dividing header" style="font-weight: 100;">
 									<a href="main.do?year=<%=year-1%>&amp;month=<%=month%>" target="_self">
-										<b>&lt;&lt;</b><!-- 이전해 -->
+										<i class="angle double left icon" style="zoom:2.0;"></i><!-- 이전해 -->
 									</a>
 									<%if(month > 0 ){ %>
 									<a href="main.do?year=<%=year%>&amp;month=<%=month-1%>" target="_self">
-										<b>&lt;</b><!-- 이전달 -->
+										<i class="angle left icon" style="zoom:2.0;"></i><!-- 이전달 -->
 									</a>
 									<%} else {%>
-										<b>&lt;</b>
+										<a href="#"><i class="angle left icon" style="zoom:2.0;"></i></a>
 									<%} %>
 									&nbsp;&nbsp;
-									<%=year%>년
-									<%=month+1%>월
+										<%=year%>년
+										<%=month+1%>월
 									&nbsp;&nbsp;
 									<%if(month < 11 ){ %>
 									<a href="main.do?year=<%=year%>&amp;month=<%=month+1%>" target="_self">
-										<b>&gt;</b><!-- 다음달 -->
+										<i class="angle right icon" style="zoom:2.0;"></i><!-- 다음달 -->
 									</a>
 									<%}else{%>
-										<b>&gt;</b>
+										<a href="#"><i class="angle right icon" style="zoom:2.0;"></i></a>
 									<%} %>
 									<a href="main.do?year=<%=year+1%>&amp;month=<%=month%>" target="_self">
-										<b>&gt;&gt;</b><!-- 다음해 -->
+										<i class="angle double right icon" style="zoom:2.0;"></i><!-- 다음해 -->
 									</a>
+								</h2>
 								</td>
 							</tr>
 						</table>
@@ -150,7 +161,7 @@ $(document).ready(function(){
 				</tr>
 			</table>
 			<br>
-			<table border="1" cellspacing="1" cellpadding="1" bgcolor="#FFFFFF" style="border-color: rgba(0,0,0,.05); width:100%;">
+			<table border="1" cellspacing="1" cellpadding="1" bgcolor="#FFFFFF" style="border-color: rgba(0,0,0,.05); width:100%; margin-top:-30px;">
 				<thead>
 				<tr bgcolor="#CECECE">
 					<td width='100px'>
@@ -209,7 +220,7 @@ $(document).ready(function(){
 				<%
 				if(index==Integer.parseInt(temp.substring(6, 8))){ //index:1~31, temp:임시날짜 
 				%>
-				<br>★
+				<br><i class="shipping icon" style="zoom:1.8;"></i><i class="shop icon" style="zoom:1.8;"></i>
 				<%
 				}
 				%>
