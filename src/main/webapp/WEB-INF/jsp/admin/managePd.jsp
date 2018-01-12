@@ -17,6 +17,14 @@ $(document).ready(function() {
 	$("#sidebar").click(function(){ //사이드바 클릭시
 		$('.ui.labeled.icon.sidebar').sidebar('toggle');
 	});
+
+	$('i[id^="editBtn"]').click(function(){
+		//alert($(this).parent().prev().prev().text()); //243(재고수량)
+		
+		$(this).parent().prev().prev().html("<input type=\"text\"/>"); //아래꺼나 이거 둘중하나로(사이즈조절)
+		//$(this).parent().prev().prev().html("<div class=\"ui input\"><input type=\"text\"	</div>");
+		//alert($(this).parent().prev().prev().html("<input type=\"text\"/>"));
+	});
 	
 });
 
@@ -47,9 +55,9 @@ $(document).ready(function() {
 	
 	<div style="padding-top: 3%; padding-left: 3%; padding-right: 3%; padding-bottom: 3%;">
 	  <h2 class="ui dividing header" style="font-weight: 100;">입고재고관리</h2>
-	  <table class="ui fixed single line celled table" style="width: 50%;" align="right">
+	  <!-- <table class="ui fixed single line celled table" style="width: 50%;" align="right">
 	  	<tr>
-			<!-- <td>코드</td>
+			<td>코드</td>
 			<td>
 				<div class="ui input">
 					<input id="searchName" name="search" type="text">
@@ -61,9 +69,9 @@ $(document).ready(function() {
 					<input id="searchId" name="search" type="text">
 				</div>
 			</td>
-			<td><i id="search" class="search icon" style="cursor: pointer;"></i></td> -->
+			<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 		</tr>
-	  </table>
+	  </table> -->
 	  <table class="ui unstackable table">
 	  	<thead>
   			<tr>
@@ -86,7 +94,7 @@ $(document).ready(function() {
   							<td>	${row.MC_CODE}</td>
   							<td>${row.INFO}</td>
   							<td>
-  								<i class="edit icon" style="zoom:2.0; cursor: pointer;"></i>
+  								<i id="editBtn" class="edit icon" style="zoom:2.0; cursor: pointer;"></i>
   							</td>
   						</tr>
   					</c:forEach>

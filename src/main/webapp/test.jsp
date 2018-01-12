@@ -206,7 +206,7 @@ table > tbody > tr:hover > td {
 		<tr>
 			<td>Waste half the day on Twitter</td>
 			<td>20%</td>
-			<td>No</td>
+			<td>Ndo</td>
 		</tr>
 
 		<tr>
