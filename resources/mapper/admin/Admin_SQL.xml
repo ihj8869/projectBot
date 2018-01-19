@@ -11,7 +11,7 @@
 		SELECT * FROM MEMBER ORDER BY PMS,IS_DEL,MEM_NO) ORDER BY RN)
 		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
-	
+
 	<select id="searchMemberList" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM
 		(SELECT ROWNUM RN,MEM_NO,NAME,ID,PASSWORD,EMAIL,BIRTHDAY,ADDRESS,PHONE,GENDER,

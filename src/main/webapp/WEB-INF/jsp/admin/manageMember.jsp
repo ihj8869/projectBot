@@ -136,7 +136,7 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 	</div>
 	
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-	  <h2 class="ui dividing header" style="font-weight: 100;">입고재고관리</h2>
+	  <h2 class="ui dividing header" style="font-weight: 100;">코드관리</h2>
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
 				<td>코드</td>

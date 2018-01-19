@@ -14,16 +14,41 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#sidebar").click(function(){ //사이드바 클릭시
+	$("#sidebar").click(function(){ //사이드바 클릭
 		$('.ui.labeled.icon.sidebar').sidebar('toggle');
 	});
 
-	$('i[id^="editBtn"]').click(function(){
-		//alert($(this).parent().prev().prev().text()); //243(재고수량)
+	$("#jegoBtn").click(function(){ //재고버튼 클릭
+		$(".pru_no, .bc_code, .mc_code").each(function(i,e){
+			$(this).html('<div class="ui input"><input type="text" value="'+$(this).text()+'" size="4px"></div>');
+		});
 		
-		$(this).parent().prev().prev().html("<input type=\"text\"/>"); //아래꺼나 이거 둘중하나로(사이즈조절)
-		//$(this).parent().prev().prev().html("<div class=\"ui input\"><input type=\"text\"	</div>");
-		//alert($(this).parent().prev().prev().html("<input type=\"text\"/>"));
+		$("#jegoBtn, #ipgoBtn").hide();
+		$("#saveBtn_jego, #cancelBtn").show();
+		//alert("2");
+		//$(this).find("input").attr("type","text");
+	});
+	
+	$("#ipgoBtn").click(function(){ //입고버튼클릭
+		$(".mc_code").each(function(i,e){
+			$(this).html('<div class="ui input"><input type="text" value="'+$(this).text()+'" size="4px"></div>');
+		});
+	
+		$(".ipgo").show();
+		$("#jegoBtn, #ipgoBtn").hide();
+		$("#saveBtn_ipgo, #cancelBtn").show();
+	});
+	
+	$("#saveBtn_jego").click(function(){ //저장(재고)버튼클릭
+		document.location.href="managePd.do";
+	});
+	
+	$("#saveBtn_ipgo").click(function(){ //저장(입고)버튼클릭
+		document.location.href="managePd.do";
+	});
+	
+	$("#cancelBtn").click(function(){ //취소버튼클릭
+		document.location.href="managePd.do";
 	});
 	
 });
@@ -32,7 +57,6 @@ $(document).ready(function() {
 </head>
 
 <body>
-<%-- ${list} --%>
 	<h2 class="ui block header"><i id="sidebar" class="sidebar icon" style="zoom: 0.5; cursor: pointer;"></i>아름다운가게 재고관리시스템</h2>
 
 	<div class="ui left demo vertical inverted sidebar labeled icon menu">
@@ -78,9 +102,9 @@ $(document).ready(function() {
     			<th>상품구분</th>
     			<th>판매수량</th>
     			<th>창고수량</th>
-    			<th>재고수량</th>
-    			<th>재고확인일</th>
-    			<th></th>
+    			<th>진열수량</th>
+    			<th class="ipgo" style="display: none;">입고수량</th>
+    			<th>업데이트일</th>
   			</tr>
   		</thead>
   		<tbody>
@@ -89,13 +113,16 @@ $(document).ready(function() {
   					<c:forEach items="${list}" var="row">
   						<tr>
   							<td>${row.NAME}</td>
-  							<td>	${row.PRU_NO}</td>
-  							<td>${row.BC_CODE}</td>
-  							<td>	${row.MC_CODE}</td>
-  							<td>${row.INFO}</td>
-  							<td>
-  								<i id="editBtn" class="edit icon" style="zoom:2.0; cursor: pointer;"></i>
+  							<td class="pru_no">${row.PRU_NO}</td>
+  							<td class="bc_code">${row.BC_CODE}</td>
+  							<td class="mc_code">${row.MC_CODE}</td>
+  							<td class="ipgo" style="display: none;">
+  								<div class="ui input"><input type="text" value="0" size="4px"></div>
   							</td>
+  							<td class="info">${row.INFO}</td>
+  							<!-- <td>
+  								<i id="editBtn" class="edit icon" style="zoom:2.0; cursor: pointer;"></i>
+  							</td> -->
   						</tr>
   					</c:forEach>
   				</c:when>
@@ -107,6 +134,11 @@ $(document).ready(function() {
     		</c:choose>
   		</tbody>
 	  </table>
+	  <button id="jegoBtn" type="button" class="ui button">재고</button>
+	  <button id="ipgoBtn" type="button" class="ui button">입고</button>
+	  <button id="saveBtn_jego" type="button" class="ui button" style="display: none;">저장</button>
+	  <button id="saveBtn_ipgo" type="button" class="ui button" style="display: none;">저장</button>
+	  <button id="cancelBtn" type="button" class="ui button" style="display: none;">취소</button>
 	</div>
 	
 </body>
