@@ -33,13 +33,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="main.do")
-	public ModelAndView main() {
-		System.out.println("=======메인=======");
+	public ModelAndView main() throws Exception {
+		System.out.println(" AdminController.java  - @RequestMapping(value=\"/managePd.do\")");
 		ModelAndView mv = new ModelAndView("/admin/main");
-        //List<Map<String,Object>> list = adminService.selectMemberList(map);
-        //mv.addObject("list", list);
-        //mv.addObject("map", map);
-        return mv;
+		List<Map<String,Object>> list = adminService.selectCalList();
+		mv.addObject("list", list);
+		return mv;
 	}
 //===================================================================================================
 	@RequestMapping(value="/manageMember.do") //index.jsp에서 admin 클릭 (전체 회원정보), 회원검색(이름,아이디로), 페이징
@@ -120,7 +119,7 @@ public class AdminController {
 //====================================================================================================
 	@RequestMapping(value="/managePd.do") //상품정보
 	public ModelAndView selectProductList() throws Exception{
-		
+		System.out.println(" AdminController.java  - @RequestMapping(value=\"/managePd.do\")");
 		ModelAndView mv = new ModelAndView("/admin/managePd");
 		List<Map<String,Object>> list = adminService.selectPdList();
 		mv.addObject("list", list);

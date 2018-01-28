@@ -217,13 +217,30 @@ $(document).ready(function(){
 				%>
 				<font color='<%=color%>'>
 				<%=index %>
-				<%
-				if(index==Integer.parseInt(temp.substring(6, 8))){ //index:1~31, temp:임시날짜 
-				%>
-				<br><i class="shipping icon" style="zoom:1.8;"></i><i class="shop icon" style="zoom:1.8;"></i>
-				<%
-				}
-				%>
+				<c:choose>
+  				<c:when test="${fn:length(list) > 0}">
+  					<c:forEach items="${list}" var="row">
+  						<c:set var='iUseDate' value="<%=iUseDate%>"/>
+  						<c:if test="${row.WORK_DATE==iUseDate&&row.WORK_GB=='WK02'}">
+  						<br>
+  						<a href="managePd.do" class="item"> 
+							<i class="shipping icon" style="zoom:1.8;"></i> 재고작업
+						</a>
+  						<!-- <i class="shop icon" style="zoom:1.8;"></i>  -->
+  						</c:if>
+  						<c:if test="${row.WORK_DATE==iUseDate&&row.WORK_GB=='WK01'}">
+  						<br>
+  						<a href="managePd.do" class="item"> 
+							<i class="shop icon" style="zoom:1.8;"></i> 입고작업
+						</a>
+  						</c:if>
+  							
+  					</c:forEach>
+  				</c:when>
+    			</c:choose>
+				
+				
+				
 				<%
 				
 				%>
@@ -255,6 +272,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 		</div>
+		
 	</form>
 </body>
 </html>

@@ -95,6 +95,21 @@
 			SELECT * FROM PRODUCT
 		]]>
 	</select>
+	
+	<resultMap id="CalList" type="hashmap">
+		<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
+	</resultMap>
+	
+	<select id="selectCalList" resultMap="CalList">
+		<![CDATA[
+			SELECT  OFFER_NO , SUBSTR(OFFER_NO,1,8) WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM, WORK_GB,
+			        (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
+			FROM    BFS_PRODUCT
+			WHERE     SUBSTR(OFFER_NO,1,6) = '201801'
+			GROUP BY OFFER_NO, WORK_GB
+			ORDER BY WORK_DATE ASC
+		]]>
+	</select>
 
 </mapper>
 
