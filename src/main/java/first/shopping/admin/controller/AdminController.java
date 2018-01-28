@@ -3,7 +3,7 @@ package first.shopping.admin.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Calendar;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,15 +28,25 @@ public class AdminController {
 	
 	@RequestMapping(value="loginPro.do")
 	public String loginProcess(@RequestParam(value="email")String email,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
-		System.out.println("@@@@@@@@컨트롤러@@@@@@@@");
-		return "redirect:/main.do";
+		System.out.println(" AdminController.java  - @RequestMapping(value=\\\"loginPro.do\\\")");
+		
+		Calendar cal = Calendar.getInstance();
+		
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		
+		System.out.println("@@@@@@ month" + month);
+		return "redirect:/main.do?year="+year+"&month="+month;
 	}
 	
 	@RequestMapping(value="main.do")
-	public ModelAndView main() throws Exception {
+	public ModelAndView main(@RequestParam(value="year")int year,@RequestParam(value="month")int month) throws Exception {
 		System.out.println(" AdminController.java  - @RequestMapping(value=\"/managePd.do\")");
 		ModelAndView mv = new ModelAndView("/admin/main");
-		List<Map<String,Object>> list = adminService.selectCalList();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("year", year);
+		map.put("month", month+1);
+		List<Map<String,Object>> list = adminService.selectCalList(map);
 		mv.addObject("list", list);
 		return mv;
 	}

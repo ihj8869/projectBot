@@ -7,12 +7,30 @@
 <title>아름다운가게 재고관리시스템</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="java.util.Calendar"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 <script type="text/javascript">
 
 </script>
+
+<%
+	Calendar cal = Calendar.getInstance();
+	String strYear = request.getParameter("year");
+	String strMonth = request.getParameter("month");
+	
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH);
+	int date = cal.get(Calendar.DATE);
+	
+	if(strYear != null){
+		year = Integer.parseInt(strYear);
+		month = Integer.parseInt(strMonth);	
+	}else{
+		
+	}
+%>
 
 <style rel="stylesheet">
 @charset "UTF-8";
@@ -313,6 +331,8 @@ body .container .content .signup-cont {
 			</div>
     		<div class="signup-cont cont">
                	<form action="#" method="post" enctype="multipart/form-data">
+	               	<input type="year" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+	               	<input type="mon" name="email" id="name" class="inpt" required="required" placeholder="Your name">
 					<input type="email" name="email" id="name" class="inpt" required="required" placeholder="Your name">
 					<label for="name">Your name</label>
                     <input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">

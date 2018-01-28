@@ -23,7 +23,7 @@ public interface AdminService {
 //====================================================================================================
 	List<Map<String, Object>> selectPdList() throws Exception;
 	
-	List<Map<String, Object>> selectCalList() throws Exception;
+	List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception;
 }
 
 

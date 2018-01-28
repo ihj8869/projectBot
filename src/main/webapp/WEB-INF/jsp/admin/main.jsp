@@ -41,8 +41,10 @@ A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
 	Calendar cal = Calendar.getInstance();
 	String strYear = request.getParameter("year");
 	String strMonth = request.getParameter("month");
-	String temp = "20180115"; //테스트 날짜(아이콘 삽입)
 	
+	
+	int nowyear = cal.get(Calendar.YEAR);
+	int nowmonth = cal.get(Calendar.MONTH);
 	int year = cal.get(Calendar.YEAR);
 	int month = cal.get(Calendar.MONTH);
 	int date = cal.get(Calendar.DATE);
@@ -74,7 +76,7 @@ $(document).ready(function(){
 	});
 	
 	$("#todayBtn").click(function(){ //오늘 버튼 클릭
-		document.location.href="main.do";
+		document.location.href="main.do?year=<%=nowyear%>&month=<%=nowmonth%>";
 	});
 });
 </script>
@@ -87,7 +89,7 @@ $(document).ready(function(){
 	<%-- <br>
 	${map} --%>
 	<div class="ui left demo vertical inverted sidebar labeled icon menu">
-		<a href="main.do" class="item"> 
+		<a href="main.do?year=<%=year%>&month=<%=month%>" class="item"> 
 			<i class="home icon"></i> Home
 		</a>
 		<a href="manageMember.do" class="item"> 
@@ -133,11 +135,13 @@ $(document).ready(function(){
 										<i class="angle double left icon" style="zoom:2.0;"></i><!-- 이전해 -->
 									</a>
 									<%if(month > 0 ){ %>
-									<a href="main.do?year=<%=year%>&amp;month=<%=month-1%>" target="_self">
-										<i class="angle left icon" style="zoom:2.0;"></i><!-- 이전달 -->
-									</a>
+										<a href="main.do?year=<%=year%>&amp;month=<%=month-1%>" target="_self">
+											<i class="angle left icon" style="zoom:2.0;"></i><!-- 이전달 -->
+										</a>
 									<%} else {%>
-										<a href="#"><i class="angle left icon" style="zoom:2.0;"></i></a>
+										<a href="main.do?year=<%=year-1%>&amp;month=<%=11%>" target="_self">
+											<i class="angle left icon" style="zoom:2.0;"></i><!-- 이전달 -->
+										</a>
 									<%} %>
 									&nbsp;&nbsp;
 										<%=year%>년
@@ -148,7 +152,9 @@ $(document).ready(function(){
 										<i class="angle right icon" style="zoom:2.0;"></i><!-- 다음달 -->
 									</a>
 									<%}else{%>
-										<a href="#"><i class="angle right icon" style="zoom:2.0;"></i></a>
+										<a href="main.do?year=<%=year+1%>&amp;month=<%=0%>" target="_self">
+											<i class="angle right icon" style="zoom:2.0;"></i><!-- 이전달 -->
+										</a>
 									<%} %>
 									<a href="main.do?year=<%=year+1%>&amp;month=<%=month%>" target="_self">
 										<i class="angle double right icon" style="zoom:2.0;"></i><!-- 다음해 -->

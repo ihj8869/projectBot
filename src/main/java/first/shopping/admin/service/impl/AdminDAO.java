@@ -50,8 +50,8 @@ public class AdminDAO extends AbstractDAO{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectCalList() throws Exception{
+	public List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception{
 		System.out.println("AdminDAO - public List<Map<String, Object>> selectCalList() throws Exception");
-		return (List<Map<String, Object>>)selectList("admin.selectCalList");
+		return (List<Map<String, Object>>)selectList("admin.selectCalList", map);
 	}
 }

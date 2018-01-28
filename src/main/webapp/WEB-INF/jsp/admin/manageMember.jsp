@@ -7,10 +7,30 @@
 <title>아름다운가게 재고관리시스템</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="java.util.Calendar"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
     
+<%
+	Calendar cal = Calendar.getInstance();
+	String strYear = request.getParameter("year");
+	String strMonth = request.getParameter("month");
+	
+	
+	int nowyear = cal.get(Calendar.YEAR);
+	int nowmonth = cal.get(Calendar.MONTH);
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH);
+	int date = cal.get(Calendar.DATE);
+	
+	if(strYear != null){
+		year = Integer.parseInt(strYear);
+		month = Integer.parseInt(strMonth);	
+	}else{
+		
+	}
+%>
 <script type="text/javascript">
 $(document).ready(function() {
 	if($("#email").val()==''){
@@ -118,7 +138,7 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 	<%-- <br>
 	${map} --%>
 	<div class="ui left demo vertical inverted sidebar labeled icon menu">
-		<a href="main.do" class="item"> 
+		<a href="main.do?year=<%=year%>&month=<%=month%>" class="item"> 
 			<i class="home icon"></i> Home
 		</a>
 		<a href="manageMember.do" class="item"> 

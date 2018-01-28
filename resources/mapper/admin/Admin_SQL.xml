@@ -102,10 +102,10 @@
 	
 	<select id="selectCalList" resultMap="CalList">
 		<![CDATA[
-			SELECT  OFFER_NO , SUBSTR(OFFER_NO,1,8) WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM, WORK_GB,
+			SELECT  OFFER_NO , SUBSTR(OFFER_NO,1,8) WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM , WORK_GB,
 			        (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
 			FROM    BFS_PRODUCT
-			WHERE     SUBSTR(OFFER_NO,1,6) = '201801'
+			WHERE   SUBSTR(OFFER_NO,1,6) = DECODE(#{month},'12',#{year}||#{month},'11',#{year}||#{month},'10',#{year}||#{month},#{year}||'0'||#{month})
 			GROUP BY OFFER_NO, WORK_GB
 			ORDER BY WORK_DATE ASC
 		]]>
