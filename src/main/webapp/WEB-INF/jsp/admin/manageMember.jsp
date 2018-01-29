@@ -27,7 +27,7 @@
 	if(strYear != null){
 		year = Integer.parseInt(strYear);
 		month = Integer.parseInt(strMonth);	
-	}else{
+	}else{ 
 		
 	}
 %>

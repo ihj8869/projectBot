@@ -55,7 +55,6 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.selectPdList();
 	}
 	
-	@Override
 	public List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception {
 		return adminDAO.selectCalList(map);
 	}
