@@ -35,7 +35,7 @@
 $(document).ready(function() {
 	if($("#email").val()==''){
 		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
-		document.location.href="/first/index.jsp"
+		document.location.href="/index.jsp"
 	}
 	$(".isDel").children().next().each(function(){ //삭제된 회원은 빨갛게
 		if($(this).val()=='Y'){

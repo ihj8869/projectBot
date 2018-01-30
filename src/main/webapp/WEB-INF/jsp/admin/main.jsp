@@ -14,6 +14,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	if($("#email").val()==''){
+		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
+		document.location.href="/index.jsp"
+	}
+}
+</script>
+
 <%
 	Calendar cal = Calendar.getInstance();
 	String strYear = request.getParameter("year");
@@ -60,11 +69,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     </a>
     <img src="img/login.jpg" style="width:45%;" class="w3-round"><br><br>
     <h4><b>아름다운가게</b></h4>
-    <p class="w3-text-grey">재고관리시스템</p>
+    <p class="w3-text-grey">재고관리시스템 </p>
   </div>
   <div class="w3-bar-block">
-    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>코드관리 </a>
+    <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
+    <a href="manageMember.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>코드관리 </a>
     <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고재고관리</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>통계관리</a>
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a>

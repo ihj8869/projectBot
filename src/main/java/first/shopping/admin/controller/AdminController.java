@@ -1,9 +1,11 @@
 package first.shopping.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.support.RequestPartServletServerHttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.shopping.admin.Paging;
@@ -22,6 +25,7 @@ import first.shopping.admin.service.AdminService;
 @Controller
 public class AdminController {
 	 Logger log = Logger.getLogger(this.getClass());
+	
 	
 	@Resource(name="adminService")
 	private AdminService adminService;
@@ -46,6 +50,7 @@ public class AdminController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("year", year);
 		map.put("month", month+1);
+		
 		List<Map<String,Object>> list = adminService.selectCalList(map);
 		mv.addObject("list", list);
 		return mv;
@@ -73,7 +78,7 @@ public class AdminController {
 		map.put("id", id);
 		
 		
-		ModelAndView mv = new ModelAndView("/admin/manageMember");
+		ModelAndView mv = new ModelAndView("/admin/code");
         List<Map<String,Object>> list = adminService.selectMemberList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);
