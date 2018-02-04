@@ -90,7 +90,7 @@
 		<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
 	</resultMap>
 	
-	<select id="selectPdList" resultMap="PdList">
+	<select id="selectPdList" resultMap="PdList" >
 		<![CDATA[
 			SELECT * FROM PRODUCT
 		]]>
@@ -110,6 +110,35 @@
 			ORDER BY WORK_DATE ASC
 		]]>
 	</select>
+	
+	<resultMap id="CodeList" type="hashmap">
+		<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
+	</resultMap>
+	
+	
+	<select id="searchCodeList" resultMap="CodeList">
+		SELECT * FROM BFS_CODE
+		WHERE MAJOR_CD = 'PRGB'
+		<if test="name != null">
+			AND KOR_NAME LIKE '%' || #{name} || '%' 
+		</if>
+		<if test="use != null">
+			AND USE_GB LIKE '%' || #{use} || '%' 
+		</if>
+		ORDER BY USE_GB DESC, MINOR_CD ASC
+	</select>
+	
+	<select id="Code_getTotalRow" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) FROM BFS_CODE
+		WHERE MAJOR_CD = 'PRGB'
+		<if test="name != null">
+			AND KOR_NAME LIKE '%' || #{name} || '%' 
+		</if>
+		<if test="use != null">
+			AND USE_GB LIKE '%' || #{use} || '%' 
+		</if>
+	</select>
+
 
 </mapper>
 

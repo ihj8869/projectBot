@@ -24,6 +24,10 @@ public interface AdminService {
 	List<Map<String, Object>> selectPdList() throws Exception;
 	
 	List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectCodeList(HashMap<String, Object> map) throws Exception;
+	
+	int Code_getTotalRow(HashMap<String, Object> map) throws Exception;
 }
 
 

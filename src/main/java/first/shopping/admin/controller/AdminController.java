@@ -55,6 +55,37 @@ public class AdminController {
 		mv.addObject("list", list);
 		return mv;
 	}
+	
+	@RequestMapping(value="/Code.do")
+    public ModelAndView selectCodeList(@RequestParam(value="name",required=false)String name,
+    					@RequestParam(value="use",required=false)String id, @RequestParam(value="page",required=false)String page) throws Exception{
+		//
+		int pageScale=5;
+		int totalRow=0;
+		
+		if(name!=null) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("name", name);
+			map.put("use", id);
+			totalRow = adminService.Code_getTotalRow(map);
+		}else {
+			totalRow = adminService.Code_getTotalRow(null);
+		}
+		
+		Paging pg = new Paging();		
+		HashMap<String, Object> map = pg.paging(pageScale, totalRow, page);
+		map.put("name", name);
+		map.put("use", id);
+		
+		
+		ModelAndView mv = new ModelAndView("/admin/code");
+        List<Map<String,Object>> list = adminService.selectCodeList(map);
+        mv.addObject("list", list);
+        mv.addObject("map", map);
+         
+        return mv;
+    }
+	
 //===================================================================================================
 	@RequestMapping(value="/manageMember.do") //index.jsp에서 admin 클릭 (전체 회원정보), 회원검색(이름,아이디로), 페이징
     public ModelAndView selectMemberList(@RequestParam(value="name",required=false)String name,

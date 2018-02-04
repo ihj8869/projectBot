@@ -32,11 +32,11 @@ $(document).ready(function() {
 		$('.ui.labeled.icon.sidebar').sidebar('toggle');
 	});
 	
-	search = function(){ //이름 or 아이디로 회원검색
+	search = function(){ //코드이름으로 검색
 		var name = $("#searchName").val();
-		var id = $("#searchId").val();
+		var use = $("#searchUse").val();
 		
-		document.location.href="manageMember.do?name="+name+"&id="+id;
+		document.location.href="Code.do?name="+name+"&use="+use;
 	};
 	
 	$("#search").click(function(){ //검색 돋보기 아이콘 클릭시
@@ -49,32 +49,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#memberTb i").click(function(){ //회원 강등 or 승격
-		var no = $(this).prev().prev().val(); //손가락 이미지인 i태그 이전노드인 input의 밸류(mem_no)
-		var name = $(this).parent().next().text();
-		
-		if($(this).attr('class')=='pointing down icon'){
-			var msg = name+'님을 회원으로 강등 시키겠습니까?';
-			
-			if(confirm(msg)!=0){
-				var flag='down';
-				document.location.href="updateRating.do?flag="+flag+"&no="+no;
-			}else{
-				return;
-			}
-			
-		}else if($(this).attr('class')=='pointing up icon'){
-			var msg = name+'님을 관리자로 승격 시키겠습니까?';
-			
-			if(confirm(msg)!=0){
-				var flag='up';
-				document.location.href="updateRating.do?flag="+flag+"&no="+no;
-			}else{
-				return;
-			}
-		}
-	});
-
 	$('button[id^="delete"]').click(function(){ //버튼 배열 id로 가져오기
 		var no = $(this).val();
 		var flag = $(this).text();
@@ -160,7 +134,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     </a>
     <img src="img/login.jpg" style="width:45%;" class="w3-round"><br><br>
     <h4><b>아름다운가게</b></h4>
-    <p class="w3-text-grey">재고관리시스템 </p>
+    <p class="w3-text-grey">재고관리시스템</p>
   </div>
   <div class="w3-bar-block">
    <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
@@ -186,12 +160,21 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <h1><b>코드관리</b></h1>
     
 <div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-		<table class="ui fixed single line celled table" style="width: 30%;" align="right">
+		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
 				<td>품목명</td>
 				<td>
 					<div class="ui input">
-						<input id="searchId" name="search" type="text">
+						<input id="searchName" name="search" type="text">
+					</div>
+				</td>
+				<td>사용여부</td>
+				<td>
+					<div class="ui input">
+						<select id="searchUse" name="search">
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
 					</div>
 				</td>
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
@@ -213,14 +196,24 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
 							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td> </td>
+								<td>${row.MINOR_CD}</td>
+								<td>${row.KOR_NAME}</td>
+								<td>${row.UPDATE_DATE}</td>
+								<td>${row.UPDATE_MAN}</td>
+								<td>${row.USE_GB}</td>
 								<td>
-								    <button id="modify" class="ui button" onclick="infoPopup(${row.MEM_NO})">수정</button>
-								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">품목활성화</button>
+								    <button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">수정</button>
+								    <button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">
+								    	<c:choose>
+								    		<c:when test="${row.USE_GB eq 'Y'}">
+								    			품목사용중지
+								    		</c:when>
+								    		<c:otherwise>
+								    			품목사용
+								    		</c:otherwise>
+								    	</c:choose>
+								    	
+								    </button>
 								</td>
 							</tr>
 						</c:forEach>

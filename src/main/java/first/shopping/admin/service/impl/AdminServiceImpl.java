@@ -59,7 +59,15 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.selectCalList(map);
 	}
 	
+	@Override
+	public List<Map<String, Object>> selectCodeList(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectCodeList(map);
+	}
 	
+	@Override
+	public int Code_getTotalRow(HashMap<String, Object> map) throws Exception {
+		return adminDAO.Code_getTotalRow(map);
+	}
 	
 }
 
