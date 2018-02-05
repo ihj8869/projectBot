@@ -85,8 +85,8 @@ $(document).ready(function(){
 
 <body>
 	<h2 class="ui block header"><i id="sidebar" class="sidebar icon" style="zoom: 0.5; cursor: pointer;"></i>아름다운가게 재고관리시스템</h2>
-	<%-- ${email} 님 환영합니다. --%>
-	<input type="hidden" id="email" value="${email}">
+	<%-- ${id} 님 환영합니다. --%>
+	<input type="hidden" id="id" value="${id}">
 	<%-- <br>
 	${map} --%>
 	<div class="ui left demo vertical inverted sidebar labeled icon menu">

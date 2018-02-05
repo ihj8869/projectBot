@@ -86,6 +86,10 @@
 		</if>
 	</update>
 <!-- ================================================================================ -->
+	<select id="checkPw" parameterType="String" resultType="String">
+		SELECT PASSWORD FROM BFS_USER WHERE ID=#{id}
+	</select>
+	
 	<resultMap id="PdList" type="hashmap">
 		<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
 	</resultMap>

@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	if($("#email").val()==''){
+	if($("#id").val()==''){
 		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
 		document.location.href="/index.jsp"
 	}
@@ -125,6 +125,7 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
+<input type="hidden" id="id" value="${id}">
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>

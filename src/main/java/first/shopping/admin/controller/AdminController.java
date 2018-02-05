@@ -31,7 +31,7 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@RequestMapping(value="loginPro.do")
-	public String loginProcess(@RequestParam(value="email")String email,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
+	public String loginProcess(@RequestParam(value="id")String id,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
 		System.out.println(" AdminController.java  - @RequestMapping(value=\\\"loginPro.do\\\")");
 		
 		Calendar cal = Calendar.getInstance();

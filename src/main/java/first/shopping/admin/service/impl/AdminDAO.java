@@ -44,6 +44,10 @@ public class AdminDAO extends AbstractDAO{
 		update("admin.updateIsDel", map);
 	}
 //====================================================================================================
+	public String checkPw(String id) throws Exception{
+		return (String)selectOne("admin.checkPw", id);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectPdList() throws Exception{
 		return (List<Map<String, Object>>)selectList("admin.selectPdList");

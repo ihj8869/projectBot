@@ -21,6 +21,8 @@ public interface AdminService {
 	
 	public void updateIsDel(HashMap<String, Object> map) throws Exception;
 //====================================================================================================
+	String checkPw(String id)throws Exception;
+	
 	List<Map<String, Object>> selectPdList() throws Exception;
 	
 	List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception;
