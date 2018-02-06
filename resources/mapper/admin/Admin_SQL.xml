@@ -90,6 +90,12 @@
 		SELECT PASSWORD FROM BFS_USER WHERE ID=#{id}
 	</select>
 	
+	<insert id="signUp" parameterType="hashmap">
+		INSERT INTO BFS_USER
+		VALUES(#{id},#{password},#{name},'US01',#{ip},SYSDATE,NULL,NULL,NULL,NULL)
+	</insert>
+	
+	
 	<resultMap id="PdList" type="hashmap">
 		<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
 	</resultMap>

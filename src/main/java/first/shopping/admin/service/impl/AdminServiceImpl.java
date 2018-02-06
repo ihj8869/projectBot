@@ -54,7 +54,12 @@ public class AdminServiceImpl implements AdminService{
 	public String checkPw(String id) throws Exception {
 		return adminDAO.checkPw(id);
 	}
-		
+
+	@Override
+	public void signUp(HashMap<String, Object> map) throws Exception {
+		adminDAO.signUp(map);
+	}
+
 	@Override
 	public List<Map<String, Object>> selectPdList() throws Exception {
 		return adminDAO.selectPdList();

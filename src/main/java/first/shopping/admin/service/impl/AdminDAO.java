@@ -48,6 +48,10 @@ public class AdminDAO extends AbstractDAO{
 		return (String)selectOne("admin.checkPw", id);
 	}
 	
+	public void signUp(HashMap<String, Object> map) throws Exception{
+		insert("admin.signUp", map);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectPdList() throws Exception{
 		return (List<Map<String, Object>>)selectList("admin.selectPdList");

@@ -316,7 +316,7 @@ body .container .content .signup-cont {
 		</div>
 		<div class="content">
 			<div class="signin-cont cont">
-				<form action="loginPro.do" method="post">
+				<form action="signIn.do" method="post">
 					<input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your id">
 				    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
 				    <input type="checkbox" id="remember" class="checkbox" checked>
@@ -329,10 +329,10 @@ body .container .content .signup-cont {
 			</div>
 			
     		<div class="signup-cont cont">
-               	<form action="#" method="post" enctype="multipart/form-data">
-					<input type="text" name="name" id="name" class="inpt" required="required" placeholder="Your name">
-                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your id">
-					<input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+               	<form action="signUp.do" method="post">
+					<input type="text" name="signUp_name" id="signUp_name" class="inpt" required="required" placeholder="Your name">
+                    <input type="text" name="signUp_id" id="signUp_id" class="inpt" required="required" placeholder="Your id">
+					<input type="password" name="signUp_password" id="signUp_password" class="inpt" required="required" placeholder="Your password">
 					<div class="submit-wrap">
 						<input type="submit" value="Sign up" class="submit">
 						<a href="#" class="more"></a>

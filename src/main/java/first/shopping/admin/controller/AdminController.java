@@ -30,9 +30,9 @@ public class AdminController {
 	@Resource(name="adminService")
 	private AdminService adminService;
 	
-	@RequestMapping(value="loginPro.do")
-	public String loginProcess(@RequestParam(value="id")String id,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
-		System.out.println(" AdminController.java  - @RequestMapping(value=\\\"loginPro.do\\\")");
+	@RequestMapping(value="signIn.do")
+	public String signIn(@RequestParam(value="id")String id,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
+		System.out.println(" AdminController.java  - @RequestMapping(value=\\\"signIn.do\\\")");
 		
 		Calendar cal = Calendar.getInstance();
 		
@@ -41,6 +41,21 @@ public class AdminController {
 		
 		System.out.println("@@@@@@ month" + month);
 		return "redirect:/main.do?year="+year+"&month="+month;
+	}
+	
+	@RequestMapping(value="signUp.do")
+	public String signUp(@RequestParam(value="signUp_name")String name,@RequestParam(value="signUp_id")String id,
+			@RequestParam(value="signUp_password")String password,HttpServletRequest request) throws Exception {
+		
+		String ip = request.getRemoteAddr();
+		HashMap<String, Object> hashMap = new HashMap<>();
+		hashMap.put("name", name);
+		hashMap.put("id", id);
+		hashMap.put("password", password);
+		hashMap.put("ip", ip);
+		adminService.signUp(hashMap);
+		
+		return "redirect:/index.jsp";
 	}
 	
 	@RequestMapping(value="main.do")

@@ -23,6 +23,8 @@ public interface AdminService {
 //====================================================================================================
 	String checkPw(String id)throws Exception;
 	
+	public void signUp(HashMap<String, Object> map)throws Exception;
+	
 	List<Map<String, Object>> selectPdList() throws Exception;
 	
 	List<Map<String, Object>> selectCalList(HashMap<String, Object> map) throws Exception;
