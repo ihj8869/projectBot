@@ -72,4 +72,14 @@ public class AdminDAO extends AbstractDAO{
 	public int Code_getTotalRow(HashMap<String, Object> map) throws Exception{
 		return (int)selectOne("admin.Code_getTotalRow",map);
 	}
+	
+	public int Product_getTotalRow(HashMap<String, Object> map) throws Exception{
+		return (int)selectOne("admin.Product_getTotalRow",map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception{
+		
+		return (List<Map<String, Object>>)selectList("admin.searchProductList", map);			
+	}
 }

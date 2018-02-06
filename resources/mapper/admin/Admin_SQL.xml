@@ -149,6 +149,36 @@
 		</if>
 	</select>
 
+	<select id="Product_getTotalRow" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(OFFER_NO) FROM (
+		SELECT  OFFER_NO , WORK_GB
+		FROM    BFS_PRODUCT
+		WHERE   1=1
+		AND SUBSTR(OFFER_NO,1,8) BETWEEN #{strdate} and #{enddate}
+		AND WORK_GB LIKE '%'||'#{workgb}'||'%' 
+		GROUP BY OFFER_NO, WORK_GB)
+	</select>
+	
+	<resultMap id="ProductList" type="hashmap">
+	<result property="INFO" column="INFO" jdbcType="CLOB" javaType="String" />
+	</resultMap>
+	
+	
+	<select id="searchProductList" resultMap="ProductList">
+		SELECT  OFFER_NO , SUBSTR(OFFER_NO,1,8) WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM , WORK_GB,
+			        (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
+			FROM    BFS_PRODUCT
+			WHERE   1=1
+		<if test="strdate != null &amp;&amp; enddate != null">
+			AND SUBSTR(OFFER_NO,1,8) BETWEEN #{strdate} and #{enddate}
+		</if>
+		<if test="workgb != null">
+			AND WORK_GB = '#{workgb}' 
+		</if>
+		GROUP BY OFFER_NO, WORK_GB
+		ORDER BY WORK_DATE ASC
+	</select>
+
 
 </mapper>
 

@@ -32,6 +32,10 @@ public interface AdminService {
 	List<Map<String, Object>> selectCodeList(HashMap<String, Object> map) throws Exception;
 	
 	int Code_getTotalRow(HashMap<String, Object> map) throws Exception;
+	
+	int Product_getTotalRow(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception;
 }
 
 

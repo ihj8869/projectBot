@@ -101,6 +101,45 @@ public class AdminController {
         return mv;
     }
 	
+	@RequestMapping(value="/product.do")
+    public ModelAndView selectproductList(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,
+    					@RequestParam(value="workgb",required=false)String workgb, @RequestParam(value="page",required=false)String page) throws Exception{
+		//
+		int pageScale=5;
+		int totalRow=0;
+		String Cstrdate = "00000000";
+		String Cenddate = "99999999";
+		String Cworkgb = "%";
+		System.out.println("!!!!!!!!!! gogosing");
+		if(!strdate.equals("")&&!strdate.equals(null)) {
+			Cstrdate = strdate;
+		}
+		if(!enddate.equals("")&&!enddate.equals(null)) {
+			Cenddate = enddate;
+		}
+		if(!enddate.equals("")&&!enddate.equals(null)) {
+			Cworkgb = workgb;
+		}
+		
+		System.out.println(Cstrdate+"++"+Cenddate+"++"+Cworkgb);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("strdate", Cstrdate);
+		map.put("enddate", Cenddate);
+		map.put("workgb", workgb);
+		totalRow = adminService.Product_getTotalRow(map);
+		
+		Paging pg = new Paging();		
+		map = pg.paging(pageScale, totalRow, page);
+		
+		ModelAndView mv = new ModelAndView("/admin/product");
+        List<Map<String,Object>> list = adminService.selectProductList(map);
+        mv.addObject("list", list);
+        mv.addObject("map", map);
+         
+        return mv;
+    }
+	
 //===================================================================================================
 	@RequestMapping(value="/manageMember.do") //index.jsp에서 admin 클릭 (전체 회원정보), 회원검색(이름,아이디로), 페이징
     public ModelAndView selectMemberList(@RequestParam(value="name",required=false)String name,

@@ -79,6 +79,15 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.Code_getTotalRow(map);
 	}
 	
+	@Override
+	public int Product_getTotalRow(HashMap<String, Object> map) throws Exception {
+		return adminDAO.Product_getTotalRow(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectProductList(map);
+	}
 }
 
 
