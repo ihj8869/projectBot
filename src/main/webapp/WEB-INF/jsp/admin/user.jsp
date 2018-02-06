@@ -141,24 +141,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>코드관리</b></h1>
     
-<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+    
+	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+	  <h1 class="ui dividing header" style="font-weight: 100;">사용자관리</h1>
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
-				<td>품목명</td>
+				<td>이름</td>
 				<td>
 					<div class="ui input">
 						<input id="searchName" name="search" type="text">
 					</div>
 				</td>
-				<td>사용여부</td>
+				<td>아이디</td>
 				<td>
 					<div class="ui input">
-						<select id="searchUse" name="search">
-							<option value="Y">Y</option>
-							<option value="N">N</option>
-						</select>
+						<input id="searchId" name="search" type="text">
 					</div>
 				</td>
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
@@ -167,12 +165,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:8%;">품목코드</th>
-					<th style="width:33%;">품목명</th>
-					<th style="width:11%;">업데이트날짜</th>
-					<th style="width:11%;">업데이트ID</th>
-					<th style="width:8%;">사용여부</th>
-					<th style="width:21%;"></th>
+					<th style="width: 90px;">등급</th>
+					<th>이름</th>
+					<th>아이디</th>
+					<th>이메일</th>
+					<th>생년월일</th>
+					<th>주소</th>
+					<th style="width:180px;"></th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">
@@ -180,24 +179,27 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
 							<tr>
-								<td>${row.MINOR_CD}</td>
-								<td>${row.KOR_NAME}</td>
-								<td>${row.UPDATE_DATE}</td>
-								<td>${row.UPDATE_MAN}</td>
-								<td>${row.USE_GB}</td>
+								<td class="isDel">
+								${row.PMS}
+									<input type="hidden" value="${row.MEM_NO}">
+									<input type="hidden" value="${row.IS_DEL}">
+										<c:choose>
+											<c:when test="${row.PMS == '관리자'}">
+												<i class="pointing down icon" style="cursor: pointer;"></i>
+											</c:when>
+											<c:when test="${row.PMS == '회원'}">
+												<i class="pointing up icon" style="cursor: pointer;"></i>
+											</c:when>
+										</c:choose>
+								</td>
+								<td>${row.NAME}</td>
+								<td>${row.ID}</td>
+								<td>${row.EMAIL}</td>
+								<td>${row.BIRTHDAY}</td>
+								<td>${row.ADDRESS}</td>
 								<td>
-								    <button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">수정</button>
-								    <button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">
-								    	<c:choose>
-								    		<c:when test="${row.USE_GB eq 'Y'}">
-								    			품목사용중지
-								    		</c:when>
-								    		<c:otherwise>
-								    			품목사용
-								    		</c:otherwise>
-								    	</c:choose>
-								    	
-								    </button>
+								    <button id="modify" class="ui button" onclick="infoPopup(${row.MEM_NO})">수정</button>
+								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>

@@ -124,7 +124,7 @@ public class AdminController {
 		map.put("id", id);
 		
 		
-		ModelAndView mv = new ModelAndView("/admin/code");
+		ModelAndView mv = new ModelAndView("/admin/user");
         List<Map<String,Object>> list = adminService.selectMemberList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);
