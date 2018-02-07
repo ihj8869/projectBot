@@ -21,8 +21,8 @@ public class AdminServiceImpl implements AdminService{
 	private AdminDAO adminDAO;
 	
 	@Override
-	public List<Map<String, Object>> selectMemberList(HashMap<String, Object> map) throws Exception {
-		return adminDAO.selectMemberList(map);
+	public List<Map<String, Object>> selectUserList(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectUserList(map);
 	}
 	
 	@Override

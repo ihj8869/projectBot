@@ -34,9 +34,9 @@ $(document).ready(function() {
 	
 	search = function(){ //코드이름으로 검색
 		var name = $("#searchName").val();
-		var use = $("#searchUse").val();
+		var use = $("#searchId").val();
 		
-		document.location.href="Code.do?name="+name+"&use="+use;
+		document.location.href="user.do?name="+name+"&id="+id;
 	};
 	
 	$("#search").click(function(){ //검색 돋보기 아이콘 클릭시
@@ -145,7 +145,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
 	  <h1 class="ui dividing header" style="font-weight: 100;">사용자관리</h1>
-		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
+		<table class="ui fixed single line celled table" style="width: 70%;" align="right">
 			<tr>
 				<td>이름</td>
 				<td>
@@ -162,41 +162,28 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
+		
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width: 90px;">등급</th>
-					<th>이름</th>
 					<th>아이디</th>
-					<th>이메일</th>
-					<th>생년월일</th>
-					<th>주소</th>
-					<th style="width:180px;"></th>
+					<th>이름</th>
+					<th>등록일시</th>
+					<th>마지막로그인시간</th>
+					<th>상태</th>
+					<th style="width:200px;"></th>
 				</tr>
 			</thead>
-			<tbody id="memberTb">
+			<tbody>
 				<c:choose>
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
 							<tr>
-								<td class="isDel">
-								${row.PMS}
-									<input type="hidden" value="${row.MEM_NO}">
-									<input type="hidden" value="${row.IS_DEL}">
-										<c:choose>
-											<c:when test="${row.PMS == '관리자'}">
-												<i class="pointing down icon" style="cursor: pointer;"></i>
-											</c:when>
-											<c:when test="${row.PMS == '회원'}">
-												<i class="pointing up icon" style="cursor: pointer;"></i>
-											</c:when>
-										</c:choose>
-								</td>
-								<td>${row.NAME}</td>
 								<td>${row.ID}</td>
-								<td>${row.EMAIL}</td>
-								<td>${row.BIRTHDAY}</td>
-								<td>${row.ADDRESS}</td>
+								<td>${row.KOR_NAME}</td>
+								<td>${row.REG_DATE}</td>
+								<td>${row.LOGIN_DATE}</td>
+								<td>${row.STATE_GB}</td>
 								<td>
 								    <button id="modify" class="ui button" onclick="infoPopup(${row.MEM_NO})">수정</button>
 								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">삭제</button>
@@ -218,10 +205,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 						
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="manageMember.do?page=1&name=${map.name}&id=${map.id}"><i class="angle double left icon"></i></a>
+									<a class="item" href="user.do?page=1&name=${map.name}&id=${map.id}"><i class="angle double left icon"></i></a>
 								</c:when>
 								<c:otherwise>
-									<a class="icon item" href="manageMember.do?page=1"><i class="angle double left icon"></i></a>
+									<a class="icon item" href="user.do?page=1"><i class="angle double left icon"></i></a>
 								</c:otherwise>
 							</c:choose>
 							
@@ -229,10 +216,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.currentBlock > 1}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="manageMember.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
+											<a class="item" href="user.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="manageMember.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
+											<a class="icon item" href="user.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -243,7 +230,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							
 							<%-- <c:choose>
 								<c:when test="${currentPage > 1}">
-									<a class="icon item" href="manageMember.do?page=${currentPage-1}">이전</a>
+									<a class="icon item" href="user.do?page=${currentPage-1}">이전</a>
 								</c:when>
 								<c:otherwise>
 									<a class="icon item" href="#">이전</a>
@@ -258,10 +245,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${map.name != null || map.id != null}">
-												<a class="item" href="manageMember.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
+												<a class="item" href="user.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
 											</c:when>
 											<c:otherwise>
-												<a class="item" href="manageMember.do?page=${i}">${i}</a>
+												<a class="item" href="user.do?page=${i}">${i}</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -270,7 +257,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							
 							<%-- <c:choose>
 								<c:when test="${currentPage < totalPage}">
-									<a class="icon item" href="manageMember.do?page=${currentPage+1}">다음</a>
+									<a class="icon item" href="user.do?page=${currentPage+1}">다음</a>
 								</c:when>
 								<c:otherwise>
 									<a class="icon item" href="#">다음</a>
@@ -281,10 +268,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.totalPage > map.endPage}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="manageMember.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
+											<a class="item" href="user.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="manageMember.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
+											<a class="icon item" href="user.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -295,10 +282,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="manageMember.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
+									<a class="item" href="user.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
 								</c:when>
 								<c:otherwise>
-									<a class="icon item" href="manageMember.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
+									<a class="icon item" href="user.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
 								</c:otherwise>
 							</c:choose>
 						

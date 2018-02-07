@@ -3,30 +3,28 @@
 
 <mapper namespace="admin">
 	
-	<select id="selectMemberList" parameterType="hashmap" resultType="hashmap">
+	<select id="selectUserList" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM 
-		(SELECT ROWNUM RN,MEM_NO,NAME,ID,PASSWORD,EMAIL,BIRTHDAY,ADDRESS,PHONE,GENDER,
-		REG_DATE,REG_IP,MOD_ID,MOD_IP,MOD_DATE,DEL_ID,DEL_IP,DEL_DATE,IS_DEL,AGREE,
-		SNS_TYPE,SNS_ID,SNS_CONNECT_DATE,PMS,EMAILSTATE FROM(
-		SELECT * FROM MEMBER ORDER BY PMS,IS_DEL,MEM_NO) ORDER BY RN)
+		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_NAME,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
+		 FROM(
+		SELECT * FROM BFS_USER ORDER BY REG_DATE) ORDER BY RN)
 		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 
-	<select id="searchMemberList" parameterType="hashmap" resultType="hashmap">
+	<select id="searchUserList" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM
-		(SELECT ROWNUM RN,MEM_NO,NAME,ID,PASSWORD,EMAIL,BIRTHDAY,ADDRESS,PHONE,GENDER,
-		REG_DATE,REG_IP,MOD_ID,MOD_IP,MOD_DATE,DEL_ID,DEL_IP,DEL_DATE,IS_DEL,AGREE,
-		SNS_TYPE,SNS_ID,SNS_CONNECT_DATE,PMS,EMAILSTATE FROM(
-		SELECT * FROM MEMBER ORDER BY PMS,IS_DEL,MEM_NO) 
+		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_NAME,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
+		 FROM(
+		SELECT * FROM BFS_USER ORDER BY REG_DATE) 
 		<choose>
 			<when test="name != '' &amp;&amp; id == ''">
-				WHERE NAME LIKE '%' || #{name} || '%' 
+				WHERE KOR_NAME LIKE '%' || #{name} || '%' 
 			</when>
 			<when test="name == '' &amp;&amp; id != '' ">
 				WHERE ID LIKE '%' || #{id} || '%' 
 			</when>
 			<when test="name != '' &amp;&amp; id != '' ">
-				WHERE NAME LIKE '%' || #{name} || '%' AND ID LIKE '%' || #{id} || '%' 
+				WHERE KOR_NAME LIKE '%' || #{name} || '%' AND ID LIKE '%' || #{id} || '%' 
 			</when>
 			<otherwise>
 				
@@ -37,16 +35,16 @@
 	</select>
 	
 	<select id="getTotalRow" parameterType="hashmap" resultType="Integer">
-		SELECT COUNT(*) FROM MEMBER
+		SELECT COUNT(*) FROM BFS_USER
 		<choose>
 			<when test="name != null &amp;&amp; id == null ">
-				WHERE NAME LIKE '%' || #{name} || '%'
+				WHERE KOR_NAME LIKE '%' || #{name} || '%'
 			</when>
 			<when test="name == null &amp;&amp; id != null ">
 				WHERE ID LIKE '%' || #{id} || '%'
 			</when>
 			<when test="name != null &amp;&amp; id != null ">
-				WHERE NAME LIKE '%' || #{name} || '%' AND ID LIKE '%' || #{id} || '%'
+				WHERE KOR_NAME LIKE '%' || #{name} || '%' AND ID LIKE '%' || #{id} || '%'
 			</when>
 			<otherwise>
 				
@@ -55,7 +53,7 @@
 	</select>
 	
 	<update id="updateRating" parameterType="hashmap">
-		UPDATE MEMBER 
+		UPDATE BFS_USER 
 		<if test="flag=='up'">
 			SET PMS='관리자', MOD_IP=#{ip}, MOD_DATE=SYSDATE WHERE MEM_NO=#{no}
 		</if>
@@ -66,18 +64,18 @@
 	
 	<select id="selectMemberInfo" parameterType="Integer" resultType="hashmap">
 		<![CDATA[
-			SELECT * FROM MEMBER WHERE MEM_NO=#{no}
+			SELECT * FROM BFS_USER WHERE MEM_NO=#{no}
 		]]>
 	</select>
 	
 	<update id="updateMember" parameterType="first.shopping.admin.bean.MemberBean">
-		UPDATE MEMBER SET NAME=#{name},PASSWORD=#{password},ADDRESS=#{address},PHONE=#{phone},EMAIL=#{email},
+		UPDATE BFS_USER SET NAME=#{name},PASSWORD=#{password},ADDRESS=#{address},PHONE=#{phone},EMAIL=#{email},
 									  GENDER=#{gender},BIRTHDAY=#{birthday},MOD_IP=#{mod_ip},MOD_DATE=SYSDATE
 								WHERE MEM_NO=#{mem_no}
 	</update>
 	
 	<update id="updateIsDel" parameterType="hashmap">
-		UPDATE MEMBER 
+		UPDATE BFS_USER 
 		<if test="flag=='delete'">
 			SET DEL_IP=#{ip}, DEL_DATE=SYSDATE, IS_DEL='Y' WHERE MEM_NO=#{no}
 		</if>
@@ -155,7 +153,7 @@
 		FROM    BFS_PRODUCT
 		WHERE   1=1
 		AND SUBSTR(OFFER_NO,1,8) BETWEEN #{strdate} and #{enddate}
-		AND WORK_GB LIKE '%'||'#{workgb}'||'%' 
+		AND WORK_GB LIKE '%'||#{workgb}||'%' 
 		GROUP BY OFFER_NO, WORK_GB)
 	</select>
 	

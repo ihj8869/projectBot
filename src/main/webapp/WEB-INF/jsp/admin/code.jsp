@@ -216,10 +216,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 						
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="manageMember.do?page=1&name=${map.name}&id=${map.id}"><i class="angle double left icon"></i></a>
+									<a class="item" href="user.do?page=1&name=${map.name}&id=${map.id}"><i class="angle double left icon"></i></a>
 								</c:when>
 								<c:otherwise>
-									<a class="icon item" href="manageMember.do?page=1"><i class="angle double left icon"></i></a>
+									<a class="icon item" href="user.do?page=1"><i class="angle double left icon"></i></a>
 								</c:otherwise>
 							</c:choose>
 							
@@ -227,10 +227,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.currentBlock > 1}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="manageMember.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
+											<a class="item" href="user.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="manageMember.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
+											<a class="icon item" href="user.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -241,7 +241,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							
 							<%-- <c:choose>
 								<c:when test="${currentPage > 1}">
-									<a class="icon item" href="manageMember.do?page=${currentPage-1}">이전</a>
+									<a class="icon item" href="user.do?page=${currentPage-1}">이전</a>
 								</c:when>
 								<c:otherwise>
 									<a class="icon item" href="#">이전</a>
@@ -256,10 +256,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${map.name != null || map.id != null}">
-												<a class="item" href="manageMember.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
+												<a class="item" href="user.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
 											</c:when>
 											<c:otherwise>
-												<a class="item" href="manageMember.do?page=${i}">${i}</a>
+												<a class="item" href="user.do?page=${i}">${i}</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -268,7 +268,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							
 							<%-- <c:choose>
 								<c:when test="${currentPage < totalPage}">
-									<a class="icon item" href="manageMember.do?page=${currentPage+1}">다음</a>
+									<a class="icon item" href="user.do?page=${currentPage+1}">다음</a>
 								</c:when>
 								<c:otherwise>
 									<a class="icon item" href="#">다음</a>
@@ -279,10 +279,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.totalPage > map.endPage}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="manageMember.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
+											<a class="item" href="user.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="manageMember.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
+											<a class="icon item" href="user.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -293,10 +293,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="manageMember.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
+									<a class="item" href="user.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
 								</c:when>
 								<c:otherwise>
-									<a class="icon item" href="manageMember.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
+									<a class="icon item" href="user.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
 								</c:otherwise>
 							</c:choose>
 						

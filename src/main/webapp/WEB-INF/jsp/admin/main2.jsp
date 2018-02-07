@@ -93,7 +93,7 @@ $(document).ready(function(){
 		<a href="main.do?year=<%=year%>&month=<%=month%>" class="item"> 
 			<i class="home icon"></i> Home
 		</a>
-		<a href="manageMember.do" class="item"> 
+		<a href="user.do" class="item"> 
 			<i class="barcode icon"></i> 코드관리
 		</a> 
 		<a href="managePd.do" class="item"> 
