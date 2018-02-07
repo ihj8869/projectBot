@@ -156,6 +156,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td>
 					<div class="ui input">
 						<select id="searchUse" name="search">
+							<option value=""></option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -164,6 +165,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
+		<button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">신규품목코드 입력</button>
 		<table class="ui celled table">
 			<thead>
 				<tr>
@@ -227,10 +229,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.currentBlock > 1}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="user.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
+											<a class="item" href="code.do?page=${map.startPage-1}&name=${map.name}&id=${map.id}"><i class="angle left icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="user.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
+											<a class="icon item" href="code.do?page=${map.startPage-1}"><i class="angle left icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -256,10 +258,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${map.name != null || map.id != null}">
-												<a class="item" href="user.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
+												<a class="item" href="code.do?page=${i}&name=${map.name}&id=${map.id}">${i}</a>
 											</c:when>
 											<c:otherwise>
-												<a class="item" href="user.do?page=${i}">${i}</a>
+												<a class="item" href="code.do?page=${i}">${i}</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -279,10 +281,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<c:when test="${map.totalPage > map.endPage}">
 									<c:choose>
 										<c:when test="${map.name != null || map.id != null}">
-											<a class="item" href="user.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
+											<a class="item" href="code.do?page=${map.endPage+1}&name=${map.name}&id=${map.id}"><i class="angle right icon"></i></a>
 										</c:when>
 										<c:otherwise>
-											<a class="icon item" href="user.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
+											<a class="icon item" href="code.do?page=${map.endPage+1}"><i class="angle right icon"></i></a>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -293,10 +295,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="user.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
+									<a class="item" href="code.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
 								</c:when>
 								<c:otherwise>
-									<a class="icon item" href="user.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
+									<a class="icon item" href="code.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>
 								</c:otherwise>
 							</c:choose>
 						

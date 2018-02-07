@@ -125,7 +125,8 @@
 	
 	
 	<select id="searchCodeList" resultMap="CodeList">
-		SELECT * FROM BFS_CODE
+		SELECT * FROM 
+		(SELECT ROWNUM RN, A.* FROM BFS_CODE A
 		WHERE MAJOR_CD = 'PRGB'
 		<if test="name != null">
 			AND KOR_NAME LIKE '%' || #{name} || '%' 
@@ -133,7 +134,8 @@
 		<if test="use != null">
 			AND USE_GB LIKE '%' || #{use} || '%' 
 		</if>
-		ORDER BY USE_GB DESC, MINOR_CD ASC
+		ORDER BY USE_GB DESC, MINOR_CD ASC)
+		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="Code_getTotalRow" parameterType="hashmap" resultType="Integer">
@@ -163,8 +165,11 @@
 	
 	
 	<select id="searchProductList" resultMap="ProductList">
-		SELECT  OFFER_NO , SUBSTR(OFFER_NO,1,8) WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM , WORK_GB,
-			        (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
+		SELECT  OFFER_NO
+				, SUBSTR(OFFER_NO,1,4)||'년'||SUBSTR(OFFER_NO,5,2)||'월'|| SUBSTR(OFFER_NO,7,2)||'일' WORK_DATE
+				, SUBSTR(OFFER_NO,9,2) WORK_NUM 
+				, WORK_GB
+				, (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
 			FROM    BFS_PRODUCT
 			WHERE   1=1
 		<if test="strdate != null &amp;&amp; enddate != null">

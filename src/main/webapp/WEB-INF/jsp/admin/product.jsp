@@ -141,38 +141,44 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>코드관리</b></h1>
+    <h1><b>입고재고관리</b></h1>
     
 <div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
+		<table class="ui fixed single line celled table" style="width: 70%;" align="right">
 			<tr>
-				<td>품목명</td>
+				<td>작업날짜</td>
 				<td>
 					<div class="ui input">
-						<input id="searchName" name="search" type="text">
+						<input id="strdate" name="search" type="text">
+					</div> ~ 
+					<div class="ui input">
+						<input id="enddate" name="search" type="text">
 					</div>
 				</td>
-				<td>사용여부</td>
+				
+				<td>작업구분</td>
 				<td>
 					<div class="ui input">
-						<select id="searchUse" name="search">
-							<option value="Y">Y</option>
-							<option value="N">N</option>
+						<select id="workgb" name="search">
+							<option value=""></option>
+							<option value="WK01">입고작업</option>
+							<option value="WK02">재고작업</option>
 						</select>
 					</div>
 				</td>
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
+				<button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">신규입고작업</button>
+				<button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">신규재고작업</button>
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:11%;">작업번호</th>
-					<th style="width:11%;">작업날짜</th>
-					<th style="width:33%;">작업구분</th>
-					<th style="width:8%;">작업내용확인</th>
-					<th style="width:8%;">수정</th>
-					<th style="width:21%;"></th>
+					<th style="width:13%;">작업날짜</th>
+					<th style="width:13%;">작업순서</th>
+					<th style="width:13%;">작업번호</th>
+					<th style="width:45%;">작업구분</th>
+					<th style="width:16%;">작업내용확인</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">
@@ -180,25 +186,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
 							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>
-								    <button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">수정</button>
-								    <button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">
-								    	<c:choose>
-								    		<c:when test="${row.USE_GB eq 'Y'}">
-								    			품목사용중지
-								    		</c:when>
-								    		<c:otherwise>
-								    			품목사용
-								    		</c:otherwise>
-								    	</c:choose>
-								    	
-								    </button>
-								</td>
+								<td>${row.WORK_DATE}</td>
+								<td>${row.WORK_NUM}번</td>
+								<td>${row.OFFER_NO}</td>
+								<td>${row.WORK_KOR}</td>
+								<td><button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">작업내용확인</button></td>
 							</tr>
 						</c:forEach>
 					</c:when>
