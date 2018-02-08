@@ -32,12 +32,12 @@ public class AdminDAO extends AbstractDAO{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> selectMemberInfo(int no) throws Exception{
-		return (HashMap<String, Object>)selectOne("admin.selectMemberInfo", no);
+	public HashMap<String, Object> selectUserInfo(String id) throws Exception{
+		return (HashMap<String, Object>)selectOne("admin.selectUserInfo", id);
 	}
 	
-	public void updateMember(MemberBean bean) throws Exception{
-		update("admin.updateMember", bean);
+	public void updateUser(MemberBean bean) throws Exception{
+		update("admin.updateUser", bean);
 	}
 	
 	public void updateIsDel(HashMap<String, Object> map) throws Exception{
@@ -46,6 +46,10 @@ public class AdminDAO extends AbstractDAO{
 //====================================================================================================
 	public String checkPw(String id) throws Exception{
 		return (String)selectOne("admin.checkPw", id);
+	}
+	
+	public void updateLoginDate(String id) throws Exception{
+		update("admin.updateLoginDate", id);
 	}
 	
 	public void signUp(HashMap<String, Object> map) throws Exception{

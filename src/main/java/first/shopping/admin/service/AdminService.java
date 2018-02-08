@@ -15,13 +15,15 @@ public interface AdminService {
 	
 	public void updateRating(HashMap<String, Object> map) throws Exception;
 	
-	HashMap<String, Object> selectMemberInfo(int no) throws Exception;
+	HashMap<String, Object> selectUserInfo(String id) throws Exception;
 	
-	public void updateMember(MemberBean bean) throws Exception;
+	public void updateUser(MemberBean bean) throws Exception;
 	
 	public void updateIsDel(HashMap<String, Object> map) throws Exception;
 //====================================================================================================
 	String checkPw(String id)throws Exception;
+	
+	public void updateLoginDate(String id)throws Exception;
 	
 	public void signUp(HashMap<String, Object> map)throws Exception;
 	

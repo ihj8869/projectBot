@@ -1,48 +1,36 @@
 package first.shopping.admin.bean;
 
 public class MemberBean {
-	private int mem_no;
-	private String name;
+	private String id;
 	private String password;
-	private String address;
-	private String phone;
-	private String email;
-	private String gender;
-	private String birthday;
-	private String mod_ip;
+	private String kor_name;
+	private String state_gb;
+	private String update_id;
+	private String update_name;
+	private String update_ip;
 	
 	public MemberBean() {
 		super();
 	}
 
-	public MemberBean(int mem_no, String name, String password, String address, String phone, String email,
-			String gender, String birthday, String mod_ip) {
+	public MemberBean(String id, String password, String kor_name, String state_gb, String update_id,
+			String update_name, String update_ip) {
 		super();
-		this.mem_no = mem_no;
-		this.name = name;
+		this.id = id;
 		this.password = password;
-		this.address = address;
-		this.phone = phone;
-		this.email = email;
-		this.gender = gender;
-		this.birthday = birthday;
-		this.mod_ip = mod_ip;
+		this.kor_name = kor_name;
+		this.state_gb = state_gb;
+		this.update_id = update_id;
+		this.update_name = update_name;
+		this.update_ip = update_ip;
 	}
 
-	public int getMem_no() {
-		return mem_no;
+	public String getId() {
+		return id;
 	}
 
-	public void setMem_no(int mem_no) {
-		this.mem_no = mem_no;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getPassword() {
@@ -53,60 +41,53 @@ public class MemberBean {
 		this.password = password;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getKor_name() {
+		return kor_name;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setKor_name(String kor_name) {
+		this.kor_name = kor_name;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getState_gb() {
+		return state_gb;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setState_gb(String state_gb) {
+		this.state_gb = state_gb;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUpdate_id() {
+		return update_id;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUpdate_id(String update_id) {
+		this.update_id = update_id;
 	}
 
-	public String getGender() {
-		return gender;
+	public String getUpdate_name() {
+		return update_name;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setUpdate_name(String update_name) {
+		this.update_name = update_name;
 	}
 
-	public String getBirthday() {
-		return birthday;
+	public String getUpdate_ip() {
+		return update_ip;
 	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getMod_ip() {
-		return mod_ip;
-	}
-
-	public void setMod_ip(String mod_ip) {
-		this.mod_ip = mod_ip;
+	public void setUpdate_ip(String update_ip) {
+		this.update_ip = update_ip;
 	}
 
 	@Override
 	public String toString() {
-		return "MemberBean [mem_no=" + mem_no + ", name=" + name + ", password=" + password + ", address=" + address
-				+ ", phone=" + phone + ", email=" + email + ", gender=" + gender + ", birthday=" + birthday
-				+ ", mod_ip=" + mod_ip + "]";
+		return "MemberBean [id=" + id + ", password=" + password + ", kor_name=" + kor_name + ", state_gb=" + state_gb
+				+ ", update_id=" + update_id + ", update_name=" + update_name + ", update_ip=" + update_ip + "]";
 	}
+
+	
 	
 	
 }
