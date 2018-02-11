@@ -49,43 +49,25 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('button[id^="delete"]').click(function(){ //버튼 배열 id로 가져오기
-		var no = $(this).val();
-		var flag = $(this).text();
+	$('button[id^="detail"]').click(function(){ 
+		var offer_no = offer_no;
+		var work_gb = work_gb;
 		
-		if(flag=='삭제'){
-			var msg = '회원을 삭제하시겠습니까?';
-			flag = 'delete';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		} else if(flag=='복구'){
-			var msg = '회원을 복구하시겠습니까?';
-			flag = 'restore';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		}
+		if(confirm(msg)!=0){
+			document.location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
+		}else{
+			return;
+		}	
+		
 	});
 	
 });
 
-function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	var cw = 800; //창넓이
-	var ch = 700; //창높이
-	var sw = screen.availWidth;
-	var sh = screen.availHeight;
-	var px=(sw-cw)/2;
-	var py=(sh-ch)/2;
-	
-	window.open('memberInfo.do?no='+no, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+function detail(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
 }
+
+
 </script>
 
 <%
@@ -190,7 +172,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td>${row.WORK_NUM}번</td>
 								<td>${row.OFFER_NO}</td>
 								<td>${row.WORK_KOR}</td>
-								<td><button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">작업내용확인</button></td>
+								<td><button id="detail" class="ui button" type="button" onclick="detail('${row.OFFER_NO}','${row.WORK_GB}')">작업내용확인</button></td>
 							</tr>
 						</c:forEach>
 					</c:when>

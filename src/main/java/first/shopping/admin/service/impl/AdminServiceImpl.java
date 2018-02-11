@@ -36,13 +36,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public HashMap<String, Object> selectMemberInfo(int no) throws Exception {
-		return adminDAO.selectMemberInfo(no);
+	public HashMap<String, Object> selectUserInfo(String id) throws Exception {
+		return adminDAO.selectUserInfo(id);
 	}
 
 	@Override
-	public void updateMember(MemberBean bean) throws Exception {
-		adminDAO.updateMember(bean);
+	public void updateUser(MemberBean bean) throws Exception {
+		adminDAO.updateUser(bean);
 	}
 
 	@Override
@@ -54,7 +54,12 @@ public class AdminServiceImpl implements AdminService{
 	public String checkPw(String id) throws Exception {
 		return adminDAO.checkPw(id);
 	}
-
+	
+	@Override
+	public void updateLoginDate(String id) throws Exception {
+		adminDAO.updateLoginDate(id);
+	}
+	
 	@Override
 	public void signUp(HashMap<String, Object> map) throws Exception {
 		adminDAO.signUp(map);
@@ -87,6 +92,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception {
 		return adminDAO.selectProductList(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectProductList_detail(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectProductList_detail(map);
 	}
 }
 

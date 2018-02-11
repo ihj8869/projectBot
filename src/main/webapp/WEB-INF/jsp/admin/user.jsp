@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<title>아름다운가게 재고관리시스넴</title>
+<title>아름다운가게 재고관리시스템</title>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	
 	search = function(){ //코드이름으로 검색
 		var name = $("#searchName").val();
-		var use = $("#searchId").val();
+		var id = $("#searchId").val();
 		
 		document.location.href="user.do?name="+name+"&id="+id;
 	};
@@ -76,53 +76,22 @@ $(document).ready(function() {
 	
 });
 
-function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	var cw = 800; //창넓이
-	var ch = 700; //창높이
+function infoPopup(id){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	var cw = 515; //창넓이
+	var ch = 600; //창높이
 	var sw = screen.availWidth;
 	var sh = screen.availHeight;
 	var px=(sw-cw)/2;
 	var py=(sh-ch)/2;
 	
-	window.open('memberInfo.do?no='+no, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+	window.open('userInfo.do?id='+id, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
 }
 </script>
 
-<%
-	Calendar cal = Calendar.getInstance();
-	String strYear = request.getParameter("year");
-	String strMonth = request.getParameter("month");
-	
-	
-	int nowyear = cal.get(Calendar.YEAR);
-	int nowmonth = cal.get(Calendar.MONTH);
-	int year = cal.get(Calendar.YEAR);
-	int month = cal.get(Calendar.MONTH);
-	int date = cal.get(Calendar.DATE);
-	
-	if(strYear != null){
-		year = Integer.parseInt(strYear);
-		month = Integer.parseInt(strMonth);	
-	}else{
-		
-	}
-	
-	//년도월 셋팅	
-	cal.set(year, month, 1);
-	int startDay = cal.getMinimum(java.util.Calendar.DATE);
-	int endDay = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
-	int start = cal.get(java.util.Calendar.DAY_OF_WEEK);
-	int newLine = 0;
-	
-	//오늘 날짜 저장
-	Calendar todayCal = Calendar.getInstance();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyMMdd");
-	int intToday = Integer.parseInt(sdf.format(todayCal.getTime()));
-%>
-
-
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body #userTr:hover{background-color:whitesmoke;}
 </style>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <input type="hidden" id="id" value="${id}">
@@ -169,25 +138,30 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<th>아이디</th>
 					<th>이름</th>
 					<th>등록일시</th>
-					<th>마지막로그인시간</th>
+					<th>마지막로그인일시</th>
 					<th>상태</th>
-					<th style="width:200px;"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
-							<tr>
+							<tr id="userTr" onclick="infoPopup('${row.ID}')" style="cursor:pointer">
 								<td>${row.ID}</td>
 								<td>${row.KOR_NAME}</td>
 								<td>${row.REG_DATE}</td>
 								<td>${row.LOGIN_DATE}</td>
-								<td>${row.STATE_GB}</td>
 								<td>
-								    <button id="modify" class="ui button" onclick="infoPopup(${row.MEM_NO})">수정</button>
-								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">삭제</button>
+									<c:if test="${row.STATE_GB == 'US01'}">
+										활성
+									</c:if>
+									<c:if test="${row.STATE_GB == 'US02'}">
+										중지
+									</c:if>
 								</td>
+								<%-- <td>
+								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">삭제</button>
+								</td> --%>
 							</tr>
 						</c:forEach>
 					</c:when>

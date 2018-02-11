@@ -218,7 +218,7 @@ body .container .content .checkbox {
 body .container .content .checkbox + label {
   vertical-align: middle;
   display: inline-block;
-  width: 50%;
+  width: 50%;       
 }
 body .container .content .checkbox + label:before {
   content: "\A";
@@ -317,8 +317,8 @@ body .container .content .signup-cont {
 		<div class="content">
 			<div class="signin-cont cont">
 				<form action="signIn.do" method="post">
-					<input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your id">
-				    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+					<input type="text" name="login_id" id="id" class="inpt" required="required" placeholder="Your id">
+				    <input type="password" name="login_password" id="password" class="inpt" required="required" placeholder="Your password">
 				    <input type="checkbox" id="remember" class="checkbox" checked>
 				    <label for="remember">Remember me</label>
 				    <div class="submit-wrap">

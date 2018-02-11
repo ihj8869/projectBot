@@ -31,15 +31,14 @@ public class AdminController {
 	private AdminService adminService;
 //로그인==================================================================================================
 	@RequestMapping(value="signIn.do")
-	public String signIn(@RequestParam(value="id")String id,@RequestParam(value="password")String password){ //이게 불려지기전에 인터셉터를 거쳐옴.
-		System.out.println(" AdminController.java  - @RequestMapping(value=\\\"signIn.do\\\")");
+	public String signIn(@RequestParam(value="login_id")String id,@RequestParam(value="login_password")String password) throws Exception{ //이게 불려지기전에 인터셉터를 거쳐옴.
+		
+		adminService.updateLoginDate(id);
 		
 		Calendar cal = Calendar.getInstance();
-		
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		
-		System.out.println("@@@@@@ month" + month);
 		return "redirect:/main.do?year="+year+"&month="+month;
 	}
 	
@@ -86,26 +85,27 @@ public class AdminController {
         List<Map<String,Object>> list = adminService.selectUserList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);
+        mv.addObject("side","user");
          
         return mv;
     }
 	
-	@RequestMapping(value="/memberInfo.do") //회원 상세정보
-	public ModelAndView selectMemberInfo(@RequestParam(value="no")int no) throws Exception{
+	@RequestMapping(value="/userInfo.do") //회원 상세정보
+	public ModelAndView selectUserInfo(@RequestParam(value="id")String id) throws Exception{
 		
-		ModelAndView mv = new ModelAndView("/admin/memberInfo");
-		HashMap<String,Object> map =adminService.selectMemberInfo(no);
+		ModelAndView mv = new ModelAndView("/admin/userInfo");
+		HashMap<String,Object> map =adminService.selectUserInfo(id);
 		mv.addObject("map",map);
 		System.out.println(map);
 		return mv;
 	}
 	
-	@RequestMapping(value="/updateMember.do") //회원 상세정보 업데이트, 수정일, 수정아이피 업데이트
-	public String updateMember(@ModelAttribute MemberBean bean,HttpServletRequest request) throws Exception {
+	@RequestMapping(value="/updateUser.do") //회원 상세정보 업데이트, 수정일, 수정아이피 업데이트
+	public String updateUser(@ModelAttribute MemberBean bean,HttpServletRequest request) throws Exception {
 		
-		String ip = request.getRemoteAddr();
-		bean.setMod_ip(ip);
-		adminService.updateMember(bean);
+		String update_ip = request.getRemoteAddr();
+		bean.setUpdate_ip(update_ip);
+		adminService.updateUser(bean);
 		request.setAttribute("errMsg", "수정되었습니다.");
 		return "/inc/script";
 	}
@@ -134,6 +134,7 @@ public class AdminController {
 		
 		List<Map<String,Object>> list = adminService.selectCalList(map);
 		mv.addObject("list", list);
+		mv.addObject("side","main");
 		return mv;
 	}
 	
@@ -164,6 +165,7 @@ public class AdminController {
         List<Map<String,Object>> list = adminService.selectCodeList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);
+        mv.addObject("side","code");
          
         return mv;
     }
@@ -204,9 +206,30 @@ public class AdminController {
         List<Map<String,Object>> list = adminService.selectProductList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);
+        mv.addObject("side","product");
          
         return mv;
     }
+	
+	//입고재고관리_상세==================================================================================================
+		@RequestMapping(value="/product_detail.do")
+	    public ModelAndView selectproductList_detail(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
+	    											, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
+			
+			System.out.println(offer_no+"==="+work_gb+"==="+insert_gb);
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("offer_no", offer_no);
+			map.put("work_gb", work_gb);
+			map.put("insert_gb", insert_gb);
+			
+			ModelAndView mv = new ModelAndView("/admin/product_detail");
+	        List<Map<String,Object>> list = adminService.selectProductList_detail(map);
+	        mv.addObject("list", list);
+	        mv.addObject("map", map);
+	        mv.addObject("side","product_detail");
+	         
+	        return mv;
+	    }
 
 	
 	
@@ -217,7 +240,7 @@ public class AdminController {
 	
 	
 	
-//===================================================================================================
+//안쓰는거===================================================================================================
 	@RequestMapping(value="/updateRating.do") //등급 업데이트(관리자<->회원), 수정일, 수정아이피 업데이트
 	public String updateRating(@RequestParam(value="no")int no,@RequestParam(value="flag")String flag,
 			HttpServletRequest request) throws Exception {
@@ -230,7 +253,7 @@ public class AdminController {
 		adminService.updateRating(hashMap);
 		return "redirect:/user.do";
 	}
-//====================================================================================================
+
 	@RequestMapping(value="/managePd.do") //상품정보
 	public ModelAndView selectProductList() throws Exception{
 		System.out.println(" AdminController.java  - @RequestMapping(value=\"/managePd.do\")");

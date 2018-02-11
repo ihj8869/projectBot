@@ -12,12 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
-
+<c:set var="side" value="${side}"/>
 <%
 	Calendar cal = Calendar.getInstance();
 	String strYear = request.getParameter("year");
 	String strMonth = request.getParameter("month");
 	
+	String side = (String)pageContext.getAttribute("side");
 	
 	int nowyear = cal.get(Calendar.YEAR);
 	int nowmonth = cal.get(Calendar.MONTH);
@@ -62,12 +63,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <p class="w3-text-grey">재고관리시스템 </p>
   </div>
   <div class="w3-bar-block">
-    <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
-    <a href="Code.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>코드관리 </a>
-    <a href="product.do?strdate=&enddate=&workgb=" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고재고관리</a> 
-    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>통계관리</a>
-    <a href="user.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a>
-     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>로그아웃</a>
+    <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()"  class="w3-bar-item w3-button w3-padding <%if(side.equals("main")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
+    <a href="Code.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>코드관리 </a>
+    <a href="product.do?strdate=&enddate=&workgb=" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고재고관리</a> 
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("xx")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>통계관리</a>
+    <a href="user.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("user")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a>
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>로그아웃</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
