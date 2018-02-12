@@ -40,6 +40,8 @@ public interface AdminService {
 	List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> selectProductList_detail(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception;
 }
 
 

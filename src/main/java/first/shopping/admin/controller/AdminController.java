@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -180,7 +181,6 @@ public class AdminController {
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";
 		String Cworkgb = "%";
-		System.out.println("!!!!!!!!!! gogosing");
 		if(!strdate.equals("")&&!strdate.equals(null)) {
 			Cstrdate = strdate;
 		}
@@ -216,7 +216,6 @@ public class AdminController {
 	    public ModelAndView selectproductList_detail(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
 	    											, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
 			
-			System.out.println(offer_no+"==="+work_gb+"==="+insert_gb);
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("offer_no", offer_no);
 			map.put("work_gb", work_gb);
@@ -224,17 +223,46 @@ public class AdminController {
 			
 			ModelAndView mv = new ModelAndView("/admin/product_detail");
 	        List<Map<String,Object>> list = adminService.selectProductList_detail(map);
+	        List<Map<String,Object>> info = adminService.selectinfo(map);
 	        mv.addObject("list", list);
 	        mv.addObject("map", map);
+	        mv.addObject("info", info);
 	        mv.addObject("side","product_detail");
 	         
 	        return mv;
 	    }
+		
+	//입고저장=========================================================================================================
+		
+		@RequestMapping(value="ipjego.do")
+		public ModelAndView ipgoinsert(@RequestParam(value="QTY_ST02", required=true) List<String> QTY_ST02, HttpServletRequest httpServletRequest) throws Exception {
+			
+			String insert_gb = httpServletRequest.getParameter("insert_gb");
+
+			System.out.println("flag11231 = "+ insert_gb);
+			
+			
+			System.out.println("ipgoinsert test1234");
+			System.out.println(QTY_ST02.size()+"!!!!!!!");
+			
+			ModelAndView mv = new ModelAndView("/admin/main");
+			
+			return mv;
+		}
 
 	
-	
-	
-	
+////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
+//		@ExceptionHandler
+//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+//			
+//			ModelAndView mv = new ModelAndView("/admin/exception");
+//			HashMap<String, Object> map = new HashMap<>();
+//			map.put("exceptioncontent", e);
+//	        mv.addObject("map", map);
+//			
+//			return mv;
+//	    }
+//	
 	
 	
 	
@@ -262,5 +290,6 @@ public class AdminController {
 		mv.addObject("list", list);
 		return mv;
 	}
+	
 	
 }

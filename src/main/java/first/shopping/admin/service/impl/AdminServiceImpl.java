@@ -98,6 +98,11 @@ public class AdminServiceImpl implements AdminService{
 	public List<Map<String, Object>> selectProductList_detail(HashMap<String, Object> map) throws Exception {
 		return adminDAO.selectProductList_detail(map);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectinfo(map);
+	}
 }
 
 

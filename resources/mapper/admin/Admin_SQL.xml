@@ -247,6 +247,23 @@
 	</select>
 	
 	
+	<select id="searchinfo" resultMap="ProductList_Detail">
+		<![CDATA[
+			SELECT OFFER_NO
+					,A.WORK_GB
+					,SUBSTR(A.OFFER_NO,1,4)||'년'||SUBSTR(A.OFFER_NO,5,2)||'월'||SUBSTR(A.OFFER_NO,7,2)||'일' WORK_DATE_KR
+					,SUBSTR(A.OFFER_NO,1,8) WORK_DATE
+					,(SELECT KOR_NAME 
+						FROM BFS_CODE 
+						WHERE MAJOR_CD = 'WKGB'
+						AND MINOR_CD = A.WORK_GB) WORK_GB_KR
+			FROM	BFS_PRODUCT A
+			WHERE	A.OFFER_NO = #{offer_no}	
+			GROUP BY A.OFFER_NO, A.WORK_GB
+		]]>
+	</select>
+	
+	
 
 
 </mapper>

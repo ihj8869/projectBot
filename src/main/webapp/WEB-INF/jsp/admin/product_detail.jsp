@@ -49,39 +49,15 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('button[id^="delete"]').click(function(){ //버튼 배열 id로 가져오기
-		var no = $(this).val();
-		var flag = $(this).text();
+	$('button[id^="returnpage"]').click(function(){ //버튼 배열 id로 가져오기
 		
-		if(flag=='삭제'){
-			var msg = '회원을 삭제하시겠습니까?';
-			flag = 'delete';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		} else if(flag=='복구'){
-			var msg = '회원을 복구하시겠습니까?';
-			flag = 'restore';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		}
+		document.location.href="product.do?strdate=&enddate=&workgb=";
+		
 	});
 	
-	$('button[id^="save"]').click(function(){ //버튼 배열 id로 가져오기
-		
-		
-		alert("test12345");
-		alert($("input[name='QTY_ST02']")[0].value);
-		alert($("input[name='QTY_ST02']")[1].value);
-		alert(parseInt($("input[name='QTY_ST02']")[0].value)+parseInt($("input[name='QTY_ST02']")[1].value));
-	});
+	$("#save").click(function(){
+		$('form').submit();
+	})
 	
 });
 
@@ -147,12 +123,23 @@ function checkQTY(name,line){
 
 
 </script>
-<c:set var="flag" value="${flag}"/>
+<c:set var="flag" value="${map.insert_gb}"/>
+<c:set var="work_gb_kr" value="${map.work_gb}"/>
 <%
 	Calendar cal = Calendar.getInstance();
 	String strYear = request.getParameter("year");
 	String strMonth = request.getParameter("month");
 	String flag = (String)pageContext.getAttribute("flag");
+	String work_gb_kr = (String)pageContext.getAttribute("work_gb_kr");
+	String work_nm = "";
+	
+	if(work_gb_kr.equals("WK01")){
+		work_nm = "입고";
+	}else if(work_gb_kr.equals("WK02")){
+		work_nm = "재고";
+	}
+	
+	pageContext.setAttribute("work_nm", work_nm);
 	
 	int nowyear = cal.get(Calendar.YEAR);
 	int nowmonth = cal.get(Calendar.MONTH);
@@ -201,31 +188,36 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>작업내용 상세보기</b></h1>
-    
-<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-		<table class="ui fixed single line celled table" style="width: 70%;" align="right">
+    <h1><b>${work_nm}작업 상세보기</b></h1>
+ 
+ <form action="ipjego.do" id="form" name="form" method="post">
+ 	<input type="text" name="insert_gb" value="${map.insert_gb}">
+	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
+			
 			<tr>
-				<td>작업날짜</td>
-				<td>
+				<td style="width:20%;">작업날짜</td>
+				<td style="width:30%;">
+					${map.offer_no}
 					
 				</td>
-				
-				<td>작업구분</td>
-				<td>
-					
+				<td style="width:20%;">작업구분</td>
+				<td style="width:30%;">
+					${work_nm}작업
 				</td>
-				<td></td>
 			</tr>
 			
 		</table>
 			<c:choose>
 				<c:when test="${map.insert_gb  eq 'V' }">
-					<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
+					<button id="returnpage" class="ui button" type="button" >목록으로</button>
+					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
 				</c:when>
 				<c:when test="${map.insert_gb  eq 'I' }">
+					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="save" class="ui button" type="button" onclick="test">작업저장</button>
 					<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업데이터복원</button>
+					<input type="hidden" id="listsize" value= '${fn:length(list)}'>
 				</c:when>
 			</c:choose>
 		<table class="ui celled table">
@@ -233,9 +225,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<tr>
 					<th style="width:5%;text-align:center;" rowspan="2" >품목<br>코드</th>
 					<th style="width:23%;text-align:center;" rowspan="2" >품목명</th>
-					<th style="width:24%;text-align:center;" colspan="3">입고/재고 작업전 수량</th>
-					<th style="width:24%;text-align:center;" colspan="3">입고재고  작업수량</th>
-					<th style="width:24%;text-align:center;" colspan="3">작업후수량</th>
+					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업전 수량</th>
+					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업 수량</th>
+					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업후 수량</th>
 				</tr>
 				<tr >
 					<th style="width:8%;text-align:center;">합계</th>
@@ -255,7 +247,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row" varStatus="statu">
 							<tr>
-								<td>${row.PRO_GB}</td>
+								<td>
+									<input type="text" name="PRO_GB" class="ui celled table" value="${row.PRO_GB}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+									<input type="hidden" name="OFFER_NO" class="ui celled table" value="${row.OFFER_NO}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+								</td>
 								<td>${row.KOR_NAME}</td>
 								<td style="background-color:#F2F2F2;text-align:right;">
 									<input type="text" name="PRE_TOTAL_QTY" class="ui celled table" value="${row.PRE_TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
@@ -318,6 +313,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			
 		</table>
 	</div>
+</form>
 
 
 <script>

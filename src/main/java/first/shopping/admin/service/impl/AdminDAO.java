@@ -92,4 +92,11 @@ public class AdminDAO extends AbstractDAO{
 		
 		return (List<Map<String, Object>>)selectList("admin.searchProductList_Detail", map);			
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception{
+		
+		return (List<Map<String, Object>>)selectList("admin.searchinfo", map);			
+	}
+	
 }
