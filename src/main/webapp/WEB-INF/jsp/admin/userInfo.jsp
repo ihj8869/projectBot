@@ -13,8 +13,9 @@
     
 <script type="text/javascript">
 $(document).ready(function() {
-	if($("#noCheck").val()==""){ //수정 후 memberInfo로 돌아왔을때 no 파라미터가 안넘어올 경우 종료
-		//window.close();
+	if($("#id").val()==''){
+		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
+		self.close();
 	}
 	
 	$("#updatePw").click(function(){
@@ -24,16 +25,18 @@ $(document).ready(function() {
 	});
 	
 	//다음주에 섬밋하기
-	$("button[name=active_N]").click(function(){
+	$("button[name=active_N]").click(function(){ //정지버튼 클릭
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
 			$("button[name=active_Y]").attr('class','ui button');
+			$("#state_gb").val('US02');
 		}
 	});
-	$("button[name=active_Y]").click(function(){
+	$("button[name=active_Y]").click(function(){ //활성버튼 클릭
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
 			$("button[name=active_N]").attr('class','ui button');
+			$("#state_gb").val('US01');
 		}
 	});
 	
@@ -51,9 +54,10 @@ $(document).ready(function() {
 </head>
 
 <body>
-  <input type="hidden" id="noCheck" value="${param.no}">
+ <input type="hidden" id="id" value="${id}">
 	<form action="updateUser.do" method="post" id="updateForm">
 		<input type="hidden" name="update_id" value="${id}">
+		<input type="hidden" id="state_gb" name="state_gb" value="${map.STATE_GB}">
 		
 		<table class="ui unstackable table" style="margin: 20px; width: 92%">
 		<thead>
@@ -87,8 +91,8 @@ $(document).ready(function() {
 							<button class="ui button" name="active_N" type="button">정지</button>
 						</c:if>
 						<c:if test="${map.STATE_GB == 'US02'}">
-							<button class="ui button" name="active_N" type="button">활성</button>
-							<button class="ui button active" name="active_Y" type="button">정지</button>
+							<button class="ui button" name="active_Y" type="button">활성</button>
+							<button class="ui button active" name="active_N" type="button">정지</button>
 						</c:if>
 					</div>
 				</td>

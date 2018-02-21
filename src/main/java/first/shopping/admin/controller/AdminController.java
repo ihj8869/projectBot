@@ -42,6 +42,11 @@ public class AdminController {
 		
 		return "redirect:/main.do?year="+year+"&month="+month;
 	}
+	@RequestMapping(value="logout.do")
+	public String logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/index.jsp";
+	}
 	
 //회원가입==================================================================================================
 	@RequestMapping(value="signUp.do")
@@ -111,7 +116,7 @@ public class AdminController {
 		return "/inc/script";
 	}
 	
-	@RequestMapping(value="/deleteMember.do") //회원 삭제(is_del 업데이트), 삭제일, 삭제아이피 업데이트
+/*	@RequestMapping(value="/deleteMember.do") //회원 삭제(is_del 업데이트), 삭제일, 삭제아이피 업데이트
 	public String deleteMember(@RequestParam(value="no")int no, @RequestParam(value="flag")String flag, HttpServletRequest request) throws Exception{
 		
 		String ip = request.getRemoteAddr();
@@ -122,7 +127,7 @@ public class AdminController {
 		adminService.updateIsDel(hashMap);
 		
 		return "redirect:/user.do";
-	}
+	}*/
 	
 //메인===================================================================================================
 	@RequestMapping(value="main.do")

@@ -47,6 +47,9 @@ public class AdminDAO extends AbstractDAO{
 	public String checkPw(String id) throws Exception{
 		return (String)selectOne("admin.checkPw", id);
 	}
+	public String checkState(String id) throws Exception{
+		return (String)selectOne("admin.checkState", id);
+	}
 	
 	public void updateLoginDate(String id) throws Exception{
 		update("admin.updateLoginDate", id);

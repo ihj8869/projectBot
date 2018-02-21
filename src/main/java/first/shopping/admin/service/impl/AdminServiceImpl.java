@@ -54,6 +54,10 @@ public class AdminServiceImpl implements AdminService{
 	public String checkPw(String id) throws Exception {
 		return adminDAO.checkPw(id);
 	}
+	@Override
+	public String checkState(String id) throws Exception {
+		return adminDAO.checkState(id);
+	}
 	
 	@Override
 	public void updateLoginDate(String id) throws Exception {

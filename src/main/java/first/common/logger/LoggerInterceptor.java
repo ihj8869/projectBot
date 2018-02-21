@@ -23,24 +23,30 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
             log.debug("======================================          LoggerInterceptor  Start      ======================================");
             log.debug(" Request URI \t:  " + request.getRequestURI());
         }
-        System.out.println("1@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        
         String id=request.getParameter("login_id");
-		String password=request.getParameter("login_password"); 
-		System.out.println("2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		String password=request.getParameter("login_password");
+		
 		if(id != null && password != null) { //로그인 창에서 id/pw 입력 시
 			System.out.println(id+" "+password); //*.do에서 인터셉터가 또 불리는데 id, password가 존재하지 않아 null이 찍히기 때문
-			System.out.println("3@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			
 			String checkPw = adminService.checkPw(id);
-			System.out.println("4@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			if(password.equals(checkPw)){ //로그인 성공
-				System.out.println("5@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-				request.getSession().setAttribute("id", id);
-				request.getSession().setMaxInactiveInterval(60*60); //초단위
-				return true; 
-				
-			}else {
-				response.sendRedirect("/index.jsp"); //로그인 실패
+			String checkState = adminService.checkState(id);
+			
+			if(checkState.equals("US02")) {
+				response.sendRedirect("/index.jsp?err_code=pause_id"); //정지된 회원
 				return false;
+				
+			} else {
+				if(password.equals(checkPw)){ //로그인 성공
+					request.getSession().setAttribute("id", id);
+					request.getSession().setMaxInactiveInterval(60*60); //초단위
+					return true; 
+					
+				}else {
+					response.sendRedirect("/index.jsp?err_code=login_fail"); //로그인 실패
+					return false;
+				}
 			}
 		}
 		return true;

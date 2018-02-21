@@ -22,6 +22,7 @@ public interface AdminService {
 	public void updateIsDel(HashMap<String, Object> map) throws Exception;
 //====================================================================================================
 	String checkPw(String id)throws Exception;
+	String checkState(String id)throws Exception;
 	
 	public void updateLoginDate(String id)throws Exception;
 	
