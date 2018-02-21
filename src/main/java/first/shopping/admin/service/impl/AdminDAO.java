@@ -47,6 +47,9 @@ public class AdminDAO extends AbstractDAO{
 	public String checkPw(String id) throws Exception{
 		return (String)selectOne("admin.checkPw", id);
 	}
+	public String checkState(String id) throws Exception{
+		return (String)selectOne("admin.checkState", id);
+	}
 	
 	public void updateLoginDate(String id) throws Exception{
 		update("admin.updateLoginDate", id);
@@ -97,6 +100,20 @@ public class AdminDAO extends AbstractDAO{
 	public List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception{
 		
 		return (List<Map<String, Object>>)selectList("admin.searchinfo", map);			
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String selectnewofferno() throws Exception{
+		
+		return (String)selectOne("admin.serchofferno");
+	}
+	
+	public void ipgoinsert_st01(HashMap<String, Object> map) throws Exception{
+		insert("admin.ipgoinsert_st01", map);
+	}
+	
+	public void ipgoinsert_st02(HashMap<String, Object> map) throws Exception{
+		insert("admin.ipgoinsert_st02", map);
 	}
 	
 }

@@ -68,7 +68,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="product.do?strdate=&enddate=&workgb=" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고재고관리</a> 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("xx")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>통계관리</a>
     <a href="user.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("user")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a>
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>로그아웃</a>
+    <a href="logout.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>로그아웃</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->

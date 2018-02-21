@@ -22,6 +22,7 @@ public interface AdminService {
 	public void updateIsDel(HashMap<String, Object> map) throws Exception;
 //====================================================================================================
 	String checkPw(String id)throws Exception;
+	String checkState(String id)throws Exception;
 	
 	public void updateLoginDate(String id)throws Exception;
 	
@@ -42,6 +43,12 @@ public interface AdminService {
 	List<Map<String, Object>> selectProductList_detail(HashMap<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception;
+	
+	String selectnewofferno() throws Exception;
+	
+	public void ipgoinsert_st01(HashMap<String, Object> map)throws Exception;
+	
+	public void ipgoinsert_st02(HashMap<String, Object> map)throws Exception;
 }
 
 

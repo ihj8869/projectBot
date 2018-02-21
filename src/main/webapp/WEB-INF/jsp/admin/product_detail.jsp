@@ -192,13 +192,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
  
  <form action="ipjego.do" id="form" name="form" method="post">
  	<input type="text" name="insert_gb" value="${map.insert_gb}">
+ 	<input type="text" name="upornew" value="${map.upornew}">
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			
 			<tr>
 				<td style="width:20%;">작업날짜</td>
 				<td style="width:30%;">
-					${map.offer_no}
+					${map.date_nm}
 					
 				</td>
 				<td style="width:20%;">작업구분</td>
@@ -213,10 +214,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
 				</c:when>
-				<c:when test="${map.insert_gb  eq 'I' }">
+				<c:when test="${map.insert_gb  eq 'I'}">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="save" class="ui button" type="button" onclick="test">작업저장</button>
-					<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업데이터복원</button>
+					<c:choose>
+						<c:when test="${map.upornew  eq 'up'}">
+							<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업데이터복원</button>
+						</c:when>
+					</c:choose>
 					<input type="hidden" id="listsize" value= '${fn:length(list)}'>
 				</c:when>
 			</c:choose>

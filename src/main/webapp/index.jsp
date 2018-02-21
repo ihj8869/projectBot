@@ -306,7 +306,7 @@ body .container .content .signup-cont {
 
 </style>
 </head>
-
+<input type="hidden" id="err_code" value="${param.err_code}">
 <section class="container">
 	<article class="half">
 		<h1>아름다운가게<br>재고관리시스템</h1>
@@ -348,6 +348,12 @@ body .container .content .signup-cont {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
 <script type="text/javascript">
+	if($("#err_code").val() == 'login_fail'){
+		alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인하시기 바랍니다.');
+	}else if($("#err_code").val() == 'pause_id'){
+		alert('사용이 정지된 계정입니다.');
+	}
+
 $('.tabs .tab').click(function(){
     if ($(this).hasClass('signin')) {
         $('.tabs .tab').removeClass('active');

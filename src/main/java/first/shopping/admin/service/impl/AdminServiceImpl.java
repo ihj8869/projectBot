@@ -54,6 +54,10 @@ public class AdminServiceImpl implements AdminService{
 	public String checkPw(String id) throws Exception {
 		return adminDAO.checkPw(id);
 	}
+	@Override
+	public String checkState(String id) throws Exception {
+		return adminDAO.checkState(id);
+	}
 	
 	@Override
 	public void updateLoginDate(String id) throws Exception {
@@ -102,6 +106,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<Map<String, Object>> selectinfo(HashMap<String, Object> map) throws Exception {
 		return adminDAO.selectinfo(map);
+	}
+	
+	@Override
+	public String selectnewofferno() throws Exception{
+		return adminDAO.selectnewofferno();
+	}
+	
+	@Override
+	public void ipgoinsert_st01(HashMap<String, Object> map) throws Exception {
+		adminDAO.ipgoinsert_st01(map);
+	}
+	
+	@Override
+	public void ipgoinsert_st02(HashMap<String, Object> map) throws Exception {
+		adminDAO.ipgoinsert_st02(map);
 	}
 }
 

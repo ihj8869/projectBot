@@ -22,7 +22,7 @@
 	<update id="updateUser" parameterType="first.shopping.admin.bean.MemberBean">
 		UPDATE BFS_USER 
 		SET KOR_NAME=#{kor_name},PASSWORD=#{password},
-			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS')
+			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),STATE_GB=#{state_gb}
 		WHERE ID=#{id}
 	</update>
 	
@@ -39,6 +39,9 @@
 	<select id="checkPw" parameterType="String" resultType="String">
 		SELECT PASSWORD FROM BFS_USER WHERE ID=#{id}
 	</select>
+	<select id="checkState" parameterType="String" resultType="String">
+		SELECT STATE_GB FROM BFS_USER WHERE ID=#{id}
+	</select>
 	
 	<update id="updateLoginDate" parameterType="String">
 		UPDATE BFS_USER
@@ -53,7 +56,7 @@
 
 	<select id="selectUserList" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM 
-		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_NAME,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
+		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
 		 FROM(
 		SELECT * FROM BFS_USER ORDER BY LOGIN_DATE DESC) ORDER BY RN)
 		WHERE RN BETWEEN #{start} AND #{end}
@@ -61,7 +64,7 @@
 
 	<select id="searchUserList" parameterType="hashmap" resultType="hashmap">
 		SELECT * FROM
-		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_NAME,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
+		(SELECT ROWNUM RN,ID,PASSWORD,KOR_NAME,STATE_GB,REG_IP,REG_DATE,UPDATE_ID,UPDATE_IP,UPDATE_DATE,LOGIN_DATE
 		 FROM(
 		SELECT * FROM BFS_USER ORDER BY LOGIN_DATE DESC) 
 		<choose>
@@ -263,7 +266,25 @@
 		]]>
 	</select>
 	
+	<select id="serchofferno" parameterType="String" resultType="String">
+		SELECT MAX(OFFER_NO)+1 OFFER_NO
+		FROM(
+			SELECT OFFER_NO FROM BFS_PRODUCT WHERE SUBSTR(OFFER_NO,1,8)= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD')
+			UNION
+			SELECT TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD')||'00' FROM DUAL
+			)
+	</select>
 	
+	
+	<insert id="ipgoinsert_st01" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN)
+		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST01',#{QTY_ST01},SYSDATE,'TEST')
+	</insert>
+	
+	<insert id="ipgoinsert_st02" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN)
+		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST02',#{QTY_ST02},SYSDATE,'TEST')
+	</insert>
 
 
 </mapper>

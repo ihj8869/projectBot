@@ -49,22 +49,17 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('button[id^="detail"]').click(function(){ 
-		var offer_no = offer_no;
-		var work_gb = work_gb;
-		
-		if(confirm(msg)!=0){
-			document.location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
-		}else{
-			return;
-		}	
-		
-	});
 	
 });
 
 function detail(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
+	alert("offer_no = "+offer_no);
+	if(offer_no == '0000000000'){
+		 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=I";
+	}else{
+		 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
+	}
+	
 }
 
 
@@ -151,7 +146,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
-				<button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">신규입고작업</button>
+				<button id="detail" class="ui button" type="button" onclick="detail('0000000000','WK01')">신규입고작업1</button>
 				<button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">신규재고작업</button>
 		<table class="ui celled table">
 			<thead>
@@ -267,7 +262,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
 							<c:choose>
 								<c:when test="${map.name != null || map.id != null}">
-									<a class="item" href="user.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
+									<a class="item" href="product.do?page=${map.totalPage}&name=${map.name}&id=${map.id}"><i class="angle double right icon"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a class="icon item" href="user.do?page=${map.totalPage}"><i class="angle double right icon"></i></a>

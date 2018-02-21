@@ -21,10 +21,10 @@ $(document).ready(function() {
 		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
 		document.location.href="/index.jsp"
 	}
-	$(".isDel").children().next().each(function(){ //삭제된 회원은 빨갛게
-		if($(this).val()=='Y'){
+	
+	$(".state_gb").each(function(){ //중지회원 빨갛게 표시
+		if($(this).val()=='US02'){
 			$(this).parent().parent().attr('class','error');
-			$(this).parent().next().next().next().next().next().next().children().next().text('복구');
 		}
 	});
 	
@@ -48,32 +48,7 @@ $(document).ready(function() {
 			search();
 		}
 	});
-	
-	$('button[id^="delete"]').click(function(){ //버튼 배열 id로 가져오기
-		var no = $(this).val();
-		var flag = $(this).text();
-		
-		if(flag=='삭제'){
-			var msg = '회원을 삭제하시겠습니까?';
-			flag = 'delete';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		} else if(flag=='복구'){
-			var msg = '회원을 복구하시겠습니까?';
-			flag = 'restore';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		}
-	});
-	
+
 });
 
 function infoPopup(id){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
@@ -152,16 +127,14 @@ body #userTr:hover{background-color:whitesmoke;}
 								<td>${row.REG_DATE}</td>
 								<td>${row.LOGIN_DATE}</td>
 								<td>
+									<input type="hidden" class="state_gb" value="${row.STATE_GB}">
 									<c:if test="${row.STATE_GB == 'US01'}">
 										활성
 									</c:if>
 									<c:if test="${row.STATE_GB == 'US02'}">
-										중지
+										정지
 									</c:if>
 								</td>
-								<%-- <td>
-								    <button id="delete" class="ui button" type="button" value="${row.MEM_NO}">삭제</button>
-								</td> --%>
 							</tr>
 						</c:forEach>
 					</c:when>
