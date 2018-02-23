@@ -21,22 +21,18 @@ $(document).ready(function() {
 		alert('세션이 종료되었습니다. 다시 로그인해주세요.');
 		document.location.href="/index.jsp"
 	}
-	$(".isDel").children().next().each(function(){ //삭제된 회원은 빨갛게
-		if($(this).val()=='Y'){
-			$(this).parent().parent().attr('class','error');
-			$(this).parent().next().next().next().next().next().next().children().next().text('복구');
-		}
-	});
 	
-	$("#sidebar").click(function(){ //사이드바 클릭시
-		$('.ui.labeled.icon.sidebar').sidebar('toggle');
+	$(".use_gb").each(function(){ //중지회원 빨갛게 표시
+		if($(this).val()=='N'){
+			$(this).parent().parent().attr('class','error');
+		}
 	});
 	
 	search = function(){ //코드이름으로 검색
 		var name = $("#searchName").val();
 		var use = $("#searchUse").val();
 		
-		document.location.href="Code.do?name="+name+"&use="+use;
+		document.location.href="code.do?name="+name+"&use="+use;
 	};
 	
 	$("#search").click(function(){ //검색 돋보기 아이콘 클릭시
@@ -48,43 +44,17 @@ $(document).ready(function() {
 			search();
 		}
 	});
-	
-	$('button[id^="delete"]').click(function(){ //버튼 배열 id로 가져오기
-		var no = $(this).val();
-		var flag = $(this).text();
-		
-		if(flag=='삭제'){
-			var msg = '회원을 삭제하시겠습니까?';
-			flag = 'delete';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		} else if(flag=='복구'){
-			var msg = '회원을 복구하시겠습니까?';
-			flag = 'restore';
-			
-			if(confirm(msg)!=0){
-				document.location.href="deleteMember.do?no="+no+"&flag="+flag;
-			}else{
-				return;
-			}	
-		}
-	});
-	
 });
 
-function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	var cw = 800; //창넓이
-	var ch = 700; //창높이
+function infoPopup(minor_cd){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	var cw =500; //창넓이
+	var ch = 400; //창높이
 	var sw = screen.availWidth;
 	var sh = screen.availHeight;
 	var px=(sw-cw)/2;
 	var py=(sh-ch)/2;
 	
-	window.open('memberInfo.do?no='+no, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+	window.open('codeInfo.do?minor_cd='+minor_cd, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
 }
 </script>
 
@@ -123,6 +93,7 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body #codeTr:hover{background-color:whitesmoke;}
 </style>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <input type="hidden" id="id" value="${id}">
@@ -141,9 +112,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>코드관리</b></h1>
     
-<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+	  <h1 class="ui dividing header" style="font-weight: 100;">코드관리</h1>	
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
 				<td>품목명</td>
@@ -165,42 +136,30 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
+		
 		<button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">신규품목코드 입력</button>
+		
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:8%;">품목코드</th>
-					<th style="width:33%;">품목명</th>
-					<th style="width:11%;">업데이트날짜</th>
-					<th style="width:11%;">업데이트ID</th>
-					<th style="width:8%;">사용여부</th>
-					<th style="width:21%;"></th>
+					<th>품목코드</th>
+					<th>품목명</th>
+					<th>업데이트날짜</th>
+					<th>업데이트ID</th>
+					<th>사용여부</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">
 				<c:choose>
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
-							<tr>
+							<tr id="codeTr" onclick="infoPopup('${row.MINOR_CD}')" style="cursor:pointer">
 								<td>${row.MINOR_CD}</td>
 								<td>${row.KOR_NAME}</td>
 								<td>${row.UPDATE_DATE}</td>
 								<td>${row.UPDATE_MAN}</td>
-								<td>${row.USE_GB}</td>
-								<td>
-								    <button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">수정</button>
-								    <button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">
-								    	<c:choose>
-								    		<c:when test="${row.USE_GB eq 'Y'}">
-								    			품목사용중지
-								    		</c:when>
-								    		<c:otherwise>
-								    			품목사용
-								    		</c:otherwise>
-								    	</c:choose>
-								    	
-								    </button>
-								</td>
+								<td>${row.USE_GB}<input type="hidden" class="use_gb" value="${row.USE_GB}"></td>
+								
 							</tr>
 						</c:forEach>
 					</c:when>

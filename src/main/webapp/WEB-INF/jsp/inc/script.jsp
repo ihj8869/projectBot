@@ -15,6 +15,7 @@
 	<script>
 	
 	alert("<%=errMsg%>");
+	opener.parent.location.reload();
 	self.close();
 	</script>
 	<%

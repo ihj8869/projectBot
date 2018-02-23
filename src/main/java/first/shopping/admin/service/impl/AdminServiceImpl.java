@@ -39,6 +39,10 @@ public class AdminServiceImpl implements AdminService{
 	public HashMap<String, Object> selectUserInfo(String id) throws Exception {
 		return adminDAO.selectUserInfo(id);
 	}
+	@Override
+	public HashMap<String, Object> selectCodeInfo(String minor_cd) throws Exception {
+		return adminDAO.selectCodeInfo(minor_cd);
+	}
 
 	@Override
 	public void updateUser(MemberBean bean) throws Exception {
@@ -57,6 +61,10 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public String checkState(String id) throws Exception {
 		return adminDAO.checkState(id);
+	}
+	@Override
+	public String checkId(String id) throws Exception {
+		return adminDAO.checkId(id);
 	}
 	
 	@Override

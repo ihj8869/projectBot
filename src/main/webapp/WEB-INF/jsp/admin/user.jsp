@@ -28,10 +28,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#sidebar").click(function(){ //사이드바 클릭시
-		$('.ui.labeled.icon.sidebar').sidebar('toggle');
-	});
-	
 	search = function(){ //코드이름으로 검색
 		var name = $("#searchName").val();
 		var id = $("#searchId").val();
@@ -65,7 +61,6 @@ function infoPopup(id){ //jquery 바깥에 선언해야함 <script> 안으로 �
 
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-
 body #userTr:hover{background-color:whitesmoke;}
 </style>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -85,7 +80,6 @@ body #userTr:hover{background-color:whitesmoke;}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    
     
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
 	  <h1 class="ui dividing header" style="font-weight: 100;">사용자관리</h1>

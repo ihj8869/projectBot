@@ -33,19 +33,25 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 			String checkPw = adminService.checkPw(id);
 			String checkState = adminService.checkState(id);
 			
-			if(checkState.equals("US02")) {
-				response.sendRedirect("/index.jsp?err_code=pause_id"); //정지된 회원
+			if(checkPw==null || checkState==null) { //존재하지 않는 아이디일 경우
+				response.sendRedirect("/index.jsp?err_code=login_fail"); //로그인 실패
 				return false;
 				
 			} else {
-				if(password.equals(checkPw)){ //로그인 성공
-					request.getSession().setAttribute("id", id);
-					request.getSession().setMaxInactiveInterval(60*60); //초단위
-					return true; 
-					
-				}else {
-					response.sendRedirect("/index.jsp?err_code=login_fail"); //로그인 실패
+				if(checkState.equals("US02")) {
+					response.sendRedirect("/index.jsp?err_code=pause_id"); //정지된 회원
 					return false;
+					
+				} else {
+					if(password.equals(checkPw)){ //아이디, 패스워드 일치
+						request.getSession().setAttribute("id", id);
+						request.getSession().setMaxInactiveInterval(60*60); //초단위
+						return true; 
+						
+					}else {
+						response.sendRedirect("/index.jsp?err_code=login_fail"); //로그인 실패
+						return false;
+					}
 				}
 			}
 		}

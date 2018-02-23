@@ -30,7 +30,7 @@ public class AdminController {
 	
 	@Resource(name="adminService")
 	private AdminService adminService;
-//로그인==================================================================================================
+//로그인, 로그아웃==================================================================================================
 	@RequestMapping(value="signIn.do")
 	public String signIn(@RequestParam(value="login_id")String id,@RequestParam(value="login_password")String password) throws Exception{ //이게 불려지기전에 인터셉터를 거쳐옴.
 		
@@ -53,15 +53,23 @@ public class AdminController {
 	public String signUp(@RequestParam(value="signUp_name")String name,@RequestParam(value="signUp_id")String id,
 			@RequestParam(value="signUp_password")String password,HttpServletRequest request) throws Exception {
 		
-		String ip = request.getRemoteAddr();
-		HashMap<String, Object> hashMap = new HashMap<>();
-		hashMap.put("name", name);
-		hashMap.put("id", id);
-		hashMap.put("password", password);
-		hashMap.put("ip", ip);
-		adminService.signUp(hashMap);
-		
-		return "redirect:/index.jsp";
+		String checkPw = adminService.checkPw(id);
+		System.out.println("아이디중복11111111"+checkPw);
+		if(checkPw != null) { //아이디 중복체크
+			System.out.println("아이디중복22222222222"+checkPw);
+			return "redirect:/index.jsp?err_code=dupl_id";
+			
+		} else {
+			String ip = request.getRemoteAddr();
+			HashMap<String, Object> hashMap = new HashMap<>();
+			hashMap.put("name", name);
+			hashMap.put("id", id);
+			hashMap.put("password", password);
+			hashMap.put("ip", ip);
+			adminService.signUp(hashMap);
+			
+			return "redirect:/index.jsp";
+		}
 	}
 	
 //사용자관리==================================================================================================
@@ -145,7 +153,7 @@ public class AdminController {
 	}
 	
 //코드관리==================================================================================================
-	@RequestMapping(value="/Code.do")
+	@RequestMapping(value="/code.do")
     public ModelAndView selectCodeList(@RequestParam(value="name",required=false)String name,
     					@RequestParam(value="use",required=false)String id, @RequestParam(value="page",required=false)String page) throws Exception{
 		//
@@ -176,6 +184,14 @@ public class AdminController {
         return mv;
     }
 	
+	@RequestMapping(value="/codeInfo.do") //회원 상세정보
+	public ModelAndView selectCodeInfo(@RequestParam(value="minor_cd")String minor_cd) throws Exception{
+		
+		ModelAndView mv = new ModelAndView("/admin/codeInfo");
+		HashMap<String,Object> map =adminService.selectCodeInfo(minor_cd);
+		mv.addObject("map",map);
+		return mv;
+	}
 //입고재고관리==================================================================================================
 	@RequestMapping(value="/product.do")
     public ModelAndView selectproductList(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,

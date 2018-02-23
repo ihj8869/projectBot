@@ -330,9 +330,9 @@ body .container .content .signup-cont {
 			
     		<div class="signup-cont cont">
                	<form action="signUp.do" method="post">
-					<input type="text" name="signUp_name" id="signUp_name" class="inpt" required="required" placeholder="Your name">
                     <input type="text" name="signUp_id" id="signUp_id" class="inpt" required="required" placeholder="Your id">
 					<input type="password" name="signUp_password" id="signUp_password" class="inpt" required="required" placeholder="Your password">
+					<input type="text" name="signUp_name" id="signUp_name" class="inpt" required="required" placeholder="Your name">
 					<div class="submit-wrap">
 						<input type="submit" value="Sign up" class="submit">
 						<a href="#" class="more"></a>
@@ -352,6 +352,8 @@ body .container .content .signup-cont {
 		alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인하시기 바랍니다.');
 	}else if($("#err_code").val() == 'pause_id'){
 		alert('사용이 정지된 계정입니다.');
+	}else if($("#err_code").val() == 'dupl_id'){
+		alert('이미 존재하는 아이디입니다.');
 	}
 
 $('.tabs .tab').click(function(){

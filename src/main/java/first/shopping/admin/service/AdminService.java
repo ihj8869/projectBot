@@ -16,6 +16,7 @@ public interface AdminService {
 	public void updateRating(HashMap<String, Object> map) throws Exception;
 	
 	HashMap<String, Object> selectUserInfo(String id) throws Exception;
+	HashMap<String, Object> selectCodeInfo(String minor_cd) throws Exception;
 	
 	public void updateUser(MemberBean bean) throws Exception;
 	
@@ -23,6 +24,7 @@ public interface AdminService {
 //====================================================================================================
 	String checkPw(String id)throws Exception;
 	String checkState(String id)throws Exception;
+	String checkId(String id)throws Exception;
 	
 	public void updateLoginDate(String id)throws Exception;
 	

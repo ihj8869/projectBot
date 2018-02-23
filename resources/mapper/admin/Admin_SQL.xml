@@ -2,44 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	
-	<update id="updateRating" parameterType="hashmap">
-		UPDATE BFS_USER 
-		<if test="flag=='up'">
-			SET PMS='관리자', MOD_IP=#{ip}, MOD_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') WHERE MEM_NO=#{no}
-		</if>
-		<if test="flag=='down'">
-			SET PMS='회원', MOD_IP=#{ip}, MOD_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') WHERE MEM_NO=#{no}
-		</if>
-	</update>
-	
-	<select id="selectUserInfo" parameterType="String" resultType="hashmap">
-		<![CDATA[
-			SELECT * FROM BFS_USER WHERE ID=#{id}
-		]]>
-	</select>
-	
-	<update id="updateUser" parameterType="first.shopping.admin.bean.MemberBean">
-		UPDATE BFS_USER 
-		SET KOR_NAME=#{kor_name},PASSWORD=#{password},
-			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),STATE_GB=#{state_gb}
-		WHERE ID=#{id}
-	</update>
-	
-	<update id="updateIsDel" parameterType="hashmap">
-		UPDATE BFS_USER 
-		<if test="flag=='delete'">
-			SET DEL_IP=#{ip}, DEL_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'), IS_DEL='Y' WHERE MEM_NO=#{no}
-		</if>
-		<if test="flag=='restore'">
-			SET DEL_IP=#{ip}, DEL_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'), IS_DEL='N' WHERE MEM_NO=#{no}
-		</if>
-	</update>
+
 <!-- ================================================================================ -->
 	<select id="checkPw" parameterType="String" resultType="String">
 		SELECT PASSWORD FROM BFS_USER WHERE ID=#{id}
 	</select>
 	<select id="checkState" parameterType="String" resultType="String">
+		SELECT STATE_GB FROM BFS_USER WHERE ID=#{id}
+	</select>
+	<select id="checkId" parameterType="String" resultType="String">
 		SELECT STATE_GB FROM BFS_USER WHERE ID=#{id}
 	</select>
 	
@@ -51,7 +22,7 @@
 	
 	<insert id="signUp" parameterType="hashmap">
 		INSERT INTO BFS_USER
-		VALUES(#{id},#{password},#{name},'US01',#{ip},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),NULL,NULL,NULL,NULL,'로그인 기록 없음')
+		VALUES(#{id},#{password},#{name},'US01',#{ip},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),NULL,NULL,NULL,'로그인 기록 없음')
 	</insert>
 
 	<select id="selectUserList" parameterType="hashmap" resultType="hashmap">
@@ -102,6 +73,24 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="selectUserInfo" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM BFS_USER WHERE ID=#{id}
+		]]>
+	</select>
+	<select id="selectCodeInfo" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM BFS_CODE WHERE MINOR_CD=#{minor_cd}
+		]]>
+	</select>
+
+	<update id="updateUser" parameterType="first.shopping.admin.bean.MemberBean">
+		UPDATE BFS_USER 
+		SET KOR_NAME=#{kor_name},PASSWORD=#{password},
+			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),STATE_GB=#{state_gb}
+		WHERE ID=#{id}
+	</update>
 <!-- ================================================================================ -->
 	
 	<resultMap id="CalList" type="hashmap">
