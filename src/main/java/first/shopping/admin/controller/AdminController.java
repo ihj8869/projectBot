@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.tools.DocumentationTool.Location;
 
 import org.apache.log4j.Logger;
 import org.junit.runner.Request;
@@ -274,44 +275,71 @@ public class AdminController {
 	//입고저장=========================================================================================================
 		
 		@RequestMapping(value="ipjego.do")
-		public ModelAndView ipgoinsert(@RequestParam(value="PRO_GB", required=true) List<String> PRO_GB, @RequestParam(value="QTY_ST02", required=true) List<String> QTY_ST02, @RequestParam(value="QTY_ST01", required=true) List<String> QTY_ST01
-										,@RequestParam(value="OFFER_NO", required=true) List<String> OFFER_NO, HttpServletRequest httpServletRequest) throws Exception {
+		public String ipgoinsert(@RequestParam(value="PRO_GB", required=true) List<String> PRO_GB, @RequestParam(value="QTY_ST02", required=true) List<String> QTY_ST02, @RequestParam(value="QTY_ST01", required=true) List<String> QTY_ST01
+										,@RequestParam(value="OFFER_NO", required=true) String OFFER_NO, HttpServletRequest httpServletRequest) throws Exception {
 			
 			String insert_gb = httpServletRequest.getParameter("insert_gb");
 			String upornew = httpServletRequest.getParameter("upornew");
 			String new_offer_no = adminService.selectnewofferno();
-			String page_offer_no = "";
+			System.out.println("OFFER_NO");
+			String page_offer_no = OFFER_NO;
+			
+			if(upornew.equals("new")) {
+				System.out.println("new 페이지 수정");
+				page_offer_no = new_offer_no;
+			}else {
+				System.out.println("삭제후 저장 한다");
+				HashMap<String, Object> map= new HashMap<>();
+				map.put("offer_no", page_offer_no);
+				adminService.product_delete(map);
+			}
+			
+			
 			
 			for(int i = 0 ; i<PRO_GB.size() ; i++) {
 				System.out.println(PRO_GB.get(i));
-				if(upornew.equals("new")) {
-					System.out.println("new_offer_no ="+new_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01.get(i) +" QTY_ST02 = "+ QTY_ST02.get(i));
-					HashMap<String, Object> hashMap = new HashMap<>();
-					hashMap.put("OFFER_NO",new_offer_no);
-					hashMap.put("PRO_GB", PRO_GB.get(i));
-					hashMap.put("QTY_ST01", QTY_ST01.get(i));
-					hashMap.put("QTY_ST02", QTY_ST02.get(i));
-					
-					if(!QTY_ST01.get(i).equals("") && !QTY_ST01.get(i).equals("0")) {
-						adminService.ipgoinsert_st01(hashMap);
-					}
-					if(!QTY_ST02.get(i).equals("") && !QTY_ST02.get(i).equals("0")) {
-						adminService.ipgoinsert_st02(hashMap);
-					}
-					hashMap.clear();
-					
-					page_offer_no = new_offer_no;
-					
-				}else if(upornew.equals("up")){
-					
+				
+				System.out.println("new_offer_no ="+page_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01.get(i) +" QTY_ST02 = "+ QTY_ST02.get(i));
+				
+				HashMap<String, Object> hashMap = new HashMap<>();
+				hashMap.put("OFFER_NO",page_offer_no);
+				hashMap.put("PRO_GB", PRO_GB.get(i));
+				hashMap.put("QTY_ST01", QTY_ST01.get(i));
+				hashMap.put("QTY_ST02", QTY_ST02.get(i));
+				
+				if(!QTY_ST01.get(i).equals("") && !QTY_ST01.get(i).equals("0")) {
+					adminService.ipgoinsert_st01(hashMap);
 				}
+				if(!QTY_ST02.get(i).equals("") && !QTY_ST02.get(i).equals("0")) {
+					adminService.ipgoinsert_st02(hashMap);
+				}
+				hashMap.clear();
 				
 			}
 			
-			ModelAndView mv = new ModelAndView("product_detail.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V");
-			
-			return mv;
+			return "redirect:product_detail.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V";
 		}
+		
+		
+		//입고 재고관리 삭제 =========================================================================================================
+		
+			@RequestMapping(value="product_delete.do")
+			public String product_delete(@RequestParam(value="offer_no", required=false) String offer_no
+												,@RequestParam(value="work_gb", required=false) String work_gb) throws Exception {
+				
+				System.out.println("입고관리 삭제");
+				System.out.println("offer_no = " + offer_no + " work_gb = "+work_gb);
+				
+				HashMap<String, Object> map= new HashMap<>();
+				map.put("offer_no", offer_no);
+				map.put("work_gb", work_gb);
+				
+				System.out.println("11111");
+				
+				adminService.product_delete(map);
+				
+				return "redirect:/product.do?strdate=&enddate=&workgb=";
+			}
 
 	
 ////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------

@@ -274,6 +274,11 @@
 		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN)
 		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST02',#{QTY_ST02},SYSDATE,'TEST')
 	</insert>
+	
+	<delete id="product_delete" parameterType="hashmap">
+		DELETE FROM BFS_PRODUCT
+		WHERE OFFER_NO = #{offer_no}
+	</delete>
 
 
 </mapper>

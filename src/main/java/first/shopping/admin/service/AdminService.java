@@ -51,6 +51,8 @@ public interface AdminService {
 	public void ipgoinsert_st01(HashMap<String, Object> map)throws Exception;
 	
 	public void ipgoinsert_st02(HashMap<String, Object> map)throws Exception;
+	
+	public void product_delete(HashMap<String, Object> map)throws Exception;
 }
 
 

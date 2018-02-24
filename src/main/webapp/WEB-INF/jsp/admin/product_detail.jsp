@@ -77,6 +77,10 @@ function modification(offer_no,work_gb,insert_gb){ //jquery 바깥에 선언해�
 	 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb="+insert_gb;
 }
 
+function product_delete(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	 location.href="product_delete.do?offer_no="+offer_no+"&work_gb="+work_gb;
+}
+
 function checkQTY(name,line){
 	var linecheck = line-1;
 	var aa = "TOTAL_QTY";
@@ -191,6 +195,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <h1><b>${work_nm}작업 상세보기</b></h1>
  
  <form action="ipjego.do" id="form" name="form" method="post">
+ 	<input type="hidden" name="OFFER_NO" class="ui celled table" value="${map.offer_no}" style="text-align:right;background-color:transparent; border-style:none" readonly>
  	<input type="text" name="insert_gb" value="${map.insert_gb}">
  	<input type="text" name="upornew" value="${map.upornew}">
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
@@ -213,6 +218,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<c:when test="${map.insert_gb  eq 'V' }">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
+					<button id="dateupdate" class="ui button" type="button" onclick="product_delete('${map.offer_no}','${map.work_gb}')">작업삭제${map.offer_no}</button>
 				</c:when>
 				<c:when test="${map.insert_gb  eq 'I'}">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
@@ -254,7 +260,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							<tr>
 								<td>
 									<input type="text" name="PRO_GB" class="ui celled table" value="${row.PRO_GB}" style="text-align:right;background-color:transparent; border-style:none" readonly>
-									<input type="hidden" name="OFFER_NO" class="ui celled table" value="${row.OFFER_NO}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 								</td>
 								<td>${row.KOR_NAME}</td>
 								<td style="background-color:#F2F2F2;text-align:right;">

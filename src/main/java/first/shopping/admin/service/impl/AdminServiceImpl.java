@@ -130,6 +130,10 @@ public class AdminServiceImpl implements AdminService{
 	public void ipgoinsert_st02(HashMap<String, Object> map) throws Exception {
 		adminDAO.ipgoinsert_st02(map);
 	}
+	
+	public void product_delete(HashMap<String, Object> map) throws Exception{
+		adminDAO.product_delete( map);
+	}
 }
 
 

@@ -123,4 +123,8 @@ public class AdminDAO extends AbstractDAO{
 		insert("admin.ipgoinsert_st02", map);
 	}
 	
+	public void product_delete(HashMap<String, Object> map) throws Exception{
+		delete("admin.product_delete", map);
+	}
+	
 }
