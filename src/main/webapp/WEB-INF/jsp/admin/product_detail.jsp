@@ -56,6 +56,21 @@ $(document).ready(function() {
 	});
 	
 	$("#save").click(function(){
+		
+		var ll = $("#listlength").val();
+		var aa = "TOTAL_QTY";
+		var bb = "QTY_ST02";
+		var cc = "QTY_ST01";
+		var dd = "PRO_GB";
+		var ee = "KOR_NAME";
+		
+		for(var i = 0 ; i < ll ; i++){
+			if(parseInt($("input[name='"+aa+"']")[i].value) != parseInt($("input[name='"+bb+"']")[i].value)+parseInt($("input[name='"+cc+"']")[i].value)){
+				alert($("input[name='"+dd+"']")[i].value+"-"+$("input[name='"+ee+"']")[i].value+" 합계수량과 창고,진열 작업수량이 맞지않습니다.");
+				return;
+			}
+			
+		}
 		$('form').submit();
 	})
 	
@@ -78,7 +93,11 @@ function modification(offer_no,work_gb,insert_gb){ //jquery 바깥에 선언해�
 }
 
 function product_delete(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	 location.href="product_delete.do?offer_no="+offer_no+"&work_gb="+work_gb;
+	var con = confirm("데이터를 삭제하시겠습니까? *복구 불가능합니다.");
+	if(con){
+		 location.href="product_delete.do?offer_no="+offer_no+"&work_gb="+work_gb;
+	}
+	return;
 }
 
 function checkQTY(name,line){
@@ -196,8 +215,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
  
  <form action="ipjego.do" id="form" name="form" method="post">
  	<input type="hidden" name="OFFER_NO" class="ui celled table" value="${map.offer_no}" style="text-align:right;background-color:transparent; border-style:none" readonly>
- 	<input type="text" name="insert_gb" value="${map.insert_gb}">
- 	<input type="text" name="upornew" value="${map.upornew}">
+ 	<input type="hidden" name="insert_gb" value="${map.insert_gb}">
+ 	<input type="hidden" name="upornew" value="${map.upornew}">
+ 	<input type="hidden" id="listlength" value="${fn:length(list)}">
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			
@@ -218,7 +238,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<c:when test="${map.insert_gb  eq 'V' }">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
-					<button id="dateupdate" class="ui button" type="button" onclick="product_delete('${map.offer_no}','${map.work_gb}')">작업삭제${map.offer_no}</button>
+					<button id="dateupdate" class="ui button" type="button" onclick="product_delete('${map.offer_no}','${map.work_gb}')">작업삭제</button>
 				</c:when>
 				<c:when test="${map.insert_gb  eq 'I'}">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
@@ -234,8 +254,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:5%;text-align:center;" rowspan="2" >품목<br>코드</th>
-					<th style="width:23%;text-align:center;" rowspan="2" >품목명</th>
+					<th style="width:7%;text-align:center;" rowspan="2" >품목<br>코드</th>
+					<th style="width:21%;text-align:center;" rowspan="2" >품목명</th>
 					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업전 수량</th>
 					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업 수량</th>
 					<th style="width:24%;text-align:center;" colspan="3">${work_nm}작업후 수량</th>
@@ -259,9 +279,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 						<c:forEach items="${list}" var="row" varStatus="statu">
 							<tr>
 								<td>
-									<input type="text" name="PRO_GB" class="ui celled table" value="${row.PRO_GB}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+									<input type="text" name="PRO_GB" class="ui celled table" value="${row.PRO_GB}" style="text-align:center;background-color:transparent; border-style:none" readonly>
 								</td>
-								<td>${row.KOR_NAME}</td>
+								<td><input type="text" name="KOR_NAME" class="ui celled table" value="${row.KOR_NAME}" style="text-align:left;background-color:transparent; border-style:none" readonly></td>
 								<td style="background-color:#F2F2F2;text-align:right;">
 									<input type="text" name="PRE_TOTAL_QTY" class="ui celled table" value="${row.PRE_TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 								</td>
