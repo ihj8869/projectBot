@@ -33,10 +33,11 @@ $(document).ready(function() {
 	});
 	
 	search = function(){ //코드이름으로 검색
-		var name = $("#searchName").val();
-		var use = $("#searchUse").val();
+		var strdate = $("#date_from").val();
+		var enddate = $("#date_to").val();
+		var workgb = $("#workgb").val();
 		
-		document.location.href="Code.do?name="+name+"&use="+use;
+		document.location.href="product.do?workgb="+workgb+"&strdate="+strdate+"&enddate="+enddate;
 	};
 	
 	$("#search").click(function(){ //검색 돋보기 아이콘 클릭시
@@ -142,21 +143,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			<tr>
 				<td>작업날짜</td>
 				<td>
-					<div class="ui input">
-						<input id="strdate" name="search" type="text">
+					<div class="ui input" >
+						<input id="date_from" name="date_from" type="text">
 					</div> ~ 
-					<div class="ui input">
-						<input id="enddate" name="search" type="text">
+					<div class="ui input" >
+						<input id="date_to" name="date_to" type="text">
 					</div>
 				</td>
 				
 				<td>작업구분</td>
 				<td>
 					<div class="ui input">
-						<select id="workgb" name="search">
-							<option value=""></option>
+						<select id="workgb" name="workgb">
+							<option value="%"></option>
 							<option value="WK01">입고작업</option>
 							<option value="WK02">재고작업</option>
+							<option value="WK03">판매작업</option>
 						</select>
 					</div>
 				</td>

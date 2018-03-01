@@ -143,8 +143,10 @@
 		SELECT  OFFER_NO , WORK_GB
 		FROM    BFS_PRODUCT
 		WHERE   1=1
+		<if test="strdate != null">
 		AND SUBSTR(OFFER_NO,1,8) BETWEEN #{strdate} and #{enddate}
 		AND WORK_GB LIKE '%'||#{workgb}||'%' 
+		</if>
 		GROUP BY OFFER_NO, WORK_GB)
 	</select>
 	
@@ -153,23 +155,19 @@
 	</resultMap>
 	
 	
-	<select id="searchProductList" resultMap="ProductList">
-		SELECT  OFFER_NO
-				, SUBSTR(OFFER_NO,1,4)||'년'||SUBSTR(OFFER_NO,5,2)||'월'|| SUBSTR(OFFER_NO,7,2)||'일' WORK_DATE
-				, SUBSTR(OFFER_NO,9,2) WORK_NUM 
-				, WORK_GB
-				, (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
-				, MAGAM_GB
-			FROM    BFS_PRODUCT
-			WHERE   1=1
-		<if test="strdate != null &amp;&amp; enddate != null">
-			AND SUBSTR(OFFER_NO,1,8) BETWEEN #{strdate} and #{enddate}
-		</if>
-		<if test="workgb != null">
-			AND WORK_GB = '#{workgb}' 
-		</if>
-		GROUP BY OFFER_NO, WORK_GB, MAGAM_GB
-		ORDER BY OFFER_NO DESC
+	<select id="searchProductList" parameterType="hashmap" resultMap="ProductList">
+		<![CDATA[
+			SELECT  OFFER_NO
+					, SUBSTR(OFFER_NO,1,4)||'년'||SUBSTR(OFFER_NO,5,2)||'월'|| SUBSTR(OFFER_NO,7,2)||'일' WORK_DATE
+					, SUBSTR(OFFER_NO,9,2) WORK_NUM 
+					, WORK_GB
+					, (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
+					, MAGAM_GB
+				FROM    BFS_PRODUCT
+				WHERE   1=1
+			GROUP BY OFFER_NO, WORK_GB, MAGAM_GB
+			ORDER BY OFFER_NO DESC
+		]]>
 	</select>
 	
 	<resultMap id="ProductList_Detail" type="hashmap">
@@ -177,7 +175,7 @@
 	</resultMap>
 	
 
-	<select id="searchProductList_Detail" resultMap="ProductList_Detail">
+	<select id="searchProductList_Detail"  resultMap="ProductList_Detail">
 		<![CDATA[
 			SELECT a.OFFER_NO, a.WORK_GB, a.PRO_GB 
 					, (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'PRGB' AND MINOR_CD = a.PRO_GB) KOR_NAME 

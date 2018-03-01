@@ -197,19 +197,24 @@ public class AdminController {
 	@RequestMapping(value="/product.do")
     public ModelAndView selectproductList(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,
     					@RequestParam(value="workgb",required=false)String workgb, @RequestParam(value="page",required=false)String page) throws Exception{
-		//
+		System.out.println("!!!!!!!!! = " +strdate);
+		System.out.println("@@@@@@@@ = " + enddate);
+		System.out.println("######## = " + workgb);
 		int pageScale=5;
 		int totalRow=0;
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";
 		String Cworkgb = "%";
 		if(!strdate.equals("")&&!strdate.equals(null)) {
+			System.out.println("!!!!!!!!! = " +strdate);
 			Cstrdate = strdate;
 		}
 		if(!enddate.equals("")&&!enddate.equals(null)) {
+			System.out.println("@@@@@@@@ = " + enddate);
 			Cenddate = enddate;
 		}
 		if(!enddate.equals("")&&!enddate.equals(null)) {
+			System.out.println("######## = " + workgb);
 			Cworkgb = workgb;
 		}
 		
@@ -219,12 +224,17 @@ public class AdminController {
 		map.put("strdate", Cstrdate);
 		map.put("enddate", Cenddate);
 		map.put("workgb", workgb);
+		
+		String[] keys = map.keySet().toArray(new String[0]);
+		
+		
 		totalRow = adminService.Product_getTotalRow(map);
 		
 		Paging pg = new Paging();		
 		map = pg.paging(pageScale, totalRow, page);
 		
 		ModelAndView mv = new ModelAndView("/admin/product");
+		
         List<Map<String,Object>> list = adminService.selectProductList(map);
         mv.addObject("list", list);
         mv.addObject("map", map);

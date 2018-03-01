@@ -93,7 +93,9 @@ public class AdminDAO extends AbstractDAO{
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectProductList(HashMap<String, Object> map) throws Exception{
-		
+		System.out.println(map.get("workgb"));
+		System.out.println(map.get("strdate"));
+		System.out.println(map.get("enddate"));
 		return (List<Map<String, Object>>)selectList("admin.searchProductList", map);			
 	}
 	
