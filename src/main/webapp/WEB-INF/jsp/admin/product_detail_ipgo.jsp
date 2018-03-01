@@ -88,14 +88,23 @@ function infoPopup(no){ //jquery 바깥에 선언해야함 <script> 안으로 �
 	window.open('memberInfo.do?no='+no, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
 }
 
-function modification(offer_no,work_gb,insert_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb="+insert_gb;
+function modification(offer_no,work_gb,insert_gb,magam_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	if(magam_gb == 'Y'){
+		alert("마감된작업은 수정이 불가능합니다.")
+	}else{ 
+	location.href="product_detail_ipgo.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb="+insert_gb;
+	}
+	return;
 }
 
-function product_delete(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	var con = confirm("데이터를 삭제하시겠습니까? *복구 불가능합니다.");
-	if(con){
-		 location.href="product_delete.do?offer_no="+offer_no+"&work_gb="+work_gb;
+function product_delete(offer_no,work_gb,magam_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+	if(magam_gb == 'Y'){
+		alert("마감된작업은 삭제가 불가능합니다.")
+	}else{
+		var con = confirm("데이터를 삭제하시겠습니까? *복구 불가능합니다.");
+		if(con){
+			 location.href="product_delete.do?offer_no="+offer_no+"&work_gb="+work_gb;
+		}
 	}
 	return;
 }
@@ -219,16 +228,20 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
  	<input type="hidden" name="upornew" value="${map.upornew}">
  	<input type="hidden" id="listlength" value="${fn:length(list)}">
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
-			
+		<table class="ui fixed single line celled table" style="width: 55%;" align="right">
 			<tr>
-				<td style="width:20%;">작업날짜</td>
-				<td style="width:30%;">
+				<td style="width:14%;">작업번호</td>
+				<td style="width:18%;">
+					${map.offer_no}
+					
+				</td>
+				<td style="width:14%;">작업날짜</td>
+				<td style="width:24%;">
 					${map.date_nm}
 					
 				</td>
-				<td style="width:20%;">작업구분</td>
-				<td style="width:30%;">
+				<td style="width:14%;">작업구분</td>
+				<td style="width:16%;">
 					${work_nm}작업
 				</td>
 			</tr>
@@ -237,15 +250,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			<c:choose>
 				<c:when test="${map.insert_gb  eq 'V' }">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
-					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업수정</button>
-					<button id="dateupdate" class="ui button" type="button" onclick="product_delete('${map.offer_no}','${map.work_gb}')">작업삭제</button>
+					<button id="dateupdate" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I','${info[0].MAGAM_GB}')">작업수정</button>
+					<button id="dateupdate" class="ui button" type="button" onclick="product_delete('${map.offer_no}','${map.work_gb}','${info[0].MAGAM_GB}')">작업삭제</button>
 				</c:when>
 				<c:when test="${map.insert_gb  eq 'I'}">
 					<button id="returnpage" class="ui button" type="button" >목록으로</button>
 					<button id="save" class="ui button" type="button" onclick="test">작업저장</button>
 					<c:choose>
 						<c:when test="${map.upornew  eq 'up'}">
-							<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I')">작업데이터복원</button>
+							<button id="modification" class="ui button" type="button" onclick="modification('${map.offer_no}','${map.work_gb}','I','${info[0].MAGAM_GB}')">작업데이터복원</button>
 						</c:when>
 					</c:choose>
 					<input type="hidden" id="listsize" value= '${fn:length(list)}'>

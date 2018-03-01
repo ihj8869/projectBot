@@ -233,8 +233,8 @@ public class AdminController {
         return mv;
     }
 	
-	//입고재고관리_상세==================================================================================================
-		@RequestMapping(value="/product_detail.do")
+	//입고관리_상세==================================================================================================
+		@RequestMapping(value="/product_detail_ipgo.do")
 	    public ModelAndView selectproductList_detail(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
 	    											, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
 			
@@ -261,13 +261,13 @@ public class AdminController {
 			map.put("date_nm", date_nm);
 			map.put("upornew", upornew);
 			
-			ModelAndView mv = new ModelAndView("/admin/product_detail");
+			ModelAndView mv = new ModelAndView("/admin/product_detail_ipgo");
 	        List<Map<String,Object>> list = adminService.selectProductList_detail(map);
 	        List<Map<String,Object>> info = adminService.selectinfo(map);
 	        mv.addObject("list", list);
 	        mv.addObject("map", map);
 	        mv.addObject("info", info);
-	        mv.addObject("side","product_detail");
+	        mv.addObject("side","product_detail_ipgo");
 	         
 	        return mv;
 	    }
@@ -317,7 +317,13 @@ public class AdminController {
 				
 			}
 			
-			return "redirect:product_detail.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V";
+			if(upornew.equals("new")) {
+				HashMap<String, Object> map_magam= new HashMap<>();
+				map_magam.put("offer_no", page_offer_no);
+				adminService.magam(map_magam);
+			}
+			
+			return "redirect:product_detail_ipgo.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V";
 		}
 		
 		
@@ -340,6 +346,129 @@ public class AdminController {
 				
 				return "redirect:/product.do?strdate=&enddate=&workgb=";
 			}
+			
+		//재고관리_상세==================================================================================================
+			@RequestMapping(value="/product_detail_jego.do")
+		    public ModelAndView selectproductList_detail_jego(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
+		    											, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
+				
+				System.out.println("offer_no = " + offer_no);
+				String upornew = "up";
+				if(offer_no.equals("0000000000")) {
+					Calendar cal = Calendar.getInstance();
+					String year = String.valueOf(cal.get(Calendar.YEAR));
+					String month =  String.valueOf(cal.get(Calendar.MONTH)+1);
+					if(month.length()==1) {
+						month = "0"+month;
+					}
+					String date =  String.valueOf(cal.get(Calendar.DATE));
+					offer_no = year+month+date+"99";
+					
+					upornew = "new";
+				}
+				
+				String date_nm = offer_no.substring(0,4)+"년"+offer_no.substring(4,6)+"월"+offer_no.substring(6,8)+"일";
+				
+				HashMap<String, Object> map = new HashMap<>();
+				map.put("offer_no", offer_no);
+				map.put("work_gb", work_gb);
+				map.put("insert_gb", insert_gb);
+				map.put("date_nm", date_nm);
+				map.put("upornew", upornew);
+				
+				ModelAndView mv = new ModelAndView("/admin/product_detail_jego");
+		        List<Map<String,Object>> jego_pre = adminService.pro_det_jego_pre(map);
+		        List<Map<String,Object>> jego_wk02 = adminService.pro_det_jego_wk02(map);
+		        List<Map<String,Object>> jego_wk03 = adminService.pro_det_jego_wk03(map);
+		        List<Map<String,Object>> info = adminService.selectinfo(map);
+		        mv.addObject("jego_pre", jego_pre);
+		        mv.addObject("jego_wk02", jego_wk02);
+		        mv.addObject("jego_wk03", jego_wk03);
+		        mv.addObject("map", map);
+		        mv.addObject("info", info);
+		        mv.addObject("side","product_detail_ipgo");
+		         
+		        return mv;
+		    }
+			
+			//재고저장=========================================================================================================
+			
+			@RequestMapping(value="jegoinsert.do")
+			public String jegoinsert(@RequestParam(value="PRO_GB", required=true) List<String> PRO_GB, @RequestParam(value="QTY_ST02", required=true) List<String> QTY_ST02, @RequestParam(value="QTY_ST01", required=true) List<String> QTY_ST01
+											, @RequestParam(value="QTY_ST02_WK03", required=true) List<String> QTY_ST02_WK03, @RequestParam(value="QTY_ST01_WK03", required=true) List<String> QTY_ST01_WK03
+											,@RequestParam(value="OFFER_NO", required=true) String OFFER_NO, HttpServletRequest httpServletRequest) throws Exception {
+				
+				String insert_gb = httpServletRequest.getParameter("insert_gb");
+				String upornew = httpServletRequest.getParameter("upornew");
+				String new_offer_no = adminService.selectnewofferno();
+				System.out.println("OFFER_NO");
+				String page_offer_no = OFFER_NO;
+				
+				System.out.println(page_offer_no);
+				
+				if(upornew.equals("new")) {
+					System.out.println("new 페이지 수정");
+					page_offer_no = new_offer_no;
+				}else {
+					System.out.println("삭제후 저장 한다");
+					HashMap<String, Object> map= new HashMap<>();
+					map.put("offer_no", page_offer_no);
+					adminService.product_delete(map);
+				}
+				
+				
+				
+				for(int i = 0 ; i<PRO_GB.size() ; i++) {
+					System.out.println(PRO_GB.get(i));
+					
+					System.out.println("new_offer_no ="+page_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01.get(i) +" QTY_ST02 = "+ QTY_ST02.get(i));
+					
+					HashMap<String, Object> hashMap = new HashMap<>();
+					hashMap.put("OFFER_NO",page_offer_no);
+					hashMap.put("PRO_GB", PRO_GB.get(i));
+					hashMap.put("QTY_ST01", QTY_ST01.get(i));
+					hashMap.put("QTY_ST02", QTY_ST02.get(i));
+					
+					if(!QTY_ST01.get(i).equals("") && !QTY_ST01.get(i).equals("0")) {
+						adminService.jegoinsert_st01_wk02(hashMap);
+					}
+					if(!QTY_ST02.get(i).equals("") && !QTY_ST02.get(i).equals("0")) {
+						adminService.jegoinsert_st02_wk02(hashMap);
+					}
+					
+					if(i==0&&(QTY_ST01.get(i).equals("") || QTY_ST01.get(i).equals("0"))&&(QTY_ST02.get(i).equals("") || QTY_ST02.get(i).equals("0"))) {
+						adminService.jegoinsert_st01_wk02(hashMap);
+					}
+					
+					hashMap.clear();
+					
+					System.out.println("new_offer_no ="+page_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01_WK03.get(i) +" QTY_ST02 = "+ QTY_ST02_WK03.get(i));
+					
+					hashMap.put("OFFER_NO",page_offer_no);
+					hashMap.put("PRO_GB", PRO_GB.get(i));
+					hashMap.put("QTY_ST01", QTY_ST01_WK03.get(i));
+					hashMap.put("QTY_ST02", QTY_ST02_WK03.get(i));
+					
+					if(!QTY_ST01_WK03.get(i).equals("") && !QTY_ST01_WK03.get(i).equals("0")) {
+						adminService.jegoinsert_st01_wk03(hashMap);
+					}
+					if(!QTY_ST02_WK03.get(i).equals("") && !QTY_ST02_WK03.get(i).equals("0")) {
+						adminService.jegoinsert_st02_wk03(hashMap);
+					}
+					
+					hashMap.clear();
+					
+				}
+				
+				if(upornew.equals("new")) {
+					HashMap<String, Object> map_magam= new HashMap<>();
+					map_magam.put("offer_no", page_offer_no);
+					adminService.magam(map_magam);
+				}
+				
+				return "redirect:product_detail_jego.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V";
+			}
+			
 
 	
 ////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------

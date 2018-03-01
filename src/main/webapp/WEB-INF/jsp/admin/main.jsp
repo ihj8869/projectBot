@@ -179,14 +179,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   						<c:set var='iUseDate' value="<%=iUseDate%>"/>
   						<c:if test="${row.WORK_DATE==iUseDate&&row.WORK_GB=='WK02'}">
   						<br>
-  						<a href="product_detail.do?offer_no=${row.OFFER_NO}&work_gb=${row.WORK_GB}&insert_gb=V" class="item"> 
+  						<a href="product_detail_jego.do?offer_no=${row.OFFER_NO}&work_gb=${row.WORK_GB}&insert_gb=V" class="item"> 
 							<i class="fa fa-calendar-check-o"></i>  재고작업
 						</a>
   						<!-- <i class="shop icon" style="zoom:1.8;"></i>  -->
   						</c:if>
   						<c:if test="${row.WORK_DATE==iUseDate&&row.WORK_GB=='WK01'}">
   						<br>
-  						<a href="product_detail.do?offer_no=${row.OFFER_NO}&work_gb=${row.WORK_GB}&insert_gb=V" class="item"> 
+  						<a href="product_detail_ipgo.do?offer_no=${row.OFFER_NO}&work_gb=${row.WORK_GB}&insert_gb=V" class="item"> 
 							<i class="fa fa-linkedin w3-hover-opacity"></i> 입고작업
 						</a>
   						</c:if>

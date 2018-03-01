@@ -127,4 +127,44 @@ public class AdminDAO extends AbstractDAO{
 		delete("admin.product_delete", map);
 	}
 	
+	public void magam(HashMap<String, Object> map) throws Exception{
+		delete("admin.magam", map);
+	}
+	
+	public void magamcheck(HashMap<String, Object> map) throws Exception{
+		update("admin.magamcheck", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> pro_det_jego_wk02(HashMap<String, Object> map)throws Exception{
+		return (List<Map<String, Object>>)selectList("admin.pro_det_jego_wk02", map);		
+	};
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> pro_det_jego_wk03(HashMap<String, Object> map)throws Exception{
+		return (List<Map<String, Object>>)selectList("admin.pro_det_jego_wk03", map);		
+	};
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> pro_det_jego_pre(HashMap<String, Object> map)throws Exception{
+		System.out.println("adminDao");
+		return (List<Map<String, Object>>)selectList("admin.pro_det_jego_pre", map);		
+	};
+	
+	public void jegoinsert_st01_wk02(HashMap<String, Object> map) throws Exception{
+		insert("admin.jegoinsert_st01_wk02", map);
+	}
+	
+	public void jegoinsert_st02_wk02(HashMap<String, Object> map) throws Exception{
+		insert("admin.jegoinsert_st02_wk02", map);
+	}
+	
+	public void jegoinsert_st01_wk03(HashMap<String, Object> map) throws Exception{
+		insert("admin.jegoinsert_st01_wk03", map);
+	}
+	
+	public void jegoinsert_st02_wk03(HashMap<String, Object> map) throws Exception{
+		insert("admin.jegoinsert_st02_wk03", map);
+	}
+	
 }

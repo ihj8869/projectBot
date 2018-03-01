@@ -134,6 +134,47 @@ public class AdminServiceImpl implements AdminService{
 	public void product_delete(HashMap<String, Object> map) throws Exception{
 		adminDAO.product_delete( map);
 	}
+	
+	public void magam(HashMap<String, Object> map) throws Exception{
+		adminDAO.magam(map);
+	}
+	
+	public void magamcheck(HashMap<String, Object> map) throws Exception{
+		adminDAO.magamcheck(map);
+	}
+	
+	public List<Map<String, Object>> pro_det_jego_wk02(HashMap<String, Object> map)throws Exception{
+		return adminDAO.pro_det_jego_wk02(map);
+	};
+	
+	public List<Map<String, Object>> pro_det_jego_wk03(HashMap<String, Object> map)throws Exception{
+		return adminDAO.pro_det_jego_wk03(map);
+	};
+	
+	public List<Map<String, Object>> pro_det_jego_pre(HashMap<String, Object> map)throws Exception{
+		System.out.println("adminservice");
+		return adminDAO.pro_det_jego_pre(map);
+	};
+	
+	@Override
+	public void jegoinsert_st01_wk02(HashMap<String, Object> map) throws Exception {
+		adminDAO.jegoinsert_st01_wk02(map);
+	}
+	
+	@Override
+	public void jegoinsert_st02_wk02(HashMap<String, Object> map) throws Exception {
+		adminDAO.jegoinsert_st02_wk02(map);
+	}
+	
+	@Override
+	public void jegoinsert_st01_wk03(HashMap<String, Object> map) throws Exception {
+		adminDAO.jegoinsert_st01_wk03(map);
+	}
+	
+	@Override
+	public void jegoinsert_st02_wk03(HashMap<String, Object> map) throws Exception {
+		adminDAO.jegoinsert_st02_wk03(map);
+	}
 }
 
 

@@ -159,6 +159,7 @@
 				, SUBSTR(OFFER_NO,9,2) WORK_NUM 
 				, WORK_GB
 				, (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR
+				, MAGAM_GB
 			FROM    BFS_PRODUCT
 			WHERE   1=1
 		<if test="strdate != null &amp;&amp; enddate != null">
@@ -167,8 +168,8 @@
 		<if test="workgb != null">
 			AND WORK_GB = '#{workgb}' 
 		</if>
-		GROUP BY OFFER_NO, WORK_GB
-		ORDER BY OFFER_NO ASC
+		GROUP BY OFFER_NO, WORK_GB, MAGAM_GB
+		ORDER BY OFFER_NO DESC
 	</select>
 	
 	<resultMap id="ProductList_Detail" type="hashmap">
@@ -249,9 +250,10 @@
 						FROM BFS_CODE 
 						WHERE MAJOR_CD = 'WKGB'
 						AND MINOR_CD = A.WORK_GB) WORK_GB_KR
+					,NVL(A.MAGAM_GB,'N') MAGAM_GB
 			FROM	BFS_PRODUCT A
 			WHERE	A.OFFER_NO = #{offer_no}	
-			GROUP BY A.OFFER_NO, A.WORK_GB
+			GROUP BY A.OFFER_NO, A.WORK_GB, A.MAGAM_GB
 		]]>
 	</select>
 	
@@ -266,19 +268,201 @@
 	
 	
 	<insert id="ipgoinsert_st01" parameterType="hashmap">
-		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN)
-		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST01',#{QTY_ST01},SYSDATE,'TEST')
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST01',#{QTY_ST01},SYSDATE,'TEST','N')
 	</insert>
 	
 	<insert id="ipgoinsert_st02" parameterType="hashmap">
-		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN)
-		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST02',#{QTY_ST02},SYSDATE,'TEST')
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK01',#{PRO_GB},'ST02',#{QTY_ST02},SYSDATE,'TEST','N')
+	</insert>
+	
+	<insert id="jegoinsert_st01_wk02" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK02',#{PRO_GB},'ST01',#{QTY_ST01},SYSDATE,'TEST','N')
+	</insert>
+	
+	<insert id="jegoinsert_st02_wk02" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK02',#{PRO_GB},'ST02',#{QTY_ST02},SYSDATE,'TEST','N')
+	</insert>
+	
+	<insert id="jegoinsert_st01_wk03" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK03',#{PRO_GB},'ST01',-#{QTY_ST01},SYSDATE,'TEST','N')
+	</insert>
+	
+	<insert id="jegoinsert_st02_wk03" parameterType="hashmap">
+		INSERT INTO BFS_PRODUCT (OFFER_NO, WORK_GB, PRO_GB, STATE_GB, QTY, UPDATE_DATE, UPDATE_MAN, MAGAM_GB)
+		VALUES(#{OFFER_NO},'WK03',#{PRO_GB},'ST02',-#{QTY_ST02},SYSDATE,'TEST','N')
 	</insert>
 	
 	<delete id="product_delete" parameterType="hashmap">
 		DELETE FROM BFS_PRODUCT
 		WHERE OFFER_NO = #{offer_no}
 	</delete>
+	
+	<update id="magam" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_PRODUCT
+			SET MAGAM_GB = 'Y' 
+			WHERE NVL(MAGAM_GB,'N') = 'N' 
+			AND offer_no <> #{offer_no}
+		]]>
+	</update>
+	
+	<select id="magamcheck" parameterType="hashmap">
+		SELECT MAGAM_GB 
+		FROM BFS_PRODUCT
+		WHERE OFFER_NO = #{offer_no}
+	</select>
+	
+	<select id="pro_det_jego_wk03" resultMap="ProductList_Detail">
+		<![CDATA[
+			SELECT a.OFFER_NO, a.WORK_GB, a.PRO_GB 
+			        , (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'PRGB' AND MINOR_CD = a.PRO_GB) KOR_NAME 
+			        , DECODE(a.QTY,-999999,0,a.QTY)+decode(b.QTY,-999999,0,b.QTY) TOTAL_QTY
+			        , DECODE(a.QTY,-999999,0,a.QTY) QTY_ST01
+			        , DECODE(b.QTY,-999999,0,b.QTY) QTY_ST02
+			FROM (
+			        SELECT OFFER_NO,WORK_GB,PRO_GB, SUM(QTY) QTY 
+			        FROM(
+			                SELECT OFFER_NO,WORK_GB,PRO_GB,STATE_GB
+			                    ,NVL(QTY,0) QTY
+			                FROM BFS_PRODUCT A
+			                WHERE OFFER_NO = #{offer_no}
+			                AND STATE_GB = 'ST01'
+			                AND WORK_GB = 'WK03'
+			                UNION
+			                SELECT #{offer_no}  OFFER_NO,  'WK03' WORK_GB, PRO_GB, 'ST01' STATE_GB
+			                        , -999999 QTY
+			                FROM(
+			                    SELECT MINOR_CD PRO_GB FROM BFS_CODE 
+			                    WHERE MAJOR_CD = 'PRGB'
+			                    AND USE_GB = 'Y'
+			                    MINUS
+			                    SELECT PRO_GB FROM BFS_PRODUCT
+			                    WHERE OFFER_NO = #{offer_no}
+			                    AND STATE_GB = 'ST01'
+			                    AND WORK_GB = 'WK03') A
+			                            )
+			        GROUP BY OFFER_NO,WORK_GB,PRO_GB
+			    ) a,
+			    (
+			        SELECT OFFER_NO,WORK_GB,PRO_GB, SUM(QTY) QTY 
+			        FROM(
+			            SELECT OFFER_NO,WORK_GB,PRO_GB,STATE_GB
+			                ,NVL(QTY,0) QTY
+			            FROM BFS_PRODUCT A
+			            WHERE OFFER_NO = #{offer_no}
+			            AND STATE_GB = 'ST02'
+			            AND WORK_GB = 'WK03'
+			            UNION
+			            SELECT #{offer_no} OFFER_NO, 'WK03' WORK_GB, PRO_GB, 'ST02' STATE_GB 
+			                    , -999999 QTY
+			            FROM(
+			                SELECT MINOR_CD PRO_GB FROM BFS_CODE 
+			                WHERE MAJOR_CD = 'PRGB'
+			                AND USE_GB = 'Y'
+			                MINUS
+			                SELECT PRO_GB FROM BFS_PRODUCT
+			                WHERE OFFER_NO = #{offer_no}
+			                AND STATE_GB = 'ST02'
+			                AND WORK_GB = 'WK03') A
+			                )
+			        GROUP BY OFFER_NO,WORK_GB,PRO_GB
+			    )b
+			where a.offer_no = b.offer_no
+			and  a.work_gb = b.work_gb 
+			and  a.pro_gb = b.pro_gb
+			ORDER BY PRO_GB ASC
+		]]>
+	</select>
+	
+	
+	<select id="pro_det_jego_wk02" parameterType="hashmap" resultMap="ProductList_Detail">
+		<![CDATA[
+			SELECT a.OFFER_NO, a.WORK_GB, a.PRO_GB 
+			        , (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'PRGB' AND MINOR_CD = a.PRO_GB) KOR_NAME 
+			        , DECODE(a.QTY,-999999,0,a.QTY)+decode(b.QTY,-999999,0,b.QTY) TOTAL_QTY
+			        , DECODE(a.QTY,-999999,0,a.QTY) QTY_ST01
+			        , DECODE(b.QTY,-999999,0,b.QTY) QTY_ST02
+			FROM (
+			        SELECT OFFER_NO,WORK_GB,PRO_GB, SUM(QTY) QTY 
+			        FROM(
+			                SELECT OFFER_NO,WORK_GB,PRO_GB,STATE_GB
+			                    ,NVL(QTY,0) QTY
+			                FROM BFS_PRODUCT A
+			                WHERE OFFER_NO = #{offer_no}
+			                AND STATE_GB = 'ST01'
+			                AND WORK_GB = 'WK02'
+			                UNION
+			                SELECT #{offer_no}  OFFER_NO,  'WK02' WORK_GB, PRO_GB, 'ST01' STATE_GB
+			                        , -999999 QTY
+			                FROM(
+			                    SELECT MINOR_CD PRO_GB FROM BFS_CODE 
+			                    WHERE MAJOR_CD = 'PRGB'
+			                    AND USE_GB = 'Y'
+			                    MINUS
+			                    SELECT PRO_GB FROM BFS_PRODUCT
+			                    WHERE OFFER_NO = #{offer_no}
+			                    AND STATE_GB = 'ST01'
+			                    AND WORK_GB = 'WK02') A
+			                            )
+			        GROUP BY OFFER_NO,WORK_GB,PRO_GB
+			    ) a,
+			    (
+			        SELECT OFFER_NO,WORK_GB,PRO_GB, SUM(QTY) QTY 
+			        FROM(
+			            SELECT OFFER_NO,WORK_GB,PRO_GB,STATE_GB
+			                ,NVL(QTY,0) QTY
+			            FROM BFS_PRODUCT A
+			            WHERE OFFER_NO = #{offer_no}
+			            AND STATE_GB = 'ST02'
+			            AND WORK_GB = 'WK02'
+			            UNION
+			            SELECT #{offer_no} OFFER_NO, 'WK02' WORK_GB, PRO_GB, 'ST02' STATE_GB 
+			                    , -999999 QTY
+			            FROM(
+			                SELECT MINOR_CD PRO_GB FROM BFS_CODE 
+			                WHERE MAJOR_CD = 'PRGB'
+			                AND USE_GB = 'Y'
+			                MINUS
+			                SELECT PRO_GB FROM BFS_PRODUCT
+			                WHERE OFFER_NO = #{offer_no}
+			                AND STATE_GB = 'ST02'
+			                AND WORK_GB = 'WK02') A
+			                )
+			        GROUP BY OFFER_NO,WORK_GB,PRO_GB
+			    )b
+			where a.offer_no = b.offer_no
+			and  a.work_gb = b.work_gb 
+			and  a.pro_gb = b.pro_gb
+			ORDER BY PRO_GB ASC
+		]]>
+	</select>
+	
+	<select id="pro_det_jego_pre" resultMap="ProductList_Detail">
+		<![CDATA[
+			SELECT A.PRO_GB, B.QTY PRE_QTY_ST02, A.QTY PRE_QTY_ST01 , (B.QTY + A.QTY) PRE_TOTAL_QTY 
+			       ,(SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'PRGB' AND MINOR_CD = A.PRO_GB) KOR_NAME
+			FROM
+			    (SELECT   MINOR_CD PRO_GB 
+			             ,NVL((SELECT SUM(QTY) FROM BFS_PRODUCT WHERE OFFER_NO < #{offer_no} AND PRO_GB = A.MINOR_CD AND STATE_GB = 'ST01'),'0') QTY
+			    FROM BFS_CODE A
+			    WHERE    MAJOR_CD = 'PRGB'
+			    AND      USE_GB = 'Y') A,
+			    (SELECT   MINOR_CD PRO_GB 
+			             ,NVL((SELECT SUM(QTY) FROM BFS_PRODUCT WHERE OFFER_NO < #{offer_no} AND PRO_GB = A.MINOR_CD AND STATE_GB = 'ST02'),'0') QTY
+			    FROM BFS_CODE A
+			    WHERE    MAJOR_CD = 'PRGB'
+			    AND      USE_GB = 'Y') B
+			WHERE A.PRO_GB = B.PRO_GB
+			ORDER BY A.PRO_GB ASC
+		]]>
+	</select>
+	
+	
 
 
 </mapper>

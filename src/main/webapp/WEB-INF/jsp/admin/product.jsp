@@ -52,13 +52,31 @@ $(document).ready(function() {
 	
 });
 
-function detail(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	if(offer_no == '0000000000'){
-		 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=I";
+function detail_ipgo(offer_no,work_gb,vi){
+	if(vi=='I'){
+		var con = confirm("신규입력시 이전에 작업은 확정이되어 수정이 불가능합니다. 진행하시겠습니까?");
+		if(con){
+			if(offer_no == '0000000000'){
+				 location.href="product_detail_ipgo.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=I";
+			}
+		}
 	}else{
-		 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
+		location.href="product_detail_ipgo.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
 	}
 	
+}
+
+function detail_jego(offer_no,work_gb,vi){
+	if(vi=='I'){
+		var con = confirm("신규입력시 이전에 작업은 확정이되어 수정이 불가능합니다. 진행하시겠습니까?");
+		if(con){
+			if(offer_no == '0000000000'){
+				 location.href="product_detail_jego.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=I";
+			}
+		}
+	}else{
+		location.href="product_detail_jego.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
+	}
 }
 
 
@@ -145,16 +163,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 				<td><i id="search" class="search icon" style="cursor: pointer;"></i></td>
 			</tr>
 		</table>
-				<button id="detail" class="ui button" type="button" onclick="detail('0000000000','WK01')">신규입고작업</button>
-				<button id="delete" class="ui button" type="button" value="${row.MINOR_CD}">신규재고작업</button>
+				<button id="detail" class="ui button" type="button" onclick="detail_ipgo('0000000000','WK01','I')">신규입고작업</button>
+				<button id="delete" class="ui button" type="button" onclick="detail_jego('0000000000','WK02','I')">신규재고작업</button>
 		<table class="ui celled table">
 			<thead>
 				<tr>
 					<th style="width:13%;">작업날짜</th>
 					<th style="width:13%;">작업순서</th>
 					<th style="width:13%;">작업번호</th>
-					<th style="width:45%;">작업구분</th>
-					<th style="width:16%;">작업내용확인</th>
+					<th style="width:31%;">작업구분</th>
+					<th style="width:10%;">마감여부</th>
+					<th style="width:20%;">작업내용확인</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">
@@ -165,8 +184,16 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td>${row.WORK_DATE}</td>
 								<td>${row.WORK_NUM}번</td>
 								<td>${row.OFFER_NO}</td>
-								<td>${row.WORK_KOR}</td>
-								<td><button id="detail" class="ui button" type="button" onclick="detail('${row.OFFER_NO}','${row.WORK_GB}')">작업내용확인</button></td>
+								<td>${row.WORK_KOR}작업</td>
+								<td>${row.MAGAM_GB}</td>
+								<c:choose>
+									<c:when test="${row.WORK_GB  eq 'WK01'}">
+									<td><button id="detail" class="ui button" type="button" onclick="detail_ipgo('${row.OFFER_NO}','${row.WORK_GB}','V')">${row.WORK_KOR} 작업내용확인</button></td>
+									</c:when>
+									<c:when test="${row.WORK_GB  eq 'WK02'}">
+									<td><button id="detail" class="ui button" type="button" onclick="detail_jego('${row.OFFER_NO}','${row.WORK_GB}','V')">${row.WORK_KOR} 작업내용확인</button></td>
+									</c:when>
+								</c:choose>
 							</tr>
 						</c:forEach>
 					</c:when>

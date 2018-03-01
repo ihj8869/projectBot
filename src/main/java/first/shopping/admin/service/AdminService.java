@@ -53,6 +53,24 @@ public interface AdminService {
 	public void ipgoinsert_st02(HashMap<String, Object> map)throws Exception;
 	
 	public void product_delete(HashMap<String, Object> map)throws Exception;
+	
+	public void magam(HashMap<String, Object> map)throws Exception;
+	
+	public void magamcheck(HashMap<String, Object> map)throws Exception;
+	
+	public List<Map<String, Object>> pro_det_jego_wk02(HashMap<String, Object> map)throws Exception;
+	
+	public List<Map<String, Object>> pro_det_jego_wk03(HashMap<String, Object> map)throws Exception;
+	
+	public List<Map<String, Object>> pro_det_jego_pre(HashMap<String, Object> map)throws Exception;
+	
+	public void jegoinsert_st01_wk02(HashMap<String, Object> map)throws Exception;
+	
+	public void jegoinsert_st02_wk02(HashMap<String, Object> map)throws Exception;
+	
+	public void jegoinsert_st01_wk03(HashMap<String, Object> map)throws Exception;
+	
+	public void jegoinsert_st02_wk03(HashMap<String, Object> map)throws Exception;
 }
 
 
