@@ -200,7 +200,7 @@ public class AdminController {
 		System.out.println("!!!!!!!!! = " +strdate);
 		System.out.println("@@@@@@@@ = " + enddate);
 		System.out.println("######## = " + workgb);
-		int pageScale=5;
+		int pageScale=10;
 		int totalRow=0;
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";
@@ -476,23 +476,23 @@ public class AdminController {
 					adminService.magam(map_magam);
 				}
 				
-				return "redirect:product_detail_jego.do?offer_no="+page_offer_no+"&work_gb=WK01&insert_gb=V";
+				return "redirect:product_detail_jego.do?offer_no="+page_offer_no+"&work_gb=WK02&insert_gb=V";
 			}
 			
 
 	
-////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-//		@ExceptionHandler
-//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
-//			
-//			ModelAndView mv = new ModelAndView("/admin/exception");
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("exceptioncontent", e);
-//	        mv.addObject("map", map);
-//			
-//			return mv;
-//	    }
-//	
+//페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
+		@ExceptionHandler
+	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+			
+			ModelAndView mv = new ModelAndView("/admin/exception");
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("exceptioncontent", e);
+	        mv.addObject("map", map);
+			
+			return mv;
+	    }
+	
 	
 	
 	

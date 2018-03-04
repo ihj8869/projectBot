@@ -397,30 +397,30 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="TOTAL_QTY_${statu.count}" name="TOTAL_QTY_WK03" type="text" class="ui celled table" value="${jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;" onchange="checkQTY('TOTAL_QTY_WK03','${statu.count}')">
+											<input id="TOTAL_QTY_${statu.count}" name="TOTAL_QTY_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;" onchange="checkQTY('TOTAL_QTY_WK03','${statu.count}')">
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input  type="text" class="ui celled table" value="${jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input  type="text" class="ui celled table" value="${-jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="QTY_ST02_${statu.count}" name="QTY_ST02_WK03" type="text" class="ui celled table"  value="${jego_wk03[statu.index].QTY_ST02}" style="text-align:right;" onchange="checkQTY('QTY_ST02_WK03','${statu.count}')">
+											<input id="QTY_ST02_${statu.count}" name="QTY_ST02_WK03" type="text" class="ui celled table"  value="${-jego_wk03[statu.index].QTY_ST02}" style="text-align:right;" onchange="checkQTY('QTY_ST02_WK03','${statu.count}')">
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input type="text" class="ui celled table" value="${jego_wk03[statu.index].QTY_ST02}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST02}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="QTY_ST01_${statu.count}" name="QTY_ST01_WK03" type="text" class="ui celled table" value="${jego_wk03[statu.index].QTY_ST01}" style="text-align:right;" onchange="checkQTY('QTY_ST01_WK03','${statu.count}')">
+											<input id="QTY_ST01_${statu.count}" name="QTY_ST01_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST01}" style="text-align:right;" onchange="checkQTY('QTY_ST01_WK03','${statu.count}')">
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input type="text" class="ui celled table" value="${jego_wk03[statu.index].QTY_ST01}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST01}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>
