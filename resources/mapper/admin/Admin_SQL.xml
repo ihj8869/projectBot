@@ -157,7 +157,9 @@
 	
 	<select id="searchProductList" parameterType="hashmap" resultMap="ProductList">
 		<![CDATA[
-			SELECT  OFFER_NO
+		SELECT * FROM 
+		(SELECT ROWNUM RN, a.* FROM 
+			(SELECT  OFFER_NO
 					, SUBSTR(OFFER_NO,1,4)||'년'||SUBSTR(OFFER_NO,5,2)||'월'|| SUBSTR(OFFER_NO,7,2)||'일' WORK_DATE
 					, SUBSTR(OFFER_NO,9,2) WORK_NUM 
 					, WORK_GB
@@ -166,7 +168,8 @@
 				FROM    BFS_PRODUCT
 				WHERE   1=1
 			GROUP BY OFFER_NO, WORK_GB, MAGAM_GB
-			ORDER BY OFFER_NO DESC
+			ORDER BY OFFER_NO DESC) a)
+		WHERE RN BETWEEN #{start} AND #{end}
 		]]>
 	</select>
 	

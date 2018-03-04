@@ -200,7 +200,7 @@ public class AdminController {
 		System.out.println("!!!!!!!!! = " +strdate);
 		System.out.println("@@@@@@@@ = " + enddate);
 		System.out.println("######## = " + workgb);
-		int pageScale=10;
+		int pageScale=2;
 		int totalRow=0;
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";
@@ -229,6 +229,8 @@ public class AdminController {
 		
 		
 		totalRow = adminService.Product_getTotalRow(map);
+		
+		System.out.println("totalRow = " + totalRow);
 		
 		Paging pg = new Paging();		
 		map = pg.paging(pageScale, totalRow, page);

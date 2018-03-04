@@ -7,6 +7,7 @@ public class Paging {
 	public HashMap<String, Object> paging(int pageScale, int totalRow, String page) {
 		
 		 int totalPage=totalRow%pageScale==0?totalRow/pageScale:totalRow/pageScale+1;
+		 System.out.println("test 1234 = " + totalPage);
 		    totalPage=totalPage==0?1:totalPage; 
 		    int currentPage=1;
 		    String temp="1";
