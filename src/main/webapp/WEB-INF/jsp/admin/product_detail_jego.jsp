@@ -129,13 +129,22 @@ function checkQTY(name,line){
 		var cc = "QTY_ST01";
 				
 		if(name==Waa){
-			if(parseInt($("input[name='"+Waa+"']")[linecheck].value) < parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Wcc+"']")[linecheck].value)){
-				alert("판매총수량이 창고,진열 작업수량보다 적습니다.");
-				$("input[name='"+Waa+"']")[linecheck].value = "";
-				return;
+			if($("input[name='"+Waa+"']")[linecheck].value>-1&&$("input[name='"+Waa+"']")[linecheck].value<1000000){
+				if(parseInt($("input[name='"+Waa+"']")[linecheck].value) < parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Wcc+"']")[linecheck].value)){
+					alert("판매총수량이 창고,진열 작업수량보다 적습니다.");
+					$("input[name='"+Waa+"']")[linecheck].value = "0";
+					return;
+				}
+				$("input[name='"+aa+"']")[linecheck].value = (parseInt($("input[name='"+Waa+"']")[linecheck].value)+parseInt($("input[name='"+Eaa+"']")[linecheck].value))-parseInt($("input[name='"+Paa+"']")[linecheck].value);
+			}else if($("input[name='"+Waa+"']")[linecheck].value<1000000){
+				alert("판매수량은 마이너스(-) 될수 없습니다.");
+				$("input[name='"+Waa+"']")[linecheck].value = "0";
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Waa+"']")[linecheck].value = "0";
 			}
-			$("input[name='"+aa+"']")[linecheck].value = (parseInt($("input[name='"+Waa+"']")[linecheck].value)+parseInt($("input[name='"+Eaa+"']")[linecheck].value))-parseInt($("input[name='"+Paa+"']")[linecheck].value);
 		}else if(name==Wbb){
+			if($("input[name='"+Wbb+"']")[linecheck].value>-1&&$("input[name='"+Wbb+"']")[linecheck].value<1000000){
 			if(parseInt($("input[name='"+Waa+"']")[linecheck].value) < parseInt($("input[name='"+Wbb+"']")[linecheck].value)){
 				alert("작업총수량보다 큽니다.");
 				$("input[name='"+Wbb+"']")[linecheck].value = "";
@@ -144,7 +153,15 @@ function checkQTY(name,line){
 			$("input[name='"+Wcc+"']")[linecheck].value = parseInt($("input[name='"+Waa+"']")[linecheck].value)-parseInt($("input[name='"+Wbb+"']")[linecheck].value);
 			$("input[name='"+bb+"']")[linecheck].value = (parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Ebb+"']")[linecheck].value))-parseInt($("input[name='"+Pbb+"']")[linecheck].value);
 			$("input[name='"+cc+"']")[linecheck].value = (parseInt($("input[name='"+Wcc+"']")[linecheck].value)+parseInt($("input[name='"+Ecc+"']")[linecheck].value))-parseInt($("input[name='"+Pcc+"']")[linecheck].value);
+			}else if($("input[name='"+Wbb+"']")[linecheck].value<1000000){
+				alert("판매수량은 마이너스(-)가 될수 없습니다.");
+				$("input[name='"+Wbb+"']")[linecheck].value = "0";
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Wbb+"']")[linecheck].value = "0";
+			}
 		}else if(name==Wcc){
+			if($("input[name='"+Wcc+"']")[linecheck].value>-1&&$("input[name='"+Wcc+"']")[linecheck].value<1000000){
 			if(parseInt($("input[name='"+Waa+"']")[linecheck].value) < parseInt($("input[name='"+Wcc+"']")[linecheck].value)){
 				alert("작업총수량보다 큽니다.");
 				$("input[name='"+Wcc+"']")[linecheck].value = "";
@@ -153,18 +170,30 @@ function checkQTY(name,line){
 			$("input[name='"+Wbb+"']")[linecheck].value = parseInt($("input[name='"+Waa+"']")[linecheck].value)-parseInt($("input[name='"+Wcc+"']")[linecheck].value);
 			$("input[name='"+bb+"']")[linecheck].value = (parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Ebb+"']")[linecheck].value))-parseInt($("input[name='"+Pbb+"']")[linecheck].value);
 			$("input[name='"+cc+"']")[linecheck].value = (parseInt($("input[name='"+Wcc+"']")[linecheck].value)+parseInt($("input[name='"+Ecc+"']")[linecheck].value))-parseInt($("input[name='"+Pcc+"']")[linecheck].value);
-			
+			}else if($("input[name='"+Wcc+"']")[linecheck].value<1000000){
+				alert("판매수량은 마이너스(-) 될수 없습니다.");
+				$("input[name='"+Wcc+"']")[linecheck].value = "0";
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Wcc+"']")[linecheck].value = "0";
+			}
 			
 			
 			
 		}else if(name==Eaa){
+			if($("input[name='"+Eaa+"']")[linecheck].value>-1000000&&$("input[name='"+Waa+"']")[linecheck].value<1000000){
 			if(parseInt($("input[name='"+Eaa+"']")[linecheck].value) < parseInt($("input[name='"+Ebb+"']")[linecheck].value)+parseInt($("input[name='"+Ecc+"']")[linecheck].value)){
 				alert("재고총수량이 창고,진열 작업수량보다 적습니다.");
 				$("input[name='"+Eaa+"']")[linecheck].value = "";
 				return;
 			}
 			$("input[name='"+aa+"']")[linecheck].value = (parseInt($("input[name='"+Waa+"']")[linecheck].value)+parseInt($("input[name='"+Eaa+"']")[linecheck].value))-parseInt($("input[name='"+Paa+"']")[linecheck].value);
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Eaa+"']")[linecheck].value = "0";
+			}
 		}else if(name==Ebb){
+			if($("input[name='"+Ebb+"']")[linecheck].value>-1000000&&$("input[name='"+Waa+"']")[linecheck].value<1000000){
 			if(parseInt($("input[name='"+Eaa+"']")[linecheck].value) < parseInt($("input[name='"+Ebb+"']")[linecheck].value)){
 				alert("작업총수량보다 큽니다.");
 				$("input[name='"+Ebb+"']")[linecheck].value = "";
@@ -173,7 +202,12 @@ function checkQTY(name,line){
 			$("input[name='"+Ecc+"']")[linecheck].value = parseInt($("input[name='"+Eaa+"']")[linecheck].value)-parseInt($("input[name='"+Ebb+"']")[linecheck].value);
 			$("input[name='"+bb+"']")[linecheck].value = (parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Ebb+"']")[linecheck].value))-parseInt($("input[name='"+Pbb+"']")[linecheck].value);
 			$("input[name='"+cc+"']")[linecheck].value = (parseInt($("input[name='"+Wcc+"']")[linecheck].value)+parseInt($("input[name='"+Ecc+"']")[linecheck].value))-parseInt($("input[name='"+Pcc+"']")[linecheck].value);
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Ebb+"']")[linecheck].value = "0";
+			}
 		}else if(name==Ecc){
+			if($("input[name='"+Ecc+"']")[linecheck].value>-1000000&&$("input[name='"+Waa+"']")[linecheck].value<1000000){
 			if(parseInt($("input[name='"+Eaa+"']")[linecheck].value) < parseInt($("input[name='"+Ecc+"']")[linecheck].value)){
 				alert("작업총수량보다 큽니다.");
 				$("input[name='"+Ecc+"']")[linecheck].value = "";
@@ -182,6 +216,10 @@ function checkQTY(name,line){
 			$("input[name='"+Wbb+"']")[linecheck].value = parseInt($("input[name='"+Waa+"']")[linecheck].value)-parseInt($("input[name='"+Wcc+"']")[linecheck].value);
 			$("input[name='"+bb+"']")[linecheck].value = (parseInt($("input[name='"+Wbb+"']")[linecheck].value)+parseInt($("input[name='"+Ebb+"']")[linecheck].value))-parseInt($("input[name='"+Pbb+"']")[linecheck].value);
 			$("input[name='"+cc+"']")[linecheck].value = (parseInt($("input[name='"+Wcc+"']")[linecheck].value)+parseInt($("input[name='"+Ecc+"']")[linecheck].value))-parseInt($("input[name='"+Pcc+"']")[linecheck].value);
+			}else{
+				alert("숫자만 입력해주세요");
+				$("input[name='"+Ecc+"']")[linecheck].value = "0";
+			}
 		}else{
 			return;
 		}
@@ -226,6 +264,7 @@ function atset(ls){
 	}
 	
 }
+
 
 
 
@@ -368,9 +407,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 						<c:forEach items="${jego_pre}" var="row" varStatus="statu">
 						<c:choose>
 							<c:when test="${map.upornew eq 'up'}">
-								<c:set var="ETQ" value="${row.PRE_TOTAL_QTY-jego_wk03[statu.index].TOTAL_QTY+jego_wk02[statu.index].TOTAL_QTY}"/>
-								<c:set var="ETS02" value="${row.PRE_QTY_ST02-jego_wk03[statu.index].QTY_ST02+jego_wk02[statu.index].QTY_ST02}"/>
-								<c:set var="ETS01" value="${row.PRE_QTY_ST01-jego_wk03[statu.index].QTY_ST01+jego_wk02[statu.index].QTY_ST01}"/>
+								<c:set var="ETQ" value="${row.PRE_TOTAL_QTY+jego_wk03[statu.index].TOTAL_QTY+jego_wk02[statu.index].TOTAL_QTY}"/>
+								<c:set var="ETS02" value="${row.PRE_QTY_ST02+jego_wk03[statu.index].QTY_ST02+jego_wk02[statu.index].QTY_ST02}"/>
+								<c:set var="ETS01" value="${row.PRE_QTY_ST01+jego_wk03[statu.index].QTY_ST01+jego_wk02[statu.index].QTY_ST01}"/>
 							</c:when>
 							<c:when test="${map.upornew eq 'new'}">
 								<c:set var="ETQ" value="0"/>
@@ -397,7 +436,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="TOTAL_QTY_${statu.count}" name="TOTAL_QTY_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;" onchange="checkQTY('TOTAL_QTY_WK03','${statu.count}')">
+											<input id="TOTAL_QTY_${statu.count}" name="TOTAL_QTY_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;" onchange="checkQTY('TOTAL_QTY_WK03','${statu.count}')" >
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
 											<input  type="text" class="ui celled table" value="${-jego_wk03[statu.index].TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
@@ -407,7 +446,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="QTY_ST02_${statu.count}" name="QTY_ST02_WK03" type="text" class="ui celled table"  value="${-jego_wk03[statu.index].QTY_ST02}" style="text-align:right;" onchange="checkQTY('QTY_ST02_WK03','${statu.count}')">
+											<input id="QTY_ST02_${statu.count}" name="QTY_ST02_WK03" type="text" class="ui celled table"  value="${-jego_wk03[statu.index].QTY_ST02}" style="text-align:right;" onchange="checkQTY('QTY_ST02_WK03','${statu.count}')" >
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
 											<input type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST02}" style="text-align:right;background-color:transparent; border-style:none" readonly>
@@ -417,7 +456,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 								<td style="text-align:right;">
 									<c:choose>
 										<c:when test="${map.insert_gb  eq 'I' }">
-											<input id="QTY_ST01_${statu.count}" name="QTY_ST01_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST01}" style="text-align:right;" onchange="checkQTY('QTY_ST01_WK03','${statu.count}')">
+											<input id="QTY_ST01_${statu.count}" name="QTY_ST01_WK03" type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST01}" style="text-align:right;" onchange="checkQTY('QTY_ST01_WK03','${statu.count}')" >
 										</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
 											<input type="text" class="ui celled table" value="${-jego_wk03[statu.index].QTY_ST01}" style="text-align:right;background-color:transparent; border-style:none" readonly>
@@ -430,7 +469,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 											<input type="text" name="END_TOTAL_QTY" class="ui celled table" value="${ETQ}" onchange="checkQTY('END_TOTAL_QTY','${statu.count}')" style="text-align:right;background-color: #F2F2F2;">
 									</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input  type="text" class="ui celled table" value="${row.PRE_TOTAL_QTY-jego_wk03[statu.index].TOTAL_QTY+jego_wk02[statu.index].TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input  type="text" class="ui celled table" value="${row.PRE_TOTAL_QTY+jego_wk03[statu.index].TOTAL_QTY+jego_wk02[statu.index].TOTAL_QTY}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>
@@ -440,7 +479,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 											<input type="text" name="END_QTY_ST02" class="ui celled table" value="${ETS02}" onchange="checkQTY('END_QTY_ST02','${statu.count}')" style="text-align:right;background-color: #F2F2F2;">
 									</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input  type="text" class="ui celled table" value="${row.PRE_QTY_ST02-jego_wk03[statu.index].QTY_ST02+jego_wk02[statu.index].QTY_ST02}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input  type="text" class="ui celled table" value="${row.PRE_QTY_ST02+jego_wk03[statu.index].QTY_ST02+jego_wk02[statu.index].QTY_ST02}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>
@@ -450,7 +489,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 											<input type="text" name="END_QTY_ST01" class="ui celled table" value="${ETS01}" onchange="checkQTY('END_QTY_ST01','${statu.count}')" style="text-align:right;background-color: #F2F2F2;">
 									</c:when>
 										<c:when test="${map.insert_gb  eq 'V' }">
-											<input  type="text" class="ui celled table" value="${row.PRE_QTY_ST01-jego_wk03[statu.index].QTY_ST01+jego_wk02[statu.index].QTY_ST01}" style="text-align:right;background-color:transparent; border-style:none" readonly>
+											<input  type="text" class="ui celled table" value="${row.PRE_QTY_ST01+jego_wk03[statu.index].QTY_ST01+jego_wk02[statu.index].QTY_ST01}" style="text-align:right;background-color:transparent; border-style:none" readonly>
 										</c:when>
 									</c:choose>
 								</td>

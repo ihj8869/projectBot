@@ -122,30 +122,54 @@ function checkQTY(name,line){
 	var Ecc = "END_QTY_ST01";
 			
 	if(name==aa){
-		if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+cc+"']")[linecheck].value)){
-			alert("합계수량이 창고,진열 작업수량보다 적습니다.");
-			$("input[name='"+aa+"']")[linecheck].value = "";
-			return;
+		if($("input[name='"+aa+"']")[linecheck].value>-1&&$("input[name='"+aa+"']")[linecheck].value<1000000){
+			if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+cc+"']")[linecheck].value)){
+				alert("합계수량이 창고,진열 작업수량보다 적습니다.");
+				$("input[name='"+aa+"']")[linecheck].value = "0";
+				return;
+			}
+			$("input[name='"+Eaa+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)+parseInt($("input[name='"+Paa+"']")[linecheck].value);
+		}else if($("input[name='"+aa+"']")[linecheck].value<1000000){
+			alert("입고수량은 마이너스(-) 될수 없습니다.");
+			$("input[name='"+aa+"']")[linecheck].value = "0";
+		}else{
+			alert("숫자만 입력해주세요");
+			$("input[name='"+aa+"']")[linecheck].value = "0";
 		}
-		$("input[name='"+Eaa+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)+parseInt($("input[name='"+Paa+"']")[linecheck].value);
 	}else if(name==bb){
-		if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+bb+"']")[linecheck].value)){
-			alert("작업총수량보다 큽니다.");
-			$("input[name='"+bb+"']")[linecheck].value = "";
-			return;
+		if($("input[name='"+bb+"']")[linecheck].value>-1&&$("input[name='"+bb+"']")[linecheck].value<1000000){
+			if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+bb+"']")[linecheck].value)){
+				alert("작업총수량보다 큽니다.");
+				$("input[name='"+bb+"']")[linecheck].value = "0";
+				return;
+			}
+			$("input[name='"+cc+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)-parseInt($("input[name='"+bb+"']")[linecheck].value);
+			$("input[name='"+Ebb+"']")[linecheck].value = parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+Pbb+"']")[linecheck].value);
+			$("input[name='"+Ecc+"']")[linecheck].value = parseInt($("input[name='"+cc+"']")[linecheck].value)+parseInt($("input[name='"+Pcc+"']")[linecheck].value);
+		}else if($("input[name='"+bb+"']")[linecheck].value<1000000){
+			alert("입고수량은 마이너스(-) 될수 없습니다.");
+			$("input[name='"+bb+"']")[linecheck].value = "0";
+		}else{
+			alert("숫자만 입력해주세요");
+			$("input[name='"+bb+"']")[linecheck].value = "0";
 		}
-		$("input[name='"+cc+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)-parseInt($("input[name='"+bb+"']")[linecheck].value);
-		$("input[name='"+Ebb+"']")[linecheck].value = parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+Pbb+"']")[linecheck].value);
-		$("input[name='"+Ecc+"']")[linecheck].value = parseInt($("input[name='"+cc+"']")[linecheck].value)+parseInt($("input[name='"+Pcc+"']")[linecheck].value);
 	}else if(name==cc){
-		if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+cc+"']")[linecheck].value)){
-			alert("작업총수량보다 큽니다.");
-			$("input[name='"+cc+"']")[linecheck].value = "";
-			return;
+		if($("input[name='"+cc+"']")[linecheck].value>-1&&$("input[name='"+cc+"']")[linecheck].value<1000000){
+			if(parseInt($("input[name='"+aa+"']")[linecheck].value) < parseInt($("input[name='"+cc+"']")[linecheck].value)){
+				alert("작업총수량보다 큽니다.");
+				$("input[name='"+cc+"']")[linecheck].value = "0";
+				return;
+			}
+			$("input[name='"+bb+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)-parseInt($("input[name='"+cc+"']")[linecheck].value);
+			$("input[name='"+Ebb+"']")[linecheck].value = parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+Pbb+"']")[linecheck].value);
+			$("input[name='"+Ecc+"']")[linecheck].value = parseInt($("input[name='"+cc+"']")[linecheck].value)+parseInt($("input[name='"+Pcc+"']")[linecheck].value);
+		}else if($("input[name='"+cc+"']")[linecheck].value<1000000){
+			alert("입고수량은 마이너스(-) 될수 없습니다.");
+			$("input[name='"+cc+"']")[linecheck].value = "0";
+		}else{
+			alert("숫자만 입력해주세요");
+			$("input[name='"+cc+"']")[linecheck].value = "0";
 		}
-		$("input[name='"+bb+"']")[linecheck].value = parseInt($("input[name='"+aa+"']")[linecheck].value)-parseInt($("input[name='"+cc+"']")[linecheck].value);
-		$("input[name='"+Ebb+"']")[linecheck].value = parseInt($("input[name='"+bb+"']")[linecheck].value)+parseInt($("input[name='"+Pbb+"']")[linecheck].value);
-		$("input[name='"+Ecc+"']")[linecheck].value = parseInt($("input[name='"+cc+"']")[linecheck].value)+parseInt($("input[name='"+Pcc+"']")[linecheck].value);
 	}else{
 		return;
 	}
