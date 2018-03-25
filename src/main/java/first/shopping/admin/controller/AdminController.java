@@ -200,7 +200,7 @@ public class AdminController {
 		System.out.println("!!!!!!!!! = " +strdate);
 		System.out.println("@@@@@@@@ = " + enddate);
 		System.out.println("######## = " + workgb);
-		int pageScale=2;
+		int pageScale=10;
 		int totalRow=0;
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";

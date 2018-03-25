@@ -104,7 +104,7 @@
 			FROM    BFS_PRODUCT
 			WHERE   SUBSTR(OFFER_NO,1,6) = DECODE(#{month},'12',#{year}||#{month},'11',#{year}||#{month},'10',#{year}||#{month},#{year}||'0'||#{month})
 			GROUP BY OFFER_NO, WORK_GB
-			ORDER BY WORK_DATE ASC
+			ORDER BY WORK_DATE ASC, OFFER_NO ASC
 		]]>
 	</select>
 	

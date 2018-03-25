@@ -112,7 +112,7 @@ body .container .tabs .tab.active {
 }
 body .container .content form {
   position: relative;
-  height: 287px;
+  height: 287px; 
 }
 body .container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
