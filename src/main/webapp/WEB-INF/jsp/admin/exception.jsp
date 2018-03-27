@@ -60,7 +60,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <br>
     <br>
     <br>
-    <h1><b>예외사항 발생 ${map.exceptioncontent}</b></h1>
+    <h1> <b>예외사항 발생  <br></h1>
+    
+    <c:choose>
+    	<c:when test="${fn:contains(map.exceptioncontent, 'ORA-00942: table') }">
+    		<h1>신규시스템에서 실행하였습니다.
+    		<br>초기 세팅을 시작하시겠습니까?</h1>
+    	</c:when>
+    	<c:otherwise>
+    		<h1>시스템오류입니다.
+    	</c:otherwise>
+    </c:choose>
     
 
 <script>

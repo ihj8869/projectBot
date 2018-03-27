@@ -158,7 +158,7 @@ public class AdminController {
     public ModelAndView selectCodeList(@RequestParam(value="name",required=false)String name,
     					@RequestParam(value="use",required=false)String id, @RequestParam(value="page",required=false)String page) throws Exception{
 		//
-		int pageScale=5;
+		int pageScale=10;
 		int totalRow=0;
 		
 		if(name!=null) {
@@ -491,7 +491,7 @@ public class AdminController {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("exceptioncontent", e);
 	        mv.addObject("map", map);
-			
+	        
 			return mv;
 	    }
 	

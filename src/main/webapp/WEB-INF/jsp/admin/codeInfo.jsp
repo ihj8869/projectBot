@@ -63,7 +63,7 @@ $(document).ready(function() {
 		<thead>
 			<tr>
 				<th style="width: 30%">품목코드</th>
-				<td><div class="ui input"><input type="text" name="minor_cd" value="${map.MINOR_CD}"></div></td>
+				<td><div class="ui input"><input type="text" name="minor_cd" value="${map.MINOR_CD}" style="background-color:transparent; border-style:none" readonly></div></td>
 			</tr>
 			<tr>
 				<th>품목명</th>
