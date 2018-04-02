@@ -180,6 +180,16 @@ public class AdminServiceImpl implements AdminService{
 	public String selectnewcode() throws Exception{
 		return adminDAO.selectnewcode();
 	}
+	
+	@Override
+	public void updatecode(MemberBean bean) throws Exception {
+		adminDAO.updatecode(bean);
+	}
+	
+	@Override
+	public void insertcode(MemberBean bean) throws Exception {
+		adminDAO.insertcode(bean);
+	}
 }
 
 

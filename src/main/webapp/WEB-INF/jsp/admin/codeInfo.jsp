@@ -29,14 +29,14 @@ $(document).ready(function() {
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
 			$("button[name=active_Y]").attr('class','ui button');
-			$("#state_gb").val('US02');
+			$("#state_gb").val('N');
 		}
 	});
 	$("button[name=active_Y]").click(function(){ //활성버튼 클릭
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
 			$("button[name=active_N]").attr('class','ui button');
-			$("#state_gb").val('US01');
+			$("#state_gb").val('Y');
 		}
 	});
 	
@@ -55,9 +55,11 @@ $(document).ready(function() {
 
 <body>
  <input type="hidden" id="id" value="${id}">
-	<form action="updateUser.do" method="post" id="updateForm">
+	<form action="codeIU.do" method="post" id="updateForm">
+		
 		<input type="hidden" name="update_id" value="${id}">
-		<input type="hidden" id="state_gb" name="state_gb" value="${map.STATE_GB}">
+		<input type="hidden" id="state_gb" name="state_gb" value="${map.USE_GB}">
+		<input type="hidden" id="insert_gb" name="insert_gb" value="${insert_gb}">
 		
 		<table class="ui unstackable table" style="margin: 20px; width: 92%">
 		<thead>
@@ -70,6 +72,7 @@ $(document).ready(function() {
 				</c:if>
 				<th style="width: 30%">품목코드</th>
 				<td><div class="ui input"><input type="text" name="minor_cd" value="${code}" style="background-color:transparent; border-style:none" readonly></div></td>
+				<input type="hidden" name="code_cd" value="${code}">
 			</tr>
 			<tr>
 				<th>품목명</th>
@@ -98,11 +101,22 @@ $(document).ready(function() {
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<th>코드 정지 날짜</th>
+				<td>${fn:substring(map.END_DATE,0,4)}년 ${fn:substring(map.END_DATE,5,6)}월 ${fn:substring(map.END_DATE,7,8)}일</td>
+			</tr>
 		</thead>
 		</table>
 	</form>
 	<span style="float:right; margin: 15px; margin-top: -10px;">
-		<button id="update" class="ui button">수정</button>
+	
+		<c:if test="${insert_gb eq 'I' }">
+			<button id="update" class="ui button">신규입력</button>
+		</c:if>
+		<c:if test="${insert_gb eq 'U' }">
+			<button id="update" class="ui button">수정</button>
+		</c:if>
+		
 		<button id="cancel" class="ui button">취소</button>
 	</span>
 	

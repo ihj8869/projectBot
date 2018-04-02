@@ -475,7 +475,19 @@
 		]]>
 	</select>
 	
-
+	<update id="updatecode" parameterType="first.shopping.admin.bean.MemberBean">
+		<![CDATA[
+			UPDATE BFS_CODE
+			SET KOR_NAME = #{kor_name} ,UPDATE_DATE = TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'), UPDATE_MAN = #{update_id} , USE_GB = #{state_gb}, END_DATE = #{id}
+			WHERE MAJOR_CD = 'PRGB'
+			AND MINOR_CD = #{code_cd}
+		]]>
+	</update>
+	
+	<insert id="insertcode" parameterType="hashmap">
+		INSERT INTO BFS_CODE
+		VALUES('PRGB',#{code_cd},#{kor_name},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),#{update_id},'Y','')
+	</insert>
 
 </mapper>
 

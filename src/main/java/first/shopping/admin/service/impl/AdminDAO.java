@@ -175,5 +175,13 @@ public class AdminDAO extends AbstractDAO{
 		return (String)selectOne("admin.serchcode");
 	}
 	
+	public void insertcode(MemberBean bean) throws Exception{
+		update("admin.insertcode", bean);
+	}
+	
+	public void updatecode(MemberBean bean) throws Exception{
+		update("admin.updatecode", bean);
+	}
+	
 	
 }

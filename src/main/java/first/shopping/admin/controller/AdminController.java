@@ -122,6 +122,7 @@ public class AdminController {
 		bean.setUpdate_ip(update_ip);
 		adminService.updateUser(bean);
 		request.setAttribute("errMsg", "수정되었습니다.");
+		System.out.println(bean.toString());
 		return "/inc/script";
 	}
 	
@@ -200,6 +201,41 @@ public class AdminController {
 			mv.addObject("new_code", code);
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value="/codeIU.do") //회원 상세정보 업데이트, 수정일, 수정아이피 업데이트
+	public String codeIU(@ModelAttribute MemberBean bean,HttpServletRequest request) throws Exception {
+		
+		String update_ip = request.getRemoteAddr();
+		bean.setUpdate_ip(update_ip);
+		
+		System.out.println(bean.toString());
+		
+		if(bean.getInsert_gb().equals("I")) {
+			adminService.insertcode(bean);			
+		}else if(bean.getInsert_gb().equals("U")) {
+			if(bean.getState_gb().equals("N")) {
+				
+				Calendar cal = Calendar.getInstance();
+				String year = String.valueOf(cal.get(Calendar.YEAR));
+				String month =  String.valueOf(cal.get(Calendar.MONTH)+1);
+				if(month.length()==1) {
+					month = "0"+month;
+				}
+				String date = String.valueOf(cal.get(Calendar.DATE));
+				if(date.length()==1) {
+					date = "0"+date;
+				}
+						
+				bean.setId(year+month+date);
+			}else {
+				bean.setId("");
+			}
+			adminService.updatecode(bean);	
+		}
+		request.setAttribute("errMsg", "수정되었습니다.");
+		System.out.println(bean.toString());
+		return "/inc/script";
 	}
 //입고재고관리==================================================================================================
 	@RequestMapping(value="/product.do")
@@ -485,16 +521,16 @@ public class AdminController {
 
 	
 //페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-		@ExceptionHandler
-	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
-			
-			ModelAndView mv = new ModelAndView("/admin/exception");
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("exceptioncontent", e);
-	        mv.addObject("map", map);
-	        
-			return mv;
-	    }
+//		@ExceptionHandler
+//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+//			
+//			ModelAndView mv = new ModelAndView("/admin/exception");
+//			HashMap<String, Object> map = new HashMap<>();
+//			map.put("exceptioncontent", e);
+//	        mv.addObject("map", map);
+//	        
+//			return mv;
+//	    }
 	
 	
 	

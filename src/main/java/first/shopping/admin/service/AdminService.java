@@ -73,6 +73,10 @@ public interface AdminService {
 	public void jegoinsert_st02_wk03(HashMap<String, Object> map)throws Exception;
 	
 	String selectnewcode() throws Exception;
+	
+	public void insertcode(MemberBean bean) throws Exception;
+	
+	public void updatecode(MemberBean bean) throws Exception;
 }
 
 

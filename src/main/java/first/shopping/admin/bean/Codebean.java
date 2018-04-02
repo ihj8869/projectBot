@@ -1,6 +1,6 @@
 package first.shopping.admin.bean;
 
-public class MemberBean {
+public class Codebean {
 	private String id;
 	private String password;
 	private String kor_name;
@@ -8,15 +8,13 @@ public class MemberBean {
 	private String update_id;
 	private String update_name;
 	private String update_ip;
-	private String insert_gb;
-	private String code_cd;
 	
-	public MemberBean() {
+	public Codebean() {
 		super();
 	}
 
-	public MemberBean(String id, String password, String kor_name, String state_gb, String update_id,
-			String update_name, String update_ip, String insert_gb, String code_cd) {
+	public Codebean(String id, String password, String kor_name, String state_gb, String update_id,
+			String update_name, String update_ip) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -25,8 +23,6 @@ public class MemberBean {
 		this.update_id = update_id;
 		this.update_name = update_name;
 		this.update_ip = update_ip;
-		this.insert_gb = insert_gb;
-		this.code_cd = code_cd;
 	}
 
 	public String getId() {
@@ -64,14 +60,6 @@ public class MemberBean {
 	public String getUpdate_id() {
 		return update_id;
 	}
-	
-	public String getInsert_gb() {
-		return insert_gb;
-	}
-	
-	public String getCode_cd() {
-		return code_cd;
-	}
 
 	public void setUpdate_id(String update_id) {
 		this.update_id = update_id;
@@ -92,19 +80,11 @@ public class MemberBean {
 	public void setUpdate_ip(String update_ip) {
 		this.update_ip = update_ip;
 	}
-	
-	public void setInsert_gb(String insert_gb) {
-		this.insert_gb = insert_gb;
-	}
-	
-	public void setCode_cd(String code_cd) {
-		this.code_cd = code_cd;
-	}
 
 	@Override
 	public String toString() {
 		return "MemberBean [id=" + id + ", password=" + password + ", kor_name=" + kor_name + ", state_gb=" + state_gb
-				+ ", update_id=" + update_id + ", update_name=" + update_name + ", update_ip=" + update_ip + ", insert_gb=" + insert_gb + ", code_cd=" + code_cd + "]";
+				+ ", update_id=" + update_id + ", update_name=" + update_name + ", update_ip=" + update_ip + "]";
 	}
 
 	
