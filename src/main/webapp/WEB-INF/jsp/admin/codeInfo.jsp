@@ -62,8 +62,14 @@ $(document).ready(function() {
 		<table class="ui unstackable table" style="margin: 20px; width: 92%">
 		<thead>
 			<tr>
+				<c:if test="${insert_gb eq 'I' }">
+					<c:set var="code" value="${new_code}"></c:set>
+				</c:if>
+				<c:if test="${insert_gb eq 'U' }">
+					<c:set var="code" value="${map.MINOR_CD}"></c:set>
+				</c:if>
 				<th style="width: 30%">품목코드</th>
-				<td><div class="ui input"><input type="text" name="minor_cd" value="${map.MINOR_CD}" style="background-color:transparent; border-style:none" readonly></div></td>
+				<td><div class="ui input"><input type="text" name="minor_cd" value="${code}" style="background-color:transparent; border-style:none" readonly></div></td>
 			</tr>
 			<tr>
 				<th>품목명</th>

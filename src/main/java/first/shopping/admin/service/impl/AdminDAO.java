@@ -169,4 +169,11 @@ public class AdminDAO extends AbstractDAO{
 		insert("admin.jegoinsert_st02_wk03", map);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public String selectnewcode() throws Exception{
+		
+		return (String)selectOne("admin.serchcode");
+	}
+	
+	
 }

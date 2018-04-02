@@ -186,40 +186,40 @@ public class AdminController {
     }
 	
 	@RequestMapping(value="/codeInfo.do") //회원 상세정보
-	public ModelAndView selectCodeInfo(@RequestParam(value="minor_cd")String minor_cd) throws Exception{
+	public ModelAndView selectCodeInfo(@RequestParam(value="minor_cd")String minor_cd, @RequestParam(value="insert_gb")String insert_gb) throws Exception{
 		
 		ModelAndView mv = new ModelAndView("/admin/codeInfo");
 		HashMap<String,Object> map =adminService.selectCodeInfo(minor_cd);
 		mv.addObject("map",map);
+		mv.addObject("insert_gb",insert_gb);
+		
+		System.out.println("insert_gb = "+insert_gb);
+		
+		if(minor_cd.equals("0000")) {
+			String code = adminService.selectnewcode();
+			mv.addObject("new_code", code);
+		}
 		return mv;
 	}
 //입고재고관리==================================================================================================
 	@RequestMapping(value="/product.do")
     public ModelAndView selectproductList(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,
     					@RequestParam(value="workgb",required=false)String workgb, @RequestParam(value="page",required=false)String page) throws Exception{
-		System.out.println("!!!!!!!!! = " +strdate);
-		System.out.println("@@@@@@@@ = " + enddate);
-		System.out.println("######## = " + workgb);
 		int pageScale=10;
 		int totalRow=0;
 		String Cstrdate = "00000000";
 		String Cenddate = "99999999";
 		String Cworkgb = "%";
 		if(!strdate.equals("")&&!strdate.equals(null)) {
-			System.out.println("!!!!!!!!! = " +strdate);
 			Cstrdate = strdate;
 		}
 		if(!enddate.equals("")&&!enddate.equals(null)) {
-			System.out.println("@@@@@@@@ = " + enddate);
 			Cenddate = enddate;
 		}
 		if(!enddate.equals("")&&!enddate.equals(null)) {
-			System.out.println("######## = " + workgb);
 			Cworkgb = workgb;
 		}
-		
-		System.out.println(Cstrdate+"++"+Cenddate+"++"+Cworkgb);
-		
+				
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("strdate", Cstrdate);
 		map.put("enddate", Cenddate);
@@ -481,6 +481,7 @@ public class AdminController {
 				return "redirect:product_detail_jego.do?offer_no="+page_offer_no+"&work_gb=WK02&insert_gb=V";
 			}
 			
+
 
 	
 //페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------

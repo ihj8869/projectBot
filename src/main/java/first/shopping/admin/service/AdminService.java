@@ -71,6 +71,8 @@ public interface AdminService {
 	public void jegoinsert_st01_wk03(HashMap<String, Object> map)throws Exception;
 	
 	public void jegoinsert_st02_wk03(HashMap<String, Object> map)throws Exception;
+	
+	String selectnewcode() throws Exception;
 }
 
 

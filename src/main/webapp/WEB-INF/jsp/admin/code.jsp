@@ -46,7 +46,7 @@ $(document).ready(function() {
 	});
 });
 
-function infoPopup(minor_cd){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
+function infoPopup(minor_cd,insert_gb){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
 	var cw =500; //창넓이
 	var ch = 400; //창높이
 	var sw = screen.availWidth;
@@ -54,7 +54,7 @@ function infoPopup(minor_cd){ //jquery 바깥에 선언해야함 <script> 안으
 	var px=(sw-cw)/2;
 	var py=(sh-ch)/2;
 	
-	window.open('codeInfo.do?minor_cd='+minor_cd, '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+	window.open('codeInfo.do?minor_cd='+minor_cd+'&insert_gb='+insert_gb , '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
 }
 </script>
 
@@ -137,7 +137,7 @@ body #codeTr:hover{background-color:whitesmoke;}
 			</tr>
 		</table>
 		
-		<button id="modify" class="ui button" onclick="infoPopup(${row.MINOR_CD})">신규품목코드 입력</button>
+		<button id="modify" class="ui button" onclick="infoPopup('0000','I')">신규품목코드 입력</button>
 		
 		<table class="ui celled table">
 			<thead>
@@ -153,7 +153,7 @@ body #codeTr:hover{background-color:whitesmoke;}
 				<c:choose>
 					<c:when test="${fn:length(list) > 0}">
 						<c:forEach items="${list}" var="row">
-							<tr id="codeTr" onclick="infoPopup('${row.MINOR_CD}')" style="cursor:pointer">
+							<tr id="codeTr" name="codeTr" onclick="infoPopup('${row.MINOR_CD}','U')" style="cursor:pointer">
 								<td>${row.MINOR_CD}</td>
 								<td>${row.KOR_NAME}</td>
 								<td>${row.UPDATE_DATE}</td>

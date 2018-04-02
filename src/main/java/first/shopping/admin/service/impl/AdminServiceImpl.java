@@ -175,6 +175,11 @@ public class AdminServiceImpl implements AdminService{
 	public void jegoinsert_st02_wk03(HashMap<String, Object> map) throws Exception {
 		adminDAO.jegoinsert_st02_wk03(map);
 	}
+	
+	@Override
+	public String selectnewcode() throws Exception{
+		return adminDAO.selectnewcode();
+	}
 }
 
 

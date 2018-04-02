@@ -463,6 +463,17 @@
 		]]>
 	</select>
 	
+	<select id="serchcode" parameterType="String" resultType="String">
+		<![CDATA[
+		SELECT DECODE(LENGTH(MAX(MINOR_CD)+1),'1','000','2','00','3','0','4','') || TO_CHAR(MAX(MINOR_CD)+1)
+		FROM (
+		        SELECT '0000' MINOR_CD FROM DUAL
+		        UNION
+		        SELECT MINOR_CD FROM BFS_CODE 
+		        WHERE MAJOR_CD = 'PRGB'
+		      )
+		]]>
+	</select>
 	
 
 
