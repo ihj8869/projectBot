@@ -183,5 +183,24 @@ public class AdminDAO extends AbstractDAO{
 		update("admin.updatecode", bean);
 	}
 	
+	public void createBFS_CODE() throws Exception{
+		update("admin.createBFS_CODE","");
+	}
+	
+	public void createBFS_USER() throws Exception{
+		update("admin.createBFS_USER","");
+	}
+	
+	public void createBFS_PRODUCT() throws Exception{
+		update("admin.createBFS_PRODUCT","");
+	}
+	
+	public void insertuser() throws Exception{
+		insert("admin.insertuser", "");
+	}
+	
+	public void insertcode() throws Exception{
+		insert("admin.insertcode2", "");
+	}
 	
 }

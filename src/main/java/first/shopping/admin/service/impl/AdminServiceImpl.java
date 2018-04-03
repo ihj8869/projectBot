@@ -190,6 +190,31 @@ public class AdminServiceImpl implements AdminService{
 	public void insertcode(MemberBean bean) throws Exception {
 		adminDAO.insertcode(bean);
 	}
+	
+	@Override
+	public void createBFS_CODE() throws Exception {
+		adminDAO.createBFS_CODE();
+	}
+	
+	@Override
+	public void createBFS_USER() throws Exception {
+		adminDAO.createBFS_USER();
+	}
+	
+	@Override
+	public void createBFS_PRODUCT() throws Exception {
+		adminDAO.createBFS_PRODUCT();
+	}
+	
+	@Override
+	public void insertcode() throws Exception {
+		adminDAO.insertcode();
+	}
+	
+	@Override
+	public void insertuser() throws Exception {
+		adminDAO.insertuser();
+	}
 }
 
 

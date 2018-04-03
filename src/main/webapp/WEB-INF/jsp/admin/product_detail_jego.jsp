@@ -64,7 +64,9 @@ $(document).ready(function() {
 		var dd = "PRO_GB";
 		var ee = "KOR_NAME";
 		
-		
+		if(confirm("판매작업만 진행하시겠습니까? /n판매작업만 진행시 재고수량은 자동세팅됩니다.")){
+			atset(ll);
+		}
 		
 		
 		for(var i = 0 ; i < ll ; i++){

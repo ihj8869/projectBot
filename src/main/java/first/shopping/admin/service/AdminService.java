@@ -77,6 +77,16 @@ public interface AdminService {
 	public void insertcode(MemberBean bean) throws Exception;
 	
 	public void updatecode(MemberBean bean) throws Exception;
+	
+	public void createBFS_CODE() throws Exception;
+	
+	public void createBFS_USER() throws Exception;
+	
+	public void createBFS_PRODUCT() throws Exception;
+	
+	public void insertcode() throws Exception;
+	
+	public void insertuser() throws Exception;
 }
 
 

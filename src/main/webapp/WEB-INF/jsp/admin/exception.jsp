@@ -34,6 +34,12 @@ function detail(offer_no,work_gb){ //jquery 바깥에 선언해야함 <script> �
 	 location.href="product_detail.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V";
 }
 
+function startsetting(){
+	if(confirm("초기세팅이 끝나면 로그인화면으로 자동 이동됩니다.\n진행하시겠습니까?")){
+		location.href="startsetting.do";
+	}
+}
+
 
 </script>
 
@@ -66,6 +72,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     	<c:when test="${fn:contains(map.exceptioncontent, 'ORA-00942: table') }">
     		<h1>신규시스템에서 실행하였습니다.
     		<br>초기 세팅을 시작하시겠습니까?</h1>
+    		<button id="delete" class="ui button" type="button" onclick="startsetting()">초기세팅시작</button>
     	</c:when>
     	<c:otherwise>
     		<h1>시스템오류입니다.

@@ -184,7 +184,7 @@ public class AdminController {
         return mv;
     }
 	
-	@RequestMapping(value="/codeInfo.do") //회원 상세정보
+	@RequestMapping(value="/codeInfo.do") 
 	public ModelAndView selectCodeInfo(@RequestParam(value="minor_cd")String minor_cd, @RequestParam(value="insert_gb")String insert_gb) throws Exception{
 		
 		ModelAndView mv = new ModelAndView("/admin/codeInfo");
@@ -345,7 +345,7 @@ public class AdminController {
 			for(int i = 0 ; i<PRO_GB.size() ; i++) {
 				System.out.println(PRO_GB.get(i));
 				
-				System.out.println("new_offer_no ="+page_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01.get(i) +" QTY_ST02 = "+ QTY_ST02.get(i));
+//				System.out.println("new_offer_no ="+page_offer_no+" pro_gb = "+ PRO_GB.get(i) +" QTY_ST01 = "+ QTY_ST01.get(i) +" QTY_ST02 = "+ QTY_ST02.get(i));
 				
 				HashMap<String, Object> hashMap = new HashMap<>();
 				hashMap.put("OFFER_NO",page_offer_no);
@@ -385,8 +385,6 @@ public class AdminController {
 				HashMap<String, Object> map= new HashMap<>();
 				map.put("offer_no", offer_no);
 				map.put("work_gb", work_gb);
-				
-				System.out.println("11111");
 				
 				adminService.product_delete(map);
 				
@@ -515,20 +513,33 @@ public class AdminController {
 				return "redirect:product_detail_jego.do?offer_no="+page_offer_no+"&work_gb=WK02&insert_gb=V";
 			}
 			
+			@RequestMapping(value="/startsetting.do") 
+			public ModelAndView startsetting() throws Exception{
+				
+				ModelAndView mv = new ModelAndView("/admin/index");
+				adminService.createBFS_CODE();
+				adminService.createBFS_PRODUCT();
+				adminService.createBFS_USER();
+				adminService.insertcode();
+				adminService.insertuser();
+				
+				return mv;
+			}
+			
 
 
 	
 //페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-//		@ExceptionHandler
-//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
-//			
-//			ModelAndView mv = new ModelAndView("/admin/exception");
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("exceptioncontent", e);
-//	        mv.addObject("map", map);
-//	        
-//			return mv;
-//	    }
+		@ExceptionHandler
+	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+			
+			ModelAndView mv = new ModelAndView("/admin/exception");
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("exceptioncontent", e);
+	        mv.addObject("map", map);
+	        
+			return mv;
+	    }
 	
 	
 	
