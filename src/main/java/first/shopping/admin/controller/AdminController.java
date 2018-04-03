@@ -55,9 +55,7 @@ public class AdminController {
 			@RequestParam(value="signUp_password")String password,HttpServletRequest request) throws Exception {
 		
 		String checkPw = adminService.checkPw(id);
-		System.out.println("아이디중복11111111"+checkPw);
 		if(checkPw != null) { //아이디 중복체크
-			System.out.println("아이디중복22222222222"+checkPw);
 			return "redirect:/index.jsp?err_code=dupl_id";
 			
 		} else {
@@ -142,7 +140,7 @@ public class AdminController {
 //메인===================================================================================================
 	@RequestMapping(value="main.do")
 	public ModelAndView main(@RequestParam(value="year")int year,@RequestParam(value="month")int month) throws Exception {
-		System.out.println(" AdminController.java  - @RequestMapping(value=\"/managePd.do\")");
+		
 		ModelAndView mv = new ModelAndView("/admin/main");
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("year", year);

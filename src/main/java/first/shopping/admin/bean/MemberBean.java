@@ -10,13 +10,14 @@ public class MemberBean {
 	private String update_ip;
 	private String insert_gb;
 	private String code_cd;
+	private String grade;
 	
 	public MemberBean() {
 		super();
 	}
 
 	public MemberBean(String id, String password, String kor_name, String state_gb, String update_id,
-			String update_name, String update_ip, String insert_gb, String code_cd) {
+			String update_name, String update_ip, String insert_gb, String code_cd, String grade) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -27,6 +28,7 @@ public class MemberBean {
 		this.update_ip = update_ip;
 		this.insert_gb = insert_gb;
 		this.code_cd = code_cd;
+		this.grade = grade;
 	}
 
 	public String getId() {
@@ -100,6 +102,15 @@ public class MemberBean {
 	public void setCode_cd(String code_cd) {
 		this.code_cd = code_cd;
 	}
+	
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	
 
 	@Override
 	public String toString() {
