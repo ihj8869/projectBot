@@ -514,16 +514,16 @@ public class AdminController {
 			}
 			
 			@RequestMapping(value="/startsetting.do") 
-			public ModelAndView startsetting() throws Exception{
+			public String startsetting() throws Exception{
 				
-				ModelAndView mv = new ModelAndView("/admin/index");
+				ModelAndView mv = new ModelAndView("/");
 				adminService.createBFS_CODE();
 				adminService.createBFS_PRODUCT();
 				adminService.createBFS_USER();
 				adminService.insertcode();
 				adminService.insertuser();
 				
-				return mv;
+				return "redirect:/index.jsp";
 			}
 			
 
