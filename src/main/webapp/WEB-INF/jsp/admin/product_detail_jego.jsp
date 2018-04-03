@@ -64,6 +64,9 @@ $(document).ready(function() {
 		var dd = "PRO_GB";
 		var ee = "KOR_NAME";
 		
+		
+		
+		
 		for(var i = 0 ; i < ll ; i++){
 			if(parseInt($("input[name='"+aa+"']")[i].value) != parseInt($("input[name='"+bb+"']")[i].value)+parseInt($("input[name='"+cc+"']")[i].value)){
 				alert($("input[name='"+dd+"']")[i].value+"-"+$("input[name='"+ee+"']")[i].value+" 작업수량이 맞지않습니다.");
@@ -320,7 +323,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <input type="hidden" id="id" value="${id}">
-
 <!-- Sidebar/menu -->
 <jsp:include page="../inc/side.jsp"/>
 

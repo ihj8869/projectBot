@@ -147,6 +147,8 @@ body #codeTr:hover{background-color:whitesmoke;}
 					<th>업데이트날짜</th>
 					<th>업데이트ID</th>
 					<th>사용여부</th>
+					<th>생성날짜</th>
+					<th>정지날짜</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">
@@ -159,6 +161,8 @@ body #codeTr:hover{background-color:whitesmoke;}
 								<td>${row.UPDATE_DATE}</td>
 								<td>${row.UPDATE_MAN}</td>
 								<td>${row.USE_GB}<input type="hidden" class="use_gb" value="${row.USE_GB}"></td>
+								<td>${fn:substring(row.STR_DATE,0,4)}년 ${fn:substring(row.STR_DATE,5,6)}월 ${fn:substring(row.STR_DATE,7,8)}일</td>
+								<td>${fn:substring(row.END_DATE,0,4)}년 ${fn:substring(row.END_DATE,5,6)}월 ${fn:substring(row.END_DATE,7,8)}일</td>
 								
 							</tr>
 						</c:forEach>

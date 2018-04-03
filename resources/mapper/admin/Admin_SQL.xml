@@ -486,7 +486,7 @@
 	
 	<insert id="insertcode" parameterType="hashmap">
 		INSERT INTO BFS_CODE
-		VALUES('PRGB',#{code_cd},#{kor_name},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),#{update_id},'Y','')
+		VALUES('PRGB',#{code_cd},#{kor_name},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),#{update_id},'Y','',TO_CHAR(SYSDATE,'YYYYMMDD'))
 	</insert>
 
 </mapper>
