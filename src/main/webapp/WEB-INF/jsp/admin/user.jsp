@@ -48,7 +48,7 @@ $(document).ready(function() {
 });
 
 function infoPopup(id){ //jquery 바깥에 선언해야함 <script> 안으로 빼기
-	var cw = 515; //창넓이
+	var cw = 550; //창넓이
 	var ch = 600; //창높이
 	var sw = screen.availWidth;
 	var sh = screen.availHeight;

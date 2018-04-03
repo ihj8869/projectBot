@@ -22,7 +22,7 @@
 	
 	<insert id="signUp" parameterType="hashmap">
 		INSERT INTO BFS_USER
-		VALUES(#{id},#{password},#{name},'US01',#{ip},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),NULL,NULL,NULL,'로그인 기록 없음')
+		VALUES(#{id},#{password},#{name},'US01',#{ip},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),NULL,NULL,NULL,'로그인 기록 없음','회원')
 	</insert>
 
 	<select id="selectUserList" parameterType="hashmap" resultType="hashmap">
@@ -88,7 +88,8 @@
 	<update id="updateUser" parameterType="first.shopping.admin.bean.MemberBean">
 		UPDATE BFS_USER 
 		SET KOR_NAME=#{kor_name},PASSWORD=#{password},
-			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),STATE_GB=#{state_gb}
+			UPDATE_ID=#{update_id},UPDATE_IP=#{update_ip},UPDATE_DATE=TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),
+			STATE_GB=#{state_gb},GRADE=#{grade}
 		WHERE ID=#{id}
 	</update>
 <!-- ================================================================================ -->

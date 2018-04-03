@@ -24,7 +24,6 @@ $(document).ready(function() {
 		alert('비밀번호가 '+$("#password").val()+'으로 초기화되었습니다.');
 	});
 	
-	//다음주에 섬밋하기
 	$("button[name=active_N]").click(function(){ //정지버튼 클릭
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
@@ -37,6 +36,20 @@ $(document).ready(function() {
 			$(this).attr('class','ui button active');
 			$("button[name=active_N]").attr('class','ui button');
 			$("#state_gb").val('US01');
+		}
+	});
+	$("button[name=active_N2]").click(function(){ //사용자버튼 클릭
+		if($(this).attr('class')=='ui button'){
+			$(this).attr('class','ui button active');
+			$("button[name=active_Y2]").attr('class','ui button');
+			$("#grade").val('사용자');
+		}
+	});
+	$("button[name=active_Y2]").click(function(){ //관리자버튼 클릭
+		if($(this).attr('class')=='ui button'){
+			$(this).attr('class','ui button active');
+			$("button[name=active_N2]").attr('class','ui button');
+			$("#grade").val('관리자');
 		}
 	});
 	
@@ -58,6 +71,7 @@ $(document).ready(function() {
 	<form action="updateUser.do" method="post" id="updateForm">
 		<input type="hidden" name="update_id" value="${id}">
 		<input type="hidden" id="state_gb" name="state_gb" value="${map.STATE_GB}">
+		<input type="hidden" id="grade" name="grade" value="${map.GRADE}">
 		
 		<table class="ui unstackable table" style="margin: 20px; width: 92%">
 		<thead>
@@ -95,6 +109,17 @@ $(document).ready(function() {
 							<button class="ui button active" name="active_N" type="button">정지</button>
 						</c:if>
 					</div>
+					
+					<div class="ui buttons">
+						<c:if test="${map.GRADE == '관리자'}">
+							<button class="ui button active" name="active_Y2" type="button">관리자</button>
+							<button class="ui button" name="active_N2" type="button">사용자</button>
+						</c:if>
+						<c:if test="${map.GRADE == '사용자'}">
+							<button class="ui button" name="active_Y2" type="button">관리자</button>
+							<button class="ui button active" name="active_N2" type="button">사용자</button>
+						</c:if>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -120,7 +145,7 @@ $(document).ready(function() {
 		</thead>
 		</table>
 	</form>
-	<span style="float:right; margin: 15px; margin-top: -10px;">
+	<span style="float:right; margin: 18px; margin-top: -10px;">
 		<button id="update" class="ui button">수정</button>
 		<button id="cancel" class="ui button">취소</button>
 	</span>
