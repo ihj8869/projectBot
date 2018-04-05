@@ -36,8 +36,8 @@ public class AdminDAO extends AbstractDAO{
 		return (HashMap<String, Object>)selectOne("admin.selectUserInfo", id);
 	}
 	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> selectCodeInfo(String minor_cd) throws Exception{
-		return (HashMap<String, Object>)selectOne("admin.selectCodeInfo", minor_cd);
+	public HashMap<String, Object> selectCodeInfo(HashMap<String, Object> map) throws Exception{
+		return (HashMap<String, Object>)selectOne("admin.selectCodeInfo", map);
 	}
 	
 	public void updateUser(MemberBean bean) throws Exception{
@@ -170,9 +170,9 @@ public class AdminDAO extends AbstractDAO{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String selectnewcode() throws Exception{
+	public String selectnewcode(String code) throws Exception{
 		
-		return (String)selectOne("admin.serchcode");
+		return (String)selectOne("admin.serchcode",code);
 	}
 	
 	public void insertcode(MemberBean bean) throws Exception{

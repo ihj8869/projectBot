@@ -40,8 +40,8 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.selectUserInfo(id);
 	}
 	@Override
-	public HashMap<String, Object> selectCodeInfo(String minor_cd) throws Exception {
-		return adminDAO.selectCodeInfo(minor_cd);
+	public HashMap<String, Object> selectCodeInfo(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectCodeInfo(map);
 	}
 
 	@Override
@@ -177,8 +177,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public String selectnewcode() throws Exception{
-		return adminDAO.selectnewcode();
+	public String selectnewcode(String code) throws Exception{
+		return adminDAO.selectnewcode(code);
 	}
 	
 	@Override

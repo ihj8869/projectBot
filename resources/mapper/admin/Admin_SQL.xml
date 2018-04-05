@@ -81,7 +81,7 @@
 	</select>
 	<select id="selectCodeInfo" parameterType="String" resultType="hashmap">
 		<![CDATA[
-			SELECT * FROM BFS_CODE WHERE MINOR_CD=#{minor_cd}
+			SELECT * FROM BFS_CODE WHERE MINOR_CD=#{minor_cd} AND MAJOR_CD = #{code}
 		]]>
 	</select>
 
@@ -117,7 +117,7 @@
 	<select id="searchCodeList" resultMap="CodeList">
 		SELECT * FROM 
 		(SELECT ROWNUM RN, A.* FROM BFS_CODE A
-		WHERE MAJOR_CD = 'PRGB'
+		WHERE MAJOR_CD = #{code}
 		<if test="name != null">
 			AND KOR_NAME LIKE '%' || #{name} || '%' 
 		</if>
@@ -130,7 +130,7 @@
 	
 	<select id="Code_getTotalRow" parameterType="hashmap" resultType="Integer">
 		SELECT COUNT(*) FROM BFS_CODE
-		WHERE MAJOR_CD = 'PRGB'
+		WHERE MAJOR_CD = #{code}
 		<if test="name != null">
 			AND KOR_NAME LIKE '%' || #{name} || '%' 
 		</if>
@@ -471,7 +471,7 @@
 		        SELECT '0000' MINOR_CD FROM DUAL
 		        UNION
 		        SELECT MINOR_CD FROM BFS_CODE 
-		        WHERE MAJOR_CD = 'PRGB'
+		        WHERE MAJOR_CD = #{code}
 		      )
 		]]>
 	</select>
@@ -487,7 +487,7 @@
 	
 	<insert id="insertcode" parameterType="hashmap">
 		INSERT INTO BFS_CODE
-		VALUES('PRGB',#{code_cd},#{kor_name},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),#{update_id},'Y','',TO_CHAR(SYSDATE,'YYYYMMDD'))
+		VALUES(#{grade},#{code_cd},#{kor_name},TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'),#{update_id},'Y','',TO_CHAR(SYSDATE,'YYYYMMDD'))
 	</insert>
 	
 	<update id="createBFS_CODE" parameterType="String">
@@ -551,7 +551,8 @@
 			"QTY" NUMBER NOT NULL ENABLE, 
 			"UPDATE_DATE" DATE NOT NULL ENABLE, 
 			"UPDATE_MAN" VARCHAR2(10 BYTE) NOT NULL ENABLE, 
-			"MAGAM_GB" VARCHAR2(1 BYTE)
+			"MAGAM_GB" VARCHAR2(1 BYTE), 
+			"BIGO" VARCHAR2(4 BYTE)
 		   ) SEGMENT CREATION IMMEDIATE 
 		  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
 		 NOCOMPRESS LOGGING

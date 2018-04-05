@@ -32,7 +32,7 @@ $(document).ready(function() {
 		var name = $("#searchName").val();
 		var use = $("#searchUse").val();
 		
-		document.location.href="code.do?name="+name+"&use="+use;
+		document.location.href="code_rs.do?name="+name+"&use="+use;
 	};
 	
 	$("#search").click(function(){ //검색 돋보기 아이콘 클릭시
@@ -54,7 +54,7 @@ function infoPopup(minor_cd,insert_gb){ //jquery 바깥에 선언해야함 <scri
 	var px=(sw-cw)/2;
 	var py=(sh-ch)/2;
 	
-	window.open('codeInfo.do?minor_cd='+minor_cd+'&insert_gb='+insert_gb , '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
+	window.open('codeInfo_rs.do?minor_cd='+minor_cd+'&insert_gb='+insert_gb , '', 'left='+px+',top='+py+',width='+cw+',height='+ch+', location=no, status=no, resizable=no, fullscreen=no, channelmode=no');
 }
 </script>
 
@@ -114,7 +114,7 @@ body #codeTr:hover{background-color:whitesmoke;}
     <div class="w3-container">
     
 	<div style="padding-top: 50px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
-	  <h1 class="ui dividing header" style="font-weight: 100;">품목코드 관리</h1>	
+	  <h1 class="ui dividing header" style="font-weight: 100;">비고코드 관리</h1>	
 		<table class="ui fixed single line celled table" style="width: 50%;" align="right">
 			<tr>
 				<td>품목명</td>
@@ -142,13 +142,13 @@ body #codeTr:hover{background-color:whitesmoke;}
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:8%;text-align:center;">품목코드</th>
-					<th style="width:27%;text-align:center;">품목명</th>
-					<th style="width:15%;text-align:center;">업데이트날짜</th>
-					<th style="width:12%;text-align:center;">업데이트ID</th>
-					<th style="width:8%;text-align:center;">사용여부</th>
-					<th style="width:14%;text-align:center;">생성날짜</th>
-					<th style="width:14%;text-align:center;">정지날짜</th>
+					<th>품목코드</th>
+					<th>품목명</th>
+					<th>업데이트날짜</th>
+					<th>업데이트ID</th>
+					<th>사용여부</th>
+					<th>생성날짜</th>
+					<th>정지날짜</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">

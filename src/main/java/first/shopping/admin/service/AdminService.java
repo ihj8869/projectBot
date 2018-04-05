@@ -16,7 +16,7 @@ public interface AdminService {
 	public void updateRating(HashMap<String, Object> map) throws Exception;
 	
 	HashMap<String, Object> selectUserInfo(String id) throws Exception;
-	HashMap<String, Object> selectCodeInfo(String minor_cd) throws Exception;
+	HashMap<String, Object> selectCodeInfo(HashMap<String, Object> map) throws Exception;
 	
 	public void updateUser(MemberBean bean) throws Exception;
 	
@@ -72,7 +72,7 @@ public interface AdminService {
 	
 	public void jegoinsert_st02_wk03(HashMap<String, Object> map)throws Exception;
 	
-	String selectnewcode() throws Exception;
+	String selectnewcode(String code) throws Exception;
 	
 	public void insertcode(MemberBean bean) throws Exception;
 	

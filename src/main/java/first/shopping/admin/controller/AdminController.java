@@ -159,9 +159,10 @@ public class AdminController {
 		//
 		int pageScale=10;
 		int totalRow=0;
-		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", "PRGB");
 		if(name!=null) {
-			HashMap<String, Object> map = new HashMap<>();
+			
 			map.put("name", name);
 			map.put("use", id);
 			totalRow = adminService.Code_getTotalRow(map);
@@ -170,7 +171,7 @@ public class AdminController {
 		}
 		
 		Paging pg = new Paging();		
-		HashMap<String, Object> map = pg.paging(pageScale, totalRow, page);
+		map = pg.paging(pageScale, totalRow, page);
 		map.put("name", name);
 		map.put("use", id);
 		
@@ -188,24 +189,123 @@ public class AdminController {
 	public ModelAndView selectCodeInfo(@RequestParam(value="minor_cd")String minor_cd, @RequestParam(value="insert_gb")String insert_gb) throws Exception{
 		
 		ModelAndView mv = new ModelAndView("/admin/codeInfo");
-		HashMap<String,Object> map =adminService.selectCodeInfo(minor_cd);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", "PRGB");
+		map.put("minor_cd", minor_cd);
+		map =adminService.selectCodeInfo(map);
 		mv.addObject("map",map);
 		mv.addObject("insert_gb",insert_gb);
 		
 		System.out.println("insert_gb = "+insert_gb);
 		
 		if(minor_cd.equals("0000")) {
-			String code = adminService.selectnewcode();
+			String code = adminService.selectnewcode("PRGB");
 			mv.addObject("new_code", code);
 		}
 		return mv;
 	}
 	
-	@RequestMapping(value="/codeIU.do") //회원 상세정보 업데이트, 수정일, 수정아이피 업데이트
+	@RequestMapping(value="/codeIU.do")
 	public String codeIU(@ModelAttribute MemberBean bean,HttpServletRequest request) throws Exception {
 		
 		String update_ip = request.getRemoteAddr();
 		bean.setUpdate_ip(update_ip);
+		bean.setGrade("PRGB");
+		
+		System.out.println(bean.toString());
+		
+		if(bean.getInsert_gb().equals("I")) {
+			adminService.insertcode(bean);			
+		}else if(bean.getInsert_gb().equals("U")) {
+			if(bean.getState_gb().equals("N")) {
+				
+				Calendar cal = Calendar.getInstance();
+				String year = String.valueOf(cal.get(Calendar.YEAR));
+				String month =  String.valueOf(cal.get(Calendar.MONTH)+1);
+				if(month.length()==1) {
+					month = "0"+month;
+				}
+				String date = String.valueOf(cal.get(Calendar.DATE));
+				if(date.length()==1) {
+					date = "0"+date;
+				}
+						
+				bean.setId(year+month+date);
+			}else {
+				bean.setId("");
+			}
+			adminService.updatecode(bean);	
+		}
+		request.setAttribute("errMsg", "수정되었습니다.");
+		System.out.println(bean.toString());
+		return "/inc/script";
+	}
+
+	
+	
+//---------------------------------------------------이유코드관리	
+	@RequestMapping(value="/code_rs.do")
+    public ModelAndView selectCodeList_rs(@RequestParam(value="name",required=false)String name,
+    					@RequestParam(value="use",required=false)String id, @RequestParam(value="page",required=false)String page) throws Exception{
+		//
+		int pageScale=10;
+		int totalRow=0;
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", "RSGB");
+		
+		if(name!=null) {
+			map.put("name", name);
+			map.put("use", id);
+			totalRow = adminService.Code_getTotalRow(map);
+		}else {
+			totalRow = adminService.Code_getTotalRow(null);
+		}
+		
+		Paging pg = new Paging();		
+		map = pg.paging(pageScale, totalRow, page);
+		map.put("name", name);
+		map.put("use", id);
+		
+		
+		
+		ModelAndView mv = new ModelAndView("/admin/code_rs");
+        List<Map<String,Object>> list = adminService.selectCodeList(map);
+        mv.addObject("list", list);
+        mv.addObject("map", map);
+        mv.addObject("side","code_rs");
+         
+        return mv;
+    }
+	
+	
+	@RequestMapping(value="/codeInfo_rs.do") 
+	public ModelAndView selectCodeInfo_rs(@RequestParam(value="minor_cd")String minor_cd, @RequestParam(value="insert_gb")String insert_gb) throws Exception{
+		
+		ModelAndView mv = new ModelAndView("/admin/codeInfo_rs");
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", "RSGB");
+		map.put("minor_cd", minor_cd);
+		map =adminService.selectCodeInfo(map);
+		mv.addObject("map",map);
+		mv.addObject("insert_gb",insert_gb);
+		
+		System.out.println("insert_gb = "+insert_gb);
+		
+		if(minor_cd.equals("0000")) {
+			String code = adminService.selectnewcode("RSGB");
+			mv.addObject("new_code", code);
+		}
+		return mv;
+	}
+	
+	
+	
+	@RequestMapping(value="/codeIU_rs.do")
+	public String codeIU_rs(@ModelAttribute MemberBean bean,HttpServletRequest request) throws Exception {
+		
+		String update_ip = request.getRemoteAddr();
+		bean.setUpdate_ip(update_ip);
+		bean.setGrade("RSGB");
 		
 		System.out.println(bean.toString());
 		
@@ -526,21 +626,28 @@ public class AdminController {
 				return "redirect:/index.jsp";
 			}
 			
-
-
-	
-//페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-		@ExceptionHandler
-	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
 			
-			ModelAndView mv = new ModelAndView("/admin/exception");
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("exceptioncontent", e);
-	        mv.addObject("map", map);
-	        
-			return mv;
-	    }
+			@RequestMapping(value="/statistics.do") 
+			public ModelAndView statistics(@RequestParam(value="month", required=true) String month) throws Exception{
+				
+				ModelAndView mv = new ModelAndView("/admin/statistics");
+				
+				return mv;
+			}
+
 	
+////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
+//		@ExceptionHandler
+//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+//			
+//			ModelAndView mv = new ModelAndView("/admin/exception");
+//			HashMap<String, Object> map = new HashMap<>();
+//			map.put("exceptioncontent", e);
+//	        mv.addObject("map", map);
+//	        
+//			return mv;
+//	    }
+//	
 	
 	
 	
