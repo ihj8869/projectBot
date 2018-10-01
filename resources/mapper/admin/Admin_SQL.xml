@@ -868,7 +868,6 @@
 	<select id="selectpreofferno_v2" parameterType="String" resultType="String">
 		SELECT MAX(TO_NUMBER(OFFER_NO)) PRE_OFFER_NO
 		FROM BFS_WORK
-		WHERE WORK_GB = 'WK01'
 	</select>
 	
 	<select id="ipgo_magam_check" parameterType="hashmap" resultType="Integer">

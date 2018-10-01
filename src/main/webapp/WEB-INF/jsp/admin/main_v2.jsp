@@ -96,22 +96,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 							<tr>
 								<td align="center" style="font-size: 20pt">
 								<h2 class="ui dividing header" style="font-weight: 100;">
-									<a href="main.do?year=<%=year-1%>&amp;month=<%=month%>" target="_self" class="w3-bar-item w3-button w3-hover-black">««</a>
+									<a href="main_v2.do?year=<%=year-1%>&amp;month=<%=month%>" target="_self" class="w3-bar-item w3-button w3-hover-black">««</a>
 									<%if(month > 0 ){ %>
-										<a href="main.do?year=<%=year%>&amp;month=<%=month-1%>" target="_self"  class="w3-bar-item w3-button w3-hover-black">«</a>
+										<a href="main_v2.do?year=<%=year%>&amp;month=<%=month-1%>" target="_self"  class="w3-bar-item w3-button w3-hover-black">«</a>
 									<%} else {%>
-										<a href="main.do?year=<%=year-1%>&amp;month=<%=11%>" target="_self" class="w3-bar-item w3-button w3-hover-black">«</a>
+										<a href="main_v2.do?year=<%=year-1%>&amp;month=<%=11%>" target="_self" class="w3-bar-item w3-button w3-hover-black">«</a>
 									<%} %>
 									&nbsp;&nbsp;
 										<%=year%>년
 										<%=month+1%>월
 									&nbsp;&nbsp;
 									<%if(month < 11 ){ %>
-									<a href="main.do?year=<%=year%>&amp;month=<%=month+1%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»</a>
+									<a href="main_v2.do?year=<%=year%>&amp;month=<%=month+1%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»</a>
 									<%}else{%>
-										<a href="main.do?year=<%=year+1%>&amp;month=<%=0%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»</a>
+										<a href="main_v2.do?year=<%=year+1%>&amp;month=<%=0%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»</a>
 									<%} %>
-									<a href="main.do?year=<%=year+1%>&amp;month=<%=month%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»»</a>
+									<a href="main_v2.do?year=<%=year+1%>&amp;month=<%=month%>" target="_self" class="w3-bar-item w3-button w3-hover-black">»»</a>
 								</h2>
 								</td>
 							</tr>
