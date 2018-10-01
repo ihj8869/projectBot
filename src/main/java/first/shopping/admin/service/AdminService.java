@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import first.shopping.admin.bean.CodeIUbean;
 import first.shopping.admin.bean.MemberBean;
 
 
@@ -87,6 +88,70 @@ public interface AdminService {
 	public void insertcode() throws Exception;
 	
 	public void insertuser() throws Exception;
+	
+	
+	//--------------------------------------------------------------------------------
+	
+	int Code_getTotalRow_v2(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectCodeList_v2(HashMap<String, Object> map) throws Exception;
+	
+	HashMap<String, Object> selectCodeInfo_v2(HashMap<String, Object> map) throws Exception;
+	
+	String selectnewcode_v2(String code) throws Exception;
+	
+	List<Map<String, Object>> select_upcode(String code_gb) throws Exception;
+	
+	public void insertcode_v2(CodeIUbean bean) throws Exception;
+	
+	public void updatecode_v2(CodeIUbean bean) throws Exception;
+	
+	int ipgolist_getTotalRow(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectipgolist(HashMap<String, Object> map) throws Exception;
+	
+	String selectnewofferno_v2() throws Exception;
+	
+	public void new_work_insert(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectwork(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectipgo(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectjin(HashMap<String, Object> map) throws Exception;
+	
+	public void work_update(HashMap<String, Object> map) throws Exception;
+	
+	public void ipgo_insert(HashMap<String, Object> map) throws Exception;
+	
+	public void ipgo_update(HashMap<String, Object> map) throws Exception;
+	
+	public void jin_insert(HashMap<String, Object> map) throws Exception;
+	
+	public void jin_update(HashMap<String, Object> map) throws Exception;
+	
+	public void product_delete_work(HashMap<String, Object> map)throws Exception;
+	
+	public void product_delete_ipgo(HashMap<String, Object> map)throws Exception;
+	
+	public void product_delete_jin(HashMap<String, Object> map)throws Exception;
+	
+	List<Map<String, Object>> selectCalList_v2(HashMap<String, Object> map) throws Exception;
+	
+	
+	String selectpreofferno_v2() throws Exception;
+	
+	int ipgo_magam_check(HashMap<String, Object> map) throws Exception;
+	
+	int jego_magam_check() throws Exception;
+	
+	public void new_jego_insert(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> selectjego(HashMap<String, Object> map) throws Exception;
+	
+	public void product_delete_jego(HashMap<String, Object> map)throws Exception;
+	
+	public void jego_update(HashMap<String, Object> map) throws Exception;
 }
 
 

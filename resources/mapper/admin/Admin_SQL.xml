@@ -589,6 +589,364 @@
 			VALUES('admin','dkfmaekdnsrkrp','관리자','US01','관리자')
 		]]>
 	</insert>
+	
+	<!-- ================================================================================ -->
+	
+	<select id="Code_getTotalRow_v2" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) FROM BFS_PROCODE
+		WHERE CODE_GB = #{code_gb}
+		<if test="name != null">
+			AND CODE_NM LIKE '%' || #{name} || '%' 
+		</if>
+		<if test="use != null">
+			AND DECODE(END_DATE,NULL,'Y','N') LIKE '%' || #{use} || '%' 
+		</if>
+	</select>
+	
+	<select id="searchCodeList_v2" resultMap="CodeList">
+		<![CDATA[
+		SELECT * 
+		FROM (  SELECT  ROWNUM RN, CODE, CODE_NM, CODE_GB,
+		        DECODE(CODE_GB ,'A','최상위코드','B',CODE_A,'C',CODE_B,'코드분류오류') UP_CODE,
+		        DECODE(CODE_GB ,'A','','B',CODE_A_NM,'C',CODE_B_NM,'코드분류오류') UP_CODE_NM,
+		        DECODE(END_DATE,NULL, '사용중', '정지') AS USE_YN, STAR_DATE, END_DATE,
+		    	DECODE(END_DATE,NULL, 'Y','N') USE_GB, UPDATE_DATE
+				FROM BFS_PROCODE A
+				WHERE CODE_GB = #{code_gb}
+		]]>
+				<if test="name != null">
+					AND CODE_NM LIKE '%' || #{name} || '%' 
+				</if>
+				<if test="use != null">
+					AND DECODE(END_DATE,NULL,'Y','N') LIKE '%' || #{use} || '%' 
+				</if>
+				ORDER BY DECODE(END_DATE,NULL, '1', '2') ASC, CODE ASC)
+		WHERE RN BETWEEN #{start} AND #{end}
+
+	</select>
+	
+	<select id="selectCodeInfo_v2" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.*,
+			        (CASE WHEN NVL(END_DATE,'29991231') > TO_CHAR(SYSDATE, 'YYYYMMDD') THEN 'Y' ELSE 'N' END) UPDATE_YN,
+			        DECODE(END_DATE,NULL,'Y','N') USE_YN,
+			        DECODE(CODE_GB ,'A','최상위코드','B',CODE_A,'C',CODE_B,'코드분류오류') UP_CODE,
+       				DECODE(CODE_GB ,'A','','B',CODE_A_NM,'C',CODE_B_NM,'코드분류오류') UP_CODE_NM
+			FROM    BFS_PROCODE A
+			WHERE   CODE_GB = #{code_gb}
+			AND     CODE = #{code}
+		]]>
+	</select>
+	
+	<select id="serchcode_v2" parameterType="String" resultType="String">
+		<![CDATA[
+		SELECT MAX(CODE_GB)||DECODE(LENGTH(TO_NUMBER(MAX(SUBSTR(CODE,2,4)))+1),'1','00','2','0','3','')||TO_CHAR(TO_NUMBER(MAX(SUBSTR(CODE,2,4)))+1) NEXT_CODE
+		FROM BFS_PROCODE 
+		WHERE CODE_GB = #{code}
+		]]>
+	</select>
+	
+	<select id="select_upcode" parameterType="String" resultType="hashmap">
+		<![CDATA[
+		SELECT CODE, CODE_NM
+		FROM    BFS_PROCODE
+		WHERE   CODE_GB = DECODE(#{code_gb},'A','','B','A','C','B','CODE_ERR')
+		AND     NVL(END_DATE,'29991231')>to_char(sysdate,'yyyymmdd')+1
+		ORDER BY CODE ASC
+		]]>
+	</select>
+	
+	<insert id="insertcode_v2" parameterType="hashmap">
+		<![CDATA[
+		INSERT INTO BFS_PROCODE (CODE, CODE_NM, CODE_GB,
+                        CODE_A, CODE_A_NM,
+                        CODE_B, CODE_B_NM,
+                        CODE_C, CODE_C_NM,
+                        BIGO, STAR_DATE, UPDATE_DATE)
+		VALUES (#{code},#{code_nm},#{code_gb},
+		        DECODE(#{code_gb},'A',#{code},'B',#{up_code},'C',(SELECT CODE_A FROM BFS_PROCODE WHERE CODE_GB = 'B' AND CODE = #{up_code})),
+		        DECODE(#{code_gb},'A',#{code_nm},'B',(SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = #{up_code}),'C',(SELECT CODE_A_NM FROM BFS_PROCODE WHERE CODE_GB = 'B' AND CODE = #{up_code})),
+		        DECODE(#{code_gb},'A','','B',#{code},'C',#{up_code}),
+		        DECODE(#{code_gb},'A','','B',#{code_nm},'C',(SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = #{up_code})),
+		        DECODE(#{code_gb},'A','','B','','C',#{code}),
+		        DECODE(#{code_gb},'A','','B','','C',#{code_nm}),
+		        nvl(#{bigo},''), to_char(sysdate,'yyyymmdd'),sysdate)
+		]]>
+	</insert>
+	
+	<update id="updatecode_v2" parameterType="first.shopping.admin.bean.MemberBean">
+		<![CDATA[
+			UPDATE BFS_PROCODE A
+			SET     CODE_NM = #{code_nm},
+					END_DATE = #{up_code_nm},
+			        BIGO = #{bigo},
+			        UPDATE_DATE = SYSDATE
+			WHERE   CODE = #{code}
+			AND     CODE_GB = #{code_gb}
+		]]>
+	</update>
+	
+		<select id="ipgolist_getTotalRow" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) FROM BFS_WORK
+		WHERE WORK_GB = #{work_gb}
+		<if test="name != null">
+			AND CODE_NM LIKE '%' || #{name} || '%' 
+		</if>
+		<if test="use != null">
+			AND DECODE(END_DATE,NULL,'Y','N') LIKE '%' || #{use} || '%' 
+		</if>
+		<if test="strdate != null">
+			<![CDATA[
+			AND OFFER_DATE > #{strdate} 
+			]]>
+		</if>
+		<if test="enddate != null">
+			<![CDATA[
+			AND OFFER_DATE < #{enddate} 
+			]]>
+		</if>
+	</select>
+	
+	<select id="selectipgolist" resultMap="CodeList">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT ROWNUM RN, A.*
+				FROM (  SELECT   A.* 
+						FROM    BFS_WORK A
+						WHERE   WORK_GB = #{work_gb}
+				]]> 
+							AND OFFER_DATE BETWEEN #{strdate} AND #{enddate} 
+						<if test="bigo_text != null and bigo_text != ''">
+							<![CDATA[
+							AND BIGO LIKE '%'||#{bigo_text}||'%' 
+							]]>
+						</if>
+						ORDER BY OFFER_NO DESC
+						)A)
+		WHERE RN BETWEEN #{start} AND #{end}
+
+	</select>
+	
+	<select id="serchofferno_v2" parameterType="String" resultType="String">
+		SELECT  TO_CHAR(SYSDATE,'YYYYMMDD')||DECODE(LENGTH(NVL(MAX(SUBSTR(OFFER_NO,9,2)),'0')+1),'1','0')||(NVL(MAX(SUBSTR(OFFER_NO,9,2)),'0')+1) OFFER_NO
+		FROM    BFS_WORK
+		WHERE   SUBSTR(OFFER_NO,1,8) = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+	
+	<insert id="new_work_insert" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO BFS_WORK (OFFER_NO, OFFER_DATE,WORK_GB,MAGAM_GB,UPDATE_DATE)
+			VALUES (#{new_offer_no}, SUBSTR(#{new_offer_no},1,8),#{work_gb},'1',SYSDATE)
+		]]>
+	</insert>
+	
+	<select id="selectwork" resultMap="CodeList">
+		<![CDATA[
+			SELECT  MAGAM_GB+1 AS NEXT_MAGAM_GB ,A.*
+			FROM    BFS_WORK A
+			WHERE   OFFER_NO = #{offer_no}
+		]]>
+	</select>
+	
+	<select id="selectipgo" resultMap="CodeList">
+		<![CDATA[
+			SELECT  CODE_B CODE , (SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = A.CODE_B) CODE_NM
+			        ,A.*
+			FROM    BFS_IPGO A
+			WHERE   OFFER_NO = #{offer_no}
+			ORDER BY CODE_B ASC
+		]]>
+	</select>
+	
+	<select id="selectjin" resultMap="CodeList">
+		<![CDATA[
+			SELECT CODE_C CODE,(SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = A.CODE_C) CODE_NM
+				   ,A.*
+			FROM BFS_JIN A
+			WHERE OFFER_NO = #{offer_no}
+			ORDER BY CODE_B ASC, CODE_C ASC
+		]]>
+	</select>
+	
+	
+	<select id="new_code_list" resultMap="CodeList">
+		<![CDATA[
+			SELECT  '1' ROWSPAN, CODE, CODE_NM , CODE_A, CODE_B, CODE_C, '' QTY
+			FROM    BFS_PROCODE
+			WHERE   CODE_GB = #{code_gb}
+			AND     STAR_DATE <= TO_CHAR(SYSDATE,'YYYYMMDD')
+			AND     NVL(END_DATE,'29991231') > TO_CHAR(SYSDATE,'YYYYMMDD')
+			ORDER BY CODE_A ASC, CODE_B ASC, CODE_C ASC
+		]]>
+	</select>
+	
+	<update id="work_update" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_WORK SET 
+								BIGO = #{work_bigo}
+		]]>
+								,MAGAM_GB = #{next_magam_gb}
+								,MAGAM_DATE = DECODE(#{next_magam_gb},'4',SYSDATE,'')
+		<![CDATA[
+			WHERE   OFFER_NO = #{offer_no}
+			AND     MAGAM_GB = #{magam_gb}
+		]]>
+	</update>
+	
+	
+	<insert id="ipgo_insert" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO BFS_IPGO (OFFER_NO, CODE_B, CODE_A, QTY_B)
+			VALUES (#{offer_no}, #{b_code}, (SELECT CODE_A FROM BFS_PROCODE WHERE CODE=#{b_code}), #{b_qty_b})
+		]]>
+	</insert>
+	
+	<update id="ipgo_update" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_IPGO
+			SET	QTY_B = #{b_qty_b}
+				,BIGO_QTY= #{b_bigo_qty}
+				,BIGO_GB= #{b_bigo_gb}
+				,BIGO = #{b_bigo}
+			WHERE OFFER_NO = #{offer_no}
+			AND   CODE_B = #{b_code}
+		]]>
+	</update>
+	
+	<insert id="jin_insert" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO BFS_JIN (OFFER_NO, CODE_B, CODE_C, QTY_C, PRICE)
+			VALUES (#{offer_no}, #{c_code_b}, #{c_code}, #{c_qty_c}, #{c_price})
+		]]>
+	</insert>
+	
+	<update id="jin_update" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_JIN 
+			SET  QTY_C = #{c_qty_c}
+			    ,PRICE = #{c_price}
+			WHERE OFFER_NO=#{offer_no}
+		    AND   CODE_C = #{c_code}
+		]]>
+	</update>
+
+	<update id="work_save" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_WORK SET 
+								BIGO = #{work_bigo}
+			WHERE   OFFER_NO = #{offer_no}
+			AND     MAGAM_GB = #{magam_gb}
+		]]>
+	</update>
+	
+	<delete id="product_delete_work" parameterType="hashmap">
+		DELETE FROM BFS_WORK
+		WHERE OFFER_NO = #{offer_no}
+		AND	  WORK_GB = #{work_gb}
+	</delete>
+	
+	<delete id="product_delete_ipgo" parameterType="hashmap">
+		DELETE FROM BFS_IPGO
+		WHERE OFFER_NO = #{offer_no}
+	</delete>
+	
+	<delete id="product_delete_jin" parameterType="hashmap">
+		DELETE FROM BFS_JIN
+		WHERE OFFER_NO = #{offer_no}
+	</delete>
+	
+	<select id="selectCalList_v2" resultMap="CalList">
+		
+			SELECT  OFFER_NO , OFFER_DATE WORK_DATE, SUBSTR(OFFER_NO,9,2) WORK_NUM , WORK_GB,
+			        (SELECT KOR_NAME FROM BFS_CODE WHERE MAJOR_CD = 'WKGB' AND MINOR_CD = WORK_GB) WORK_KOR, MAGAM_GB
+			FROM    BFS_WORK 
+			WHERE   SUBSTR(OFFER_NO,1,6) = DECODE(#{month},'12',#{year}||#{month},'11',#{year}||#{month},'10',#{year}||#{month},#{year}||'0'||#{month})
+			ORDER BY WORK_DATE ASC, OFFER_NO ASC
+		
+	</select>
+	
+	<select id="selectpreofferno_v2" parameterType="String" resultType="String">
+		SELECT MAX(TO_NUMBER(OFFER_NO)) PRE_OFFER_NO
+		FROM BFS_WORK
+		WHERE WORK_GB = 'WK01'
+	</select>
+	
+	<select id="ipgo_magam_check" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM BFS_WORK
+		]]>
+		WHERE OFFER_NO BETWEEN #{pre_offer_no} AND #{new_offer_no}
+		<![CDATA[
+		AND WORK_GB = 'WK01'
+		AND MAGAM_GB <> '4'
+		]]>
+	</select>
+	
+	<select id="jego_magam_check()" parameterType="hashmap" resultType="Integer">
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM BFS_WORK
+		WHERE WORK_GB = 'WK02'
+		AND MAGAM_GB <> '4'
+		]]>
+	</select>
+	
+	<insert id="new_jego_insert" parameterType="hashmap">
+		INSERT INTO BFS_JEGO (OFFER_NO, CODE_A,QTY_P,UPDATE_DATE)
+		SELECT #{new_offer_no}, CODE_A, SUM(QTY_A), SYSDATE
+		FROM (SELECT CODE_A , SUM(QTY_B) QTY_A
+				FROM (
+				SELECT OFFER_NO, CODE_B, CODE_A, DECODE(BIGO_GB,'제거',NVL(QTY_B,0)-NVL(BIGO_QTY,0),'추가',NVL(QTY_B,0)+NVL(BIGO_QTY,0),NVL(QTY_B,0)) QTY_B
+				FROM BFS_IPGO A
+				WHERE OFFER_NO IN (SELECT OFFER_NO
+				                    FROM BFS_WORK
+				                    WHERE WORK_GB = 'WK01'
+				                    AND OFFER_NO BETWEEN #{pre_offer_no} AND #{new_offer_no}))
+				GROUP BY CODE_A
+		        UNION
+		        SELECT CODE_A, TO_NUMBER(QTY_A)
+		        FROM BFS_JEGO A
+		        WHERE OFFER_NO IN #{pre_offer_no} )A
+		GROUP BY CODE_A
+	</insert>
+	
+	<select id="selectjego" resultMap="CodeList">
+		<![CDATA[
+			SELECT  CODE_A CODE , (SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = A.CODE_A) CODE_NM
+			        ,A.*
+			FROM    BFS_JEGO A
+			WHERE   OFFER_NO = #{offer_no}
+			ORDER BY CODE_A ASC
+		]]>
+	</select>
+	
+	<delete id="product_delete_jego" parameterType="hashmap">
+		DELETE FROM BFS_JEGO
+		WHERE OFFER_NO = #{offer_no}
+	</delete>
+	
+	<update id="jego_update" parameterType="hashmap">
+		<![CDATA[
+			UPDATE BFS_JEGO
+			SET	QTY_A = #{a_qty_a}
+				,QTY_D= #{a_qty_d}
+				,QTY_P= #{a_qty_p}
+				,BIGO_QTY= #{a_bigo_qty}
+				,BIGO_GB= #{a_bigo_gb}
+				,BIGO = #{a_bigo}
+			WHERE OFFER_NO = #{offer_no}
+			AND   CODE_A = #{a_code}
+		]]>
+	</update>
+	
+	<insert id="new_work_insert_wk02" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO BFS_WORK (OFFER_NO, OFFER_DATE,WORK_GB,MAGAM_GB,UPDATE_DATE)
+			VALUES (#{new_offer_no}, SUBSTR(#{new_offer_no},1,8),#{work_gb},'3',SYSDATE)
+		]]>
+	</insert>
+	
 
 </mapper>
 

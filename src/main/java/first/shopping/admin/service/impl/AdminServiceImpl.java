@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import first.shopping.admin.bean.CodeIUbean;
 import first.shopping.admin.bean.MemberBean;
 import first.shopping.admin.service.AdminService;
 
@@ -215,6 +216,155 @@ public class AdminServiceImpl implements AdminService{
 	public void insertuser() throws Exception {
 		adminDAO.insertuser();
 	}
+	
+	//---------------------------------------------------------------------------------------------------
+	
+	@Override
+	public int Code_getTotalRow_v2(HashMap<String, Object> map) throws Exception {
+		return adminDAO.Code_getTotalRow_v2(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectCodeList_v2(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectCodeList_v2(map);
+	}
+	
+	@Override
+	public HashMap<String, Object> selectCodeInfo_v2(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectCodeInfo_v2(map);
+	}
+	
+	@Override
+	public String selectnewcode_v2(String code) throws Exception{
+		return adminDAO.selectnewcode_v2(code);
+	}
+	
+	@Override
+	public List<Map<String, Object>> select_upcode(String code_gb) throws Exception {
+		return adminDAO.select_upcode(code_gb);
+	}
+	
+	@Override
+	public void insertcode_v2(CodeIUbean bean) throws Exception {
+		adminDAO.insertcode_v2(bean);
+	}
+	
+	@Override
+	public void updatecode_v2(CodeIUbean bean) throws Exception {
+		adminDAO.updatecode_v2(bean);
+	}
+	
+	@Override
+	public int ipgolist_getTotalRow(HashMap<String, Object> map) throws Exception {
+		return adminDAO.ipgolist_getTotalRow(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectipgolist(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectipgolist(map);
+	}
+	
+	@Override
+	public String selectnewofferno_v2() throws Exception{
+		return adminDAO.selectnewofferno_v2();
+	}
+	
+	@Override
+	public void new_work_insert(HashMap<String, Object> map) throws Exception {
+		adminDAO.new_work_insert(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectwork(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectwork(map);
+	}
+	
+	
+	@Override
+	public List<Map<String, Object>> selectipgo(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectipgo(map);
+	}
+	
+	
+	@Override
+	public List<Map<String, Object>> selectjin(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectjin(map);
+	}
+	
+	@Override
+	public void work_update(HashMap<String, Object> map) throws Exception {
+		adminDAO.work_update(map);
+	}
+	
+	@Override
+	public void ipgo_insert(HashMap<String, Object> map) throws Exception {
+		adminDAO.ipgo_insert(map);
+	}
+	
+	@Override
+	public void ipgo_update(HashMap<String, Object> map) throws Exception {
+		adminDAO.ipgo_update(map);
+	}
+	
+	@Override
+	public void jin_insert(HashMap<String, Object> map) throws Exception {
+		adminDAO.jin_insert(map);
+	}
+	
+	@Override
+	public void jin_update(HashMap<String, Object> map) throws Exception {
+		adminDAO.jin_update(map);
+	}
+	
+	
+	public void product_delete_work(HashMap<String, Object> map) throws Exception{
+		adminDAO.product_delete_work( map);
+	}
+	
+	public void product_delete_ipgo(HashMap<String, Object> map) throws Exception{
+		adminDAO.product_delete_ipgo( map);
+	}
+	
+	public void product_delete_jin(HashMap<String, Object> map) throws Exception{
+		adminDAO.product_delete_jin( map);
+	}
+	
+	public List<Map<String, Object>> selectCalList_v2(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectCalList_v2(map);
+	}
+	
+	@Override
+	public String selectpreofferno_v2() throws Exception{
+		return adminDAO.selectpreofferno_v2();
+	}
+	
+	@Override
+	public int ipgo_magam_check(HashMap<String, Object> map) throws Exception {
+		return adminDAO.ipgo_magam_check(map);
+	}
+	
+	@Override
+	public int jego_magam_check() throws Exception {
+		return adminDAO.jego_magam_check();
+	}
+	
+	public void new_jego_insert(HashMap<String, Object> map) throws Exception{
+		adminDAO.new_jego_insert(map);
+	}
+	
+	public List<Map<String, Object>> selectjego(HashMap<String, Object> map) throws Exception {
+		return adminDAO.selectjego(map);
+	}
+	
+	public void product_delete_jego(HashMap<String, Object> map) throws Exception{
+		adminDAO.product_delete_jego( map);
+	}
+	
+	@Override
+	public void jego_update(HashMap<String, Object> map) throws Exception {
+		adminDAO.jego_update(map);
+	}
+
 }
 
 

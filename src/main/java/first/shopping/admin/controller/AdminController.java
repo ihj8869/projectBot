@@ -1,5 +1,6 @@
 package first.shopping.admin.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.tools.DocumentationTool.Location;
 
 import org.apache.log4j.Logger;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.support.RequestPartServletServerHttpReq
 import org.springframework.web.servlet.ModelAndView;
 
 import first.shopping.admin.Paging;
+import first.shopping.admin.bean.CodeIUbean;
 import first.shopping.admin.bean.MemberBean;
 import first.shopping.admin.service.AdminService;
 
@@ -41,7 +44,7 @@ public class AdminController {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		
-		return "redirect:/main.do?year="+year+"&month="+month;
+		return "redirect:/main_v2.do?year="+year+"&month="+month;
 	}
 	@RequestMapping(value="logout.do")
 	public String logout(HttpServletRequest request) {
@@ -161,17 +164,16 @@ public class AdminController {
 		int totalRow=0;
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("code", "PRGB");
-		if(name!=null) {
-			
-			map.put("name", name);
-			map.put("use", id);
-			totalRow = adminService.Code_getTotalRow(map);
-		}else {
-			totalRow = adminService.Code_getTotalRow(null);
-		}
+		System.out.println("11111111111111= " +name);
 		
+		map.put("name", name);
+		map.put("use", id);
+		
+		totalRow = adminService.Code_getTotalRow(map);
 		Paging pg = new Paging();		
 		map = pg.paging(pageScale, totalRow, page);
+		
+		map.put("code", "PRGB");
 		map.put("name", name);
 		map.put("use", id);
 		
@@ -336,7 +338,7 @@ public class AdminController {
 		return "/inc/script";
 	}
 //입고재고관리==================================================================================================
-	@RequestMapping(value="/product.do")
+	 @RequestMapping(value="/product.do")
     public ModelAndView selectproductList(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,
     					@RequestParam(value="workgb",required=false)String workgb, @RequestParam(value="page",required=false)String page) throws Exception{
 		int pageScale=10;
@@ -647,9 +649,560 @@ public class AdminController {
 //	        
 //			return mv;
 //	    }
-//	
 	
+
+		//V.2==================================================================================================
+			
+			
+		//메인===================================================================================================
+		@RequestMapping(value="main_v2.do")
+		public ModelAndView main_v2(@RequestParam(value="year")int year,@RequestParam(value="month")int month) throws Exception {
+			
+			ModelAndView mv = new ModelAndView("/admin/main_v2");
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("year", year);
+			map.put("month", month+1);
+			
+			List<Map<String,Object>> list = adminService.selectCalList_v2(map);
+			mv.addObject("list", list);
+			mv.addObject("side","main_v2");
+			return mv;
+		}
+		
+			
+		@RequestMapping(value="/code_v2.do")
+	    public ModelAndView selectCodeList_v2(@RequestParam(value="name",required=false)String name,@RequestParam(value="code_gb")String code_gb,
+	    					@RequestParam(value="use",required=false)String id, @RequestParam(value="page",required=false)String page) throws Exception{
+			System.out.println("code_v2.do");
+			int pageScale=10;
+			int totalRow=0;
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("code_gb", code_gb);
+			System.out.println("v2 code_list " +map);
+			
+			map.put("name", name);
+			map.put("use", id);
+			
+			totalRow = adminService.Code_getTotalRow_v2(map);
+			Paging pg = new Paging();		
+			map = pg.paging(pageScale, totalRow, page);
+			
+			map.put("code_gb", code_gb);
+			map.put("name", name);
+			map.put("use", id);
+			
+			
+			ModelAndView mv = new ModelAndView("/admin/code_v2");
+	        List<Map<String,Object>> list = adminService.selectCodeList_v2(map);
+	        mv.addObject("list", list);
+	        mv.addObject("map", map);
+	        mv.addObject("side","code_"+code_gb);
+	         
+	        return mv;
+	    }		
 	
+		@RequestMapping(value="/codeInfo_v2.do") 
+		public ModelAndView selectCodeInfo_v2(@RequestParam(value="code")String code, @RequestParam(value="insert_gb")String insert_gb, 
+												@RequestParam(value="code_gb")String code_gb ) throws Exception{
+			
+			ModelAndView mv = new ModelAndView("/admin/codeInfo_v2");
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("code", code);
+			map.put("code_gb", code_gb);
+			map =adminService.selectCodeInfo_v2(map);
+			mv.addObject("map",map);
+			mv.addObject("insert_gb",insert_gb);
+			mv.addObject("code_gb",code_gb);
+			
+			System.out.println("insert_gb = "+insert_gb);
+			
+			if(code.equals("0000")) {
+				String new_code = adminService.selectnewcode_v2(code_gb);
+				List<Map<String,Object>> select_map = adminService.select_upcode(code_gb);
+				
+				mv.addObject("new_code", new_code);
+				mv.addObject("list", select_map);
+				
+			}
+			return mv;
+		}
+		
+		@RequestMapping(value="/codeIU_v2.do")
+		public String codeIU_v2(@ModelAttribute CodeIUbean bean,HttpServletRequest request) throws Exception {
+			
+			String update_ip = request.getRemoteAddr();
+			
+			System.out.println(bean.toString());
+			
+			System.out.println("1=" + bean.getCode());
+			System.out.println("2=" + bean.getCode_gb());
+			System.out.println("3=" + bean.getCode_nm());
+			System.out.println("4=" + bean.getInsert_gb());
+			System.out.println("5=" + bean.getState_gb());
+			System.out.println("6=" + bean.getUp_code());
+			System.out.println("7=" + bean.getUp_code_nm());
+			
+			if(bean.getInsert_gb().equals("I")) {
+				
+				adminService.insertcode_v2(bean);		
+				
+				
+				
+			}else if(bean.getInsert_gb().equals("U")) {
+				if(bean.getState_gb().equals("N")) {
+					
+					Calendar cal = Calendar.getInstance();
+					String year = String.valueOf(cal.get(Calendar.YEAR));
+					String month =  String.valueOf(cal.get(Calendar.MONTH)+1);
+					if(month.length()==1) {
+						month = "0"+month;
+					}
+					String date = String.valueOf(cal.get(Calendar.DATE)+1);
+					if(date.length()==1) {
+						date = "0"+date;
+					}
+					
+					bean.setUp_code_nm(year+month+date);
+							
+				}else {
+					
+				}
+				adminService.updatecode_v2(bean);	
+			}
+			
+			if(bean.getInsert_gb().equals("I")) {
+				request.setAttribute("errMsg", "저장되었습니다.");
+			}else if(bean.getInsert_gb().equals("I")) {
+				request.setAttribute("errMsg", "수정되었습니다.");
+			}
+			
+			System.out.println(bean.toString());
+			return "/inc/script";
+		}
+		
+		@RequestMapping(value="/product_v2.do")
+	    public ModelAndView ipgolist(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate, 
+	    							@RequestParam(value="work_gb",required=false)String work_gb,@RequestParam(value="page",required=false)String page
+	    							,@RequestParam(value="bigo_text",required=false)String bigo_text
+	    							) throws Exception{
+
+				
+			int pageScale=10;
+			int totalRow=0;
+			String Cstrdate = "00000000";
+			String Cenddate = "99999999";
+			String Cworkgb = "%";
+			if(!strdate.equals("")&&!strdate.equals(null)) {
+				Cstrdate = strdate;
+			}
+			if(!enddate.equals("")&&!enddate.equals(null)) {
+				Cenddate = enddate;
+			}
+					
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("strdate", Cstrdate);
+			map.put("enddate", Cenddate);
+			map.put("work_gb", work_gb);
+			map.put("bigo_text", bigo_text);
+			
+			String[] keys = map.keySet().toArray(new String[0]);
+			
+			
+			totalRow = adminService.ipgolist_getTotalRow(map);
+			
+			System.out.println("totalRow = " + totalRow);
+			
+			Paging pg = new Paging();		
+			map = pg.paging(pageScale, totalRow, page);
+			
+			map.put("strdate", Cstrdate);
+			map.put("enddate", Cenddate);
+			map.put("work_gb", work_gb);
+			map.put("bigo_text", bigo_text);
+			
+			ModelAndView mv = new ModelAndView("/admin/product_v2");
+			
+	        List<Map<String,Object>> list = adminService.selectipgolist(map);
+	        mv.addObject("list", list);
+	        mv.addObject("map", map);
+	        
+	        if(work_gb.equals("WK01")) {
+	        	 mv.addObject("side","product_ipgo");
+	        }else if(work_gb.equals("WK02")) {
+	        	 mv.addObject("side","product_jego");
+	        }
+	       
+	         
+	        return mv;
+	    }
+		
+		@RequestMapping(value="/product_detail_ipgo_v2.do")
+	    public ModelAndView selectproductList_detail_v2(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
+	    												, @RequestParam(value="code_gb",required=false)String code_gb , @RequestParam(value="magam_gb",required=false)String magam_gb
+	    												, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
+			
+			HashMap<String, Object> map = new HashMap<>();
+			ModelAndView mv = new ModelAndView("/admin/product_detail_ipgo_v2");
+			List<Map<String,Object>> work = null;
+	        List<Map<String,Object>> ipgo = null;
+	        List<Map<String,Object>> jin = null;
+			
+	        map.put("magam_gb", magam_gb);
+	        map.put("work_gb", work_gb);
+	        map.put("code_gb", code_gb);
+	        
+			if(insert_gb.equals("I")) {
+				String new_offer_no = adminService.selectnewofferno_v2();
+				System.out.println(new_offer_no);
+				map.put("new_offer_no", new_offer_no);
+				
+				adminService.new_work_insert(map);
+				
+				offer_no = new_offer_no;
+			}
+			
+			map.put("offer_no", offer_no);
+			map.put("magam_gb", magam_gb);
+			
+			
+			if(Integer.parseInt(magam_gb)>0) {
+				
+				work = adminService.selectwork(map);
+				
+				if(magam_gb.equals("1")) {
+					ipgo = adminService.selectipgo(map);
+				}
+				
+				if(Integer.parseInt(magam_gb)>1) {
+					
+					ipgo = adminService.selectipgo(map);
+					
+					if(magam_gb.equals("2")) {
+						jin = adminService.selectjin(map);
+					}
+					
+					if(Integer.parseInt(magam_gb)>2) {
+						
+						jin = adminService.selectjin(map);
+						
+					}
+				}
+			}
+			
+			map.put("offer_no", offer_no);
+			map.put("work_gb", work_gb);
+			map.put("insert_gb", insert_gb);
+			
+			
+	        mv.addObject("work", work);
+	        mv.addObject("map", map);
+	        mv.addObject("ipgo", ipgo);
+	        mv.addObject("jin", jin);
+	        mv.addObject("side","product_ipgo");
+	         
+	        return mv;
+	    }
+		
+		@RequestMapping(value="ipjego_v2.do")
+		public String ipgoinsert_v2(@RequestParam(value="b_code", required=true) List<String> b_code, @RequestParam(value="b_code_nm", required=true) List<String> b_code_nm
+									, @RequestParam(value="b_qty_b", required=true) List<String> b_qty_b ,@RequestParam(value="offer_no", required=true) String offer_no
+									, @RequestParam(value="magam_gb", required=true) String magam_gb , @RequestParam(value="next_magam_gb", required=true) String next_magam_gb 
+									, @RequestParam(value="work_bigo", required=true) String work_bigo , @RequestParam(value="savenext", required=true) String savenext
+									, @RequestParam(value="work_gb", required=true) String work_gb, @RequestParam(value="b_bigo_qty", required=true) List<String> b_bigo_qty
+									, @RequestParam(value="b_bigo_gb", required=true) List<String> b_bigo_gb, @RequestParam(value="b_bigo", required=true) List<String> b_bigo
+									
+									, @RequestParam(value="c_code", required=false) List<String> c_code, @RequestParam(value="c_code_b", required=false) List<String> c_code_b
+									, @RequestParam(value="c_code_nm", required=false) List<String> c_code_nm, @RequestParam(value="c_qty_c", required=false) List<String> c_qty_c
+									, @RequestParam(value="c_price", required=false) List<String> c_price
+									
+									
+									, HttpServletRequest httpServletRequest) throws Exception {
+			
+			
+			System.out.println("------------------------------");
+			System.out.println(b_code);
+			System.out.println("------------------------------");
+			System.out.println(b_code_nm);
+			System.out.println("------------------------------");
+			System.out.println(b_qty_b);
+			System.out.println("------------------------------");
+			System.out.println(offer_no);
+			System.out.println("------------------------------");
+			System.out.println(magam_gb);
+			System.out.println("------------------------------");
+			System.out.println(next_magam_gb);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			HashMap<String, Object> datamap = new HashMap<>();
+			String movemagam = magam_gb;
+			
+			//work 업데이트
+			map.put("offer_no", offer_no);
+			map.put("magam_gb", magam_gb);
+			map.put("next_magam_gb",next_magam_gb);
+			map.put("work_bigo", work_bigo);
+			map.put("savenext", savenext);
+			
+			adminService.work_update(map);
+			
+			//ipgo 인서트
+			if(magam_gb.equals("1")) {
+				for(int i = 0 ; i<b_code.size() ; i++) {
+					System.out.println(b_code.get(i)+"--"+b_qty_b.get(i));
+					
+					HashMap<String, Object> hashMap = new HashMap<>();
+					datamap.put("offer_no", offer_no);
+					datamap.put("b_code", b_code.get(i));
+					datamap.put("b_qty_b", b_qty_b.get(i));
+					datamap.put("b_bigo", b_bigo.get(i));
+					
+					adminService.ipgo_insert(datamap);
+					
+					hashMap.clear();
+					
+				}
+			}
+			
+			//ipgo 업데이트
+			if(magam_gb.equals("2")||magam_gb.equals("3")) {
+				for(int i = 0 ; i<b_code.size() ; i++) {
+					System.out.println(b_code.get(i)+"--"+b_qty_b.get(i));
+					
+					HashMap<String, Object> hashMap = new HashMap<>();
+					datamap.put("offer_no", offer_no);
+					datamap.put("b_code", b_code.get(i));
+					datamap.put("b_qty_b", b_qty_b.get(i));
+					datamap.put("b_bigo_qty", b_bigo_qty.get(i));
+					datamap.put("b_bigo_gb", b_bigo_gb.get(i));
+					datamap.put("b_bigo", b_bigo.get(i));
+					
+					adminService.ipgo_update(datamap);
+					
+					hashMap.clear();
+					
+				}
+			}
+			
+			//jin 인서트
+			if(magam_gb.equals("2")) {
+				System.out.println("c_code.size = " + c_code.size());
+				
+				for(int i = 0 ; i<c_code.size() ; i++) {
+					System.out.println(c_code.get(i)+"--"+c_qty_c.get(i));
+					
+					HashMap<String, Object> hashMap = new HashMap<>();
+					datamap.put("offer_no", offer_no);
+					datamap.put("c_code", c_code.get(i));
+					datamap.put("c_qty_c", c_qty_c.get(i));
+					datamap.put("c_code_b", c_code_b.get(i));
+					datamap.put("c_price", c_price.get(i));
+					
+					adminService.jin_insert(datamap);
+					
+					hashMap.clear();
+					
+				}
+			}
+			
+			//jin 업데이트
+			if(magam_gb.equals("3")) {
+				for(int i = 0 ; i<c_code.size() ; i++) {
+					System.out.println(c_code.get(i)+"--"+c_qty_c.get(i));
+					
+					HashMap<String, Object> hashMap = new HashMap<>();
+					datamap.put("offer_no", offer_no);
+					datamap.put("c_code", c_code.get(i));
+					datamap.put("c_qty_c", c_qty_c.get(i));
+					datamap.put("c_code_b", c_code_b.get(i));
+					datamap.put("c_price", c_price.get(i));
+					
+					adminService.jin_update(datamap);
+					
+					hashMap.clear();
+					
+				}
+			}
+			
+			if(savenext.equals("Y")) {
+				movemagam = next_magam_gb;
+			}
+			
+			return "redirect:product_detail_ipgo_v2.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V&code_gb=B&magam_gb="+movemagam;
+		}
+		
+		@RequestMapping(value="product_delete_v2.do")
+		public String product_delete_v2(@RequestParam(value="offer_no", required=false) String offer_no
+											,@RequestParam(value="work_gb", required=false) String work_gb) throws Exception {
+			
+			HashMap<String, Object> map= new HashMap<>();
+			map.put("offer_no", offer_no);
+			map.put("work_gb", work_gb);
+			
+			adminService.product_delete_work(map);
+			adminService.product_delete_ipgo(map);
+			adminService.product_delete_jin(map);
+			adminService.product_delete_jego(map);
+			
+			return "redirect:/product_v2.do?strdate=&enddate=&work_gb="+work_gb;
+		}
+		
+		@RequestMapping(value="/product_detail_jego_v2.do")
+	    public ModelAndView selectproductList_detail_jego_v2(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
+	    												, @RequestParam(value="code_gb",required=false)String code_gb , @RequestParam(value="magam_gb",required=false)String magam_gb
+	    												, @RequestParam(value="insert_gb",required=false)String insert_gb, HttpServletResponse response) throws Exception{
+			
+			HashMap<String, Object> map = new HashMap<>();
+			ModelAndView mv = new ModelAndView("/admin/product_detail_jego_v2");
+			List<Map<String,Object>> work = null;
+	        List<Map<String,Object>> jego = null;
+			
+	        map.put("magam_gb", magam_gb);
+	        map.put("work_gb", work_gb);
+	        map.put("code_gb", code_gb);
+	        String gostop = "g";
+	        
+			if(insert_gb.equals("I")) {
+				String new_offer_no = adminService.selectnewofferno_v2();
+				String pre_offer_no = adminService.selectpreofferno_v2();
+				System.out.println(new_offer_no);
+				map.put("new_offer_no", new_offer_no);
+				map.put("pre_offer_no", pre_offer_no);
+				
+				int ipgo_magam_check = adminService.ipgo_magam_check(map);
+				int jego_magam_check = adminService.jego_magam_check();
+				
+				
+				if(ipgo_magam_check>0) {
+					response.setContentType("text/html; charset=UTF-8");
+
+		            PrintWriter out = response.getWriter();
+
+		            out.println("<script>alert('마감되지 않은 입고작업이 존재합니다.'); history.go(-1);</script>");
+
+		            out.flush(); 
+		            
+		            gostop= "s";
+		            
+				}
+				
+				
+				if(jego_magam_check>0) {
+					response.setContentType("text/html; charset=UTF-8");
+
+		            PrintWriter out = response.getWriter();
+
+		            out.println("<script>alert('마감되지 않은 재고작업이 존재합니다.'); history.go(-1);</script>");
+
+		            out.flush(); 
+		            
+		            gostop= "s";
+				}
+				
+				
+				if(gostop.equals("g")) {
+					adminService.new_work_insert(map);
+					adminService.new_jego_insert(map);
+					
+					offer_no = new_offer_no;
+				}
+				
+			}
+			
+			if(gostop.equals("g")) {
+			
+				map.put("offer_no", offer_no);
+				map.put("magam_gb", magam_gb);
+				
+				
+				work = adminService.selectwork(map);
+				jego = adminService.selectjego(map);
+				
+				map.put("offer_no", offer_no);
+				map.put("work_gb", work_gb);
+				map.put("insert_gb", insert_gb);
+				
+				
+		        mv.addObject("work", work);
+		        mv.addObject("map", map);
+		        mv.addObject("jego", jego);
+		        mv.addObject("side","product_jego");
+			}
+	         
+	        return mv;
+	    }
+		
+		@RequestMapping(value="jego_v2.do")
+		public String jegoinsert_v2(@RequestParam(value="a_code", required=true) List<String> a_code, @RequestParam(value="a_code_nm", required=true) List<String> a_code_nm
+									, @RequestParam(value="a_qty_a", required=true) List<String> a_qty_a , @RequestParam(value="a_qty_p", required=true) List<String> a_qty_p 
+									, @RequestParam(value="a_qty_d", required=true) List<String> a_qty_d 
+									, @RequestParam(value="offer_no", required=true) String offer_no, @RequestParam(value="magam_gb", required=true) String magam_gb 
+									, @RequestParam(value="next_magam_gb", required=true) String next_magam_gb 
+									, @RequestParam(value="work_bigo", required=true) String work_bigo , @RequestParam(value="savenext", required=true) String savenext
+									, @RequestParam(value="work_gb", required=true) String work_gb, @RequestParam(value="a_bigo_qty", required=true) List<String> a_bigo_qty
+									, @RequestParam(value="a_bigo_gb", required=true) List<String> a_bigo_gb, @RequestParam(value="a_bigo", required=true) List<String> a_bigo
+									
+									, HttpServletRequest httpServletRequest) throws Exception {
+			
+			
+			System.out.println("------------------------------");
+			System.out.println(a_code);
+			System.out.println("------------------------------");
+			System.out.println(a_code_nm);
+			System.out.println("------------------------------");
+			System.out.println(a_qty_a);
+			System.out.println("------------------------------");
+			System.out.println(offer_no);
+			System.out.println("------------------------------");
+			System.out.println(magam_gb);
+			System.out.println("------------------------------");
+			System.out.println(next_magam_gb);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			HashMap<String, Object> datamap = new HashMap<>();
+			String movemagam = magam_gb;
+			
+			//work 업데이트
+			map.put("offer_no", offer_no);
+			map.put("magam_gb", magam_gb);
+			map.put("next_magam_gb",next_magam_gb);
+			map.put("work_bigo", work_bigo);
+			map.put("savenext", savenext);
+			
+			adminService.work_update(map);
+			
+			//jego 업데이트
+			for(int i = 0 ; i<a_code.size() ; i++) {
+				System.out.println(a_code.get(i)+"--"+a_qty_a.get(i));
+				
+				HashMap<String, Object> hashMap = new HashMap<>();
+				datamap.put("offer_no", offer_no);
+				datamap.put("a_code", a_code.get(i));
+				datamap.put("a_code_nm", a_code.get(i));
+				datamap.put("a_qty_a", a_qty_a.get(i));
+				datamap.put("a_qty_d", a_qty_d.get(i));
+				datamap.put("a_qty_p", a_qty_p.get(i));
+				datamap.put("a_bigo_qty", a_bigo_qty.get(i));
+				datamap.put("a_bigo_gb", a_bigo_gb.get(i));
+				datamap.put("a_bigo", a_bigo.get(i));
+				
+				adminService.jego_update(datamap);
+				
+				hashMap.clear();
+				
+			}
+			
+			
+			if(savenext.equals("Y")) {
+				movemagam = next_magam_gb;
+			}
+			
+			return "redirect:product_detail_jego_v2.do?offer_no="+offer_no+"&work_gb="+work_gb+"&insert_gb=V&code_gb=B&magam_gb="+movemagam;
+		}
+
+		
+		
+		
+		
 	
 	
 	

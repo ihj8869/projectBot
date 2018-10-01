@@ -312,7 +312,7 @@ body .container .content .signup-cont {
 		<h1>아름다운가게<br>재고관리시스템</h1>
 		<div class="tabs">
 			<span class="tab signin active"><a href="#signin">Sign in</a></span>
-			<span class="tab signup"><a href="#signup">Sign up</a></span>
+			<!-- <span class="tab signup"><a href="#signup ">Sign up</a></span>-->
 		</div>
 		<div class="content">
 			<div class="signin-cont cont">

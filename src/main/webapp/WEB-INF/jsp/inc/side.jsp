@@ -61,14 +61,23 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <img src="img/login.jpg" style="width:45%;" class="w3-round"><br><br>
     <h4><b>아름다운가게</b></h4>
     <p class="w3-text-grey">재고관리시스템 </p>
+    <p class="w3-text-red">서버 무료 사용 예상기간은 <br> 2018년 12월 30일 까지입니다 </p>
   </div>
   <div class="w3-bar-block">
+    -------------ver 2.0
+    <a href="main_v2.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()"  class="w3-bar-item w3-button w3-padding <%if(side.equals("main_v2")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>코드관리</a>
+    <a href="code_v2.do?code_gb=A" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code_A")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>├ 재고코드 관리 </a>
+    <a href="code_v2.do?code_gb=B" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code_B")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>├ 입고코드 관리 </a>
+    <a href="code_v2.do?code_gb=C" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code_C")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>└ 진열코드 관리 </a>
+    <a href="product_v2.do?strdate=&enddate=&work_gb=WK01" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product_ipgo")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고진열 관리</a> 
+    <a href="product_v2.do?strdate=&enddate=&work_gb=WK02" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product_jego")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>재고판매 관리</a>
+<%--     -------------ver 1.0
     <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()"  class="w3-bar-item w3-button w3-padding <%if(side.equals("main")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
     <a href="code.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>품목코드 관리 </a>
-    <a href="code_rs.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code_rs")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>비고코드 관리 </a>
     <a href="product.do?strdate=&enddate=&workgb=" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고재고관리</a> 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("xx")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>통계관리</a>
-    <a href="user.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("user")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a>
+    <a href="user.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("user")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>사용자관리</a> --%>
     <a href="logout.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>로그아웃</a>
   </div>
 </nav>
