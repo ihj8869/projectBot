@@ -255,6 +255,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
+	public void updatecode_v2_plus(CodeIUbean bean) throws Exception {
+		adminDAO.updatecode_v2_plus(bean);
+	}
+	
+	@Override
 	public int ipgolist_getTotalRow(HashMap<String, Object> map) throws Exception {
 		return adminDAO.ipgolist_getTotalRow(map);
 	}

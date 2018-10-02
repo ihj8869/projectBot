@@ -638,18 +638,18 @@ public class AdminController {
 			}
 
 	
-////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-		@ExceptionHandler
-	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
-			
-			ModelAndView mv = new ModelAndView("/admin/exception");
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("exceptioncontent", e);
-	        mv.addObject("map", map);
-	        
-			return mv;
-	    }
-	
+//////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
+//		@ExceptionHandler
+//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+//			
+//			ModelAndView mv = new ModelAndView("/admin/exception");
+//			HashMap<String, Object> map = new HashMap<>();
+//			map.put("exceptioncontent", e);
+//	        mv.addObject("map", map);
+//	        
+//			return mv;
+//	    }
+//	
 
 		//V.2==================================================================================================
 			
@@ -767,7 +767,8 @@ public class AdminController {
 				}else {
 					
 				}
-				adminService.updatecode_v2(bean);	
+				adminService.updatecode_v2(bean);
+				adminService.updatecode_v2_plus(bean);
 			}
 			
 			if(bean.getInsert_gb().equals("I")) {

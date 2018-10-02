@@ -690,7 +690,7 @@
 	</insert>
 	
 	<update id="updatecode_v2" parameterType="first.shopping.admin.bean.MemberBean">
-		<![CDATA[
+			<![CDATA[
 			UPDATE BFS_PROCODE A
 			SET     CODE_NM = #{code_nm},
 					END_DATE = #{up_code_nm},
@@ -698,7 +698,39 @@
 			        UPDATE_DATE = SYSDATE
 			WHERE   CODE = #{code}
 			AND     CODE_GB = #{code_gb}
-		]]>
+			]]>
+	</update>
+	
+	<update id="updatecode_v2_plus" parameterType="first.shopping.admin.bean.MemberBean">
+		<if test="code_gb=='A'.toString()">
+			<![CDATA[
+			UPDATE BFS_PROCODE A
+			SET     CODE_A_NM = #{code_nm},
+					END_DATE = #{up_code_nm},
+			        UPDATE_DATE = SYSDATE
+			WHERE   CODE_A = #{code}
+			]]>
+		</if>
+		
+		<if test="code_gb=='B'.toString()">
+			<![CDATA[
+			UPDATE BFS_PROCODE A
+			SET     CODE_B_NM = #{code_nm},
+					END_DATE = #{up_code_nm},
+			        UPDATE_DATE = SYSDATE
+			WHERE   CODE_B = #{code}
+			]]>
+		</if>
+		
+		<if test="code_gb=='C'.toString()">
+			<![CDATA[
+			UPDATE BFS_PROCODE A
+			SET     CODE_C_NM = #{code_nm},
+					END_DATE = #{up_code_nm},
+			        UPDATE_DATE = SYSDATE
+			WHERE   CODE_C = #{code}
+			]]>
+		</if>
 	</update>
 	
 		<select id="ipgolist_getTotalRow" parameterType="hashmap" resultType="Integer">

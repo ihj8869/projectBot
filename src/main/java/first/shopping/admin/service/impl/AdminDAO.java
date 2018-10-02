@@ -253,6 +253,12 @@ public class AdminDAO extends AbstractDAO{
 		update("admin.updatecode_v2", bean);
 	}
 	
+	public void updatecode_v2_plus(CodeIUbean bean) throws Exception{
+		System.out.println("AdminDAO updatecode_v2_plus");
+		System.out.println("@@@@@ = " + bean.toString());
+		update("admin.updatecode_v2_plus", bean);
+	}
+	
 	
 	public int ipgolist_getTotalRow(HashMap<String, Object> map) throws Exception{
 		System.out.println("AdminDAO ipgolist_getTotalRow");

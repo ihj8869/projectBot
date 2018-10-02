@@ -106,6 +106,8 @@ public interface AdminService {
 	
 	public void updatecode_v2(CodeIUbean bean) throws Exception;
 	
+	public void updatecode_v2_plus(CodeIUbean bean) throws Exception;
+	
 	int ipgolist_getTotalRow(HashMap<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> selectipgolist(HashMap<String, Object> map) throws Exception;

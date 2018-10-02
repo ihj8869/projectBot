@@ -18,13 +18,6 @@ $(document).ready(function() {
 		self.close();
 	}
 	
-	$("#updatePw").click(function(){
-		$("#password").attr('value','0000');
-		$("#password").attr('type','text');
-		alert('비밀번호가 '+$("#password").val()+'으로 초기화되었습니다.');
-	});
-	
-	//다음주에 섬밋하기
 	$("button[name=active_N]").click(function(){ //정지버튼 클릭
 		if($(this).attr('class')=='ui button'){
 			$(this).attr('class','ui button active');
@@ -41,6 +34,9 @@ $(document).ready(function() {
 	});
 	
 	$("#update").click(function(){
+		
+		var result = confirm("상위코드를 수정하면 하위코드도 동일하게 수정됩니다. 진행하시겠습니까? 예) 상위코드를 사용정지시 하위코드도 사용정지됩니다.");
+
 		//제약사항
 		if($("#update_yn").val()=='N'){
 			alert("코드사용이 중지되어 수정할 수 없습니다.")
@@ -50,7 +46,13 @@ $(document).ready(function() {
 			alert("상위코드를 선택해주세요")
 			return;
 		}
-		$("#updateForm").submit();
+		
+		if(result == true){
+			$("#updateForm").submit();
+		}else{
+			return;
+		}
+		
 	});
 	
 	$("#cancel").click(function(){
