@@ -639,16 +639,16 @@ public class AdminController {
 
 	
 ////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
-//		@ExceptionHandler
-//	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
-//			
-//			ModelAndView mv = new ModelAndView("/admin/exception");
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("exceptioncontent", e);
-//	        mv.addObject("map", map);
-//	        
-//			return mv;
-//	    }
+		@ExceptionHandler
+	    public ModelAndView exception(HttpServletRequest req, Exception e) throws Exception {       
+			
+			ModelAndView mv = new ModelAndView("/admin/exception");
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("exceptioncontent", e);
+	        mv.addObject("map", map);
+	        
+			return mv;
+	    }
 	
 
 		//V.2==================================================================================================
@@ -839,66 +839,87 @@ public class AdminController {
 		@RequestMapping(value="/product_detail_ipgo_v2.do")
 	    public ModelAndView selectproductList_detail_v2(@RequestParam(value="offer_no",required=false)String offer_no, @RequestParam(value="work_gb",required=false)String work_gb
 	    												, @RequestParam(value="code_gb",required=false)String code_gb , @RequestParam(value="magam_gb",required=false)String magam_gb
-	    												, @RequestParam(value="insert_gb",required=false)String insert_gb) throws Exception{
+	    												, @RequestParam(value="insert_gb",required=false)String insert_gb, HttpServletResponse response) throws Exception{
 			
 			HashMap<String, Object> map = new HashMap<>();
 			ModelAndView mv = new ModelAndView("/admin/product_detail_ipgo_v2");
 			List<Map<String,Object>> work = null;
 	        List<Map<String,Object>> ipgo = null;
 	        List<Map<String,Object>> jin = null;
-			
-	        map.put("magam_gb", magam_gb);
-	        map.put("work_gb", work_gb);
-	        map.put("code_gb", code_gb);
+	        String gostop = "g";
 	        
-			if(insert_gb.equals("I")) {
-				String new_offer_no = adminService.selectnewofferno_v2();
-				System.out.println(new_offer_no);
-				map.put("new_offer_no", new_offer_no);
-				
-				adminService.new_work_insert(map);
-				
-				offer_no = new_offer_no;
+	        int jego_magam_check = adminService.jego_magam_check();
+			
+			if(jego_magam_check>0) {
+				response.setContentType("text/html; charset=UTF-8");
+
+	            PrintWriter out = response.getWriter();
+
+	            out.println("<script>alert('마감되지 않은 재고작업이 존재합니다.'); history.go(-1);</script>");
+
+	            out.flush(); 
+	            
+	            gostop= "s";
 			}
 			
-			map.put("offer_no", offer_no);
-			map.put("magam_gb", magam_gb);
-			
-			
-			if(Integer.parseInt(magam_gb)>0) {
+			if(gostop.equals("g")) {
 				
-				work = adminService.selectwork(map);
-				
-				if(magam_gb.equals("1")) {
-					ipgo = adminService.selectipgo(map);
+				map.put("magam_gb", magam_gb);
+		        map.put("work_gb", work_gb);
+		        map.put("code_gb", code_gb);
+		        
+				if(insert_gb.equals("I")) {
+					String new_offer_no = adminService.selectnewofferno_v2();
+					System.out.println(new_offer_no);
+					map.put("new_offer_no", new_offer_no);
+					
+					adminService.new_work_insert(map);
+					
+					offer_no = new_offer_no;
 				}
 				
-				if(Integer.parseInt(magam_gb)>1) {
+				map.put("offer_no", offer_no);
+				map.put("magam_gb", magam_gb);
+				
+				
+				if(Integer.parseInt(magam_gb)>0) {
 					
-					ipgo = adminService.selectipgo(map);
+					work = adminService.selectwork(map);
 					
-					if(magam_gb.equals("2")) {
-						jin = adminService.selectjin(map);
+					if(magam_gb.equals("1")) {
+						ipgo = adminService.selectipgo(map);
 					}
 					
-					if(Integer.parseInt(magam_gb)>2) {
+					if(Integer.parseInt(magam_gb)>1) {
 						
-						jin = adminService.selectjin(map);
+						ipgo = adminService.selectipgo(map);
 						
+						if(magam_gb.equals("2")) {
+							jin = adminService.selectjin(map);
+						}
+						
+						if(Integer.parseInt(magam_gb)>2) {
+							
+							jin = adminService.selectjin(map);
+							
+						}
 					}
 				}
+				
+				map.put("offer_no", offer_no);
+				map.put("work_gb", work_gb);
+				map.put("insert_gb", insert_gb);
+				
+				
+		        mv.addObject("work", work);
+		        mv.addObject("map", map);
+		        mv.addObject("ipgo", ipgo);
+		        mv.addObject("jin", jin);
+		        mv.addObject("side","product_ipgo");
+				
 			}
 			
-			map.put("offer_no", offer_no);
-			map.put("work_gb", work_gb);
-			map.put("insert_gb", insert_gb);
-			
-			
-	        mv.addObject("work", work);
-	        mv.addObject("map", map);
-	        mv.addObject("ipgo", ipgo);
-	        mv.addObject("jin", jin);
-	        mv.addObject("side","product_ipgo");
+	        
 	         
 	        return mv;
 	    }

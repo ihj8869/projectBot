@@ -640,17 +640,32 @@
 	
 	<select id="serchcode_v2" parameterType="String" resultType="String">
 		<![CDATA[
-		SELECT MAX(CODE_GB)||DECODE(LENGTH(TO_NUMBER(MAX(SUBSTR(CODE,2,4)))+1),'1','00','2','0','3','')||TO_CHAR(TO_NUMBER(MAX(SUBSTR(CODE,2,4)))+1) NEXT_CODE
-		FROM BFS_PROCODE 
-		WHERE CODE_GB = #{code}
+		SELECT  #{code}||DECODE(LENGTH(TO_CHAR(CODE_NUM)+1),1,'0000',2,'000',3,'00',4,'0','')||TO_CHAR(CODE_NUM+1) NEXT_CODE
+		FROM    (SELECT  MAX(TO_NUMBER(CODE_NUM)) CODE_NUM 
+		         FROM    (SELECT SUBSTR(CODE,2) CODE_NUM
+		                 FROM BFS_PROCODE
+		                 WHERE CODE_GB = #{code}
+		                 UNION
+		                 SELECT '00000' 
+		                 FROM DUAL)
+		        ) A 
 		]]>
 	</select>
 	
 	<select id="select_upcode" parameterType="String" resultType="hashmap">
 		<![CDATA[
 		SELECT CODE, CODE_NM
-		FROM    BFS_PROCODE
-		WHERE   CODE_GB = DECODE(#{code_gb},'A','','B','A','C','B','CODE_ERR')
+		FROM    (SELECT '' CODE, '최상위코드입니다' CODE_NM, 'AM' CODE_GB, '19991030' STAR_DATE, '29991231' END_DATE  FROM DUAL
+		         UNION
+		         SELECT CODE, CODE_NM, CODE_GB,STAR_DATE,END_DATE 
+		         FROM (SELECT CODE, CODE_NM, CODE_GB,STAR_DATE,END_DATE  FROM BFS_PROCODE
+		         		UNION
+		         		SELECT '000000', '선택해주세요', 'A', '19991030', '29991231' FROM DUAL
+		         		UNION
+		         		SELECT '000000', '선택해주세요', 'B', '19991030', '29991231' FROM DUAL
+		        	   )
+		        )
+		WHERE   CODE_GB = DECODE(#{code_gb},'A','AM','B','A','C','B','CODE_ERR')
 		AND     NVL(END_DATE,'29991231')>to_char(sysdate,'yyyymmdd')+1
 		ORDER BY CODE ASC
 		]]>
@@ -775,7 +790,7 @@
 			FROM    BFS_PROCODE
 			WHERE   CODE_GB = #{code_gb}
 			AND     STAR_DATE <= TO_CHAR(SYSDATE,'YYYYMMDD')
-			AND     NVL(END_DATE,'29991231') > TO_CHAR(SYSDATE,'YYYYMMDD')
+			AND     NVL(END_DATE,'29991231')-1 > TO_CHAR(SYSDATE,'YYYYMMDD')
 			ORDER BY CODE_A ASC, CODE_B ASC, CODE_C ASC
 		]]>
 	</select>
@@ -866,8 +881,14 @@
 	</select>
 	
 	<select id="selectpreofferno_v2" parameterType="String" resultType="String">
-		SELECT MAX(TO_NUMBER(OFFER_NO)) PRE_OFFER_NO
-		FROM BFS_WORK
+		SELECT  MAX(OFFER_NO)
+		FROM    (
+		        SELECT  TO_NUMBER(OFFER_NO) OFFER_NO
+		        FROM    BFS_WORK
+		        WHERE   WORK_GB = 'WK02'
+		        UNION
+		        SELECT  TO_NUMBER('0')
+		        FROM    DUAL)
 	</select>
 	
 	<select id="ipgo_magam_check" parameterType="hashmap" resultType="Integer">

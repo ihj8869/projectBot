@@ -46,6 +46,10 @@ $(document).ready(function() {
 			alert("코드사용이 중지되어 수정할 수 없습니다.")
 			return;
 		}
+		if($("#up_code").val()=='000000'){
+			alert("상위코드를 선택해주세요")
+			return;
+		}
 		$("#updateForm").submit();
 	});
 	

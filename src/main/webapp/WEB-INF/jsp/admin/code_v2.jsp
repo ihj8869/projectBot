@@ -157,14 +157,14 @@ body #codeTr:hover{background-color:whitesmoke;}
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th style="width:5%;text-align:center;">코드</th>
-					<th style="width:17%;text-align:center;">코드명</th>
-					<th style="width:8%;text-align:center;">상위코드</th>
-					<th style="width:17%;text-align:center;">상위코드명</th>
-					<th style="width:14%;text-align:center;">생성날짜</th>
-					<th style="width:14%;text-align:center;">중지날짜</th>
-					<th style="width:15%;text-align:center;">업데이트 날짜</th>
-					<th style="width:7%;text-align:center;">사용여부</th>
+					<th style="width:7%;text-align:center;">코드</th>
+					<th style="width:19%;text-align:center;">코드명</th>
+					<th style="width:9%;text-align:center;">상위코드</th>
+					<th style="width:19%;text-align:center;">상위코드명</th>
+					<th style="width:13%;text-align:center;">생성날짜</th>
+					<th style="width:13%;text-align:center;">중지날짜</th>
+					<th style="width:12%;text-align:center;">업데이트<br>날짜</th>
+					<th style="width:8%;text-align:center;">사용여부</th>
 				</tr>
 			</thead>
 			<tbody id="memberTb">

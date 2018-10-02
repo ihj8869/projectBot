@@ -305,7 +305,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 										<td><input type="text" name="a_qty_a" class="ui celled table" value="${row_jego.QTY_A}" style="${setting};" onchange="calc()" ${ro_gb}></td>
 										<td><input type="text" name="a_bigo_qty" class="ui celled table" value="${row_jego.BIGO_QTY}" style="text-align:center;background-color:transparent; border-style:none;" readonly></td>
 										<td><input type="text" name="a_bigo_gb" class="ui celled table" value="${row_jego.BIGO_GB}" style="text-align:center;background-color:transparent; border-style:none;" readonly></td>
-										<td><input type="text" name="a_bigo" class="ui celled table" value="${row_jego.BIGO}" style="${setting};" ${ro_gb}></td>
+										<td><input type="text" name="a_bigo" class="ui celled table" value="${row_jego.BIGO}" style="${setting};" ${ro_gb} maxlength="30"></td>
 									</tr>
 								
 								</c:forEach>
