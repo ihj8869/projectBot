@@ -154,6 +154,14 @@ public interface AdminService {
 	public void product_delete_jego(HashMap<String, Object> map)throws Exception;
 	
 	public void jego_update(HashMap<String, Object> map) throws Exception;
+	
+	
+	//통계사용
+	List<Map<String, Object>> static_get_offer_no(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> static_get_wk01(HashMap<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> static_get_wk01_qty(HashMap<String, Object> map) throws Exception;
 }
 
 

@@ -159,5 +159,6 @@ $(document).ready(function() {
 		<button id="cancel" class="ui button">취소</button>
 	</span>
 	
+
 </body>
 </html>

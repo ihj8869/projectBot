@@ -72,6 +72,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="code_v2.do?code_gb=C" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code_C")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>└ 진열코드 관리 </a>
     <a href="product_v2.do?strdate=&enddate=&work_gb=WK01" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product_ipgo")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>입고진열 관리</a> 
     <a href="product_v2.do?strdate=&enddate=&work_gb=WK02" onclick="w3_close()" class="w3-bar-item w3-button w3-padding <%if(side.equals("product_jego")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>재고판매 관리</a>
+    <a href="statistics.do?" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("statistics")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>매장 통계</a>
 <%--     -------------ver 1.0
     <a href="main.do?year=<%=nowyear%>&month=<%=nowmonth %>" onclick="w3_close()"  class="w3-bar-item w3-button w3-padding <%if(side.equals("main")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>메인 - 월별작업목록</a> 
     <a href="code.do" onclick="w3_close()" class="w3-bar-item w3-button w3-padding  <%if(side.equals("code")){ %>w3-text-teal<%}%>"><i class="fa fa-th-large fa-fw w3-margin-right"></i>품목코드 관리 </a>

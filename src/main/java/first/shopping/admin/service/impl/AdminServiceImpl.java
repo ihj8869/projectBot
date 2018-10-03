@@ -369,6 +369,23 @@ public class AdminServiceImpl implements AdminService{
 	public void jego_update(HashMap<String, Object> map) throws Exception {
 		adminDAO.jego_update(map);
 	}
+	
+	//통계사용
+	
+	@Override
+	public List<Map<String, Object>> static_get_offer_no(HashMap<String, Object> map) throws Exception {
+		return adminDAO.static_get_offer_no(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> static_get_wk01(HashMap<String, Object> map) throws Exception {
+		return adminDAO.static_get_wk01(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> static_get_wk01_qty(HashMap<String, Object> map) throws Exception {
+		return adminDAO.static_get_wk01_qty(map);
+	}
 
 }
 

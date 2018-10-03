@@ -629,13 +629,6 @@ public class AdminController {
 			}
 			
 			
-			@RequestMapping(value="/statistics.do") 
-			public ModelAndView statistics(@RequestParam(value="month", required=true) String month) throws Exception{
-				
-				ModelAndView mv = new ModelAndView("/admin/statistics");
-				
-				return mv;
-			}
 
 	
 //////페이지 전체 예외처리 예외발생시 예외페이지 이동----------------------------------
@@ -1222,6 +1215,71 @@ public class AdminController {
 		}
 
 		
+		
+		//통계======================================================
+		
+		@RequestMapping(value="/statistics.do")
+	    public ModelAndView statistics(@RequestParam(value="strdate",required=false)String strdate, @RequestParam(value="enddate",required=false)String enddate,
+				@RequestParam(value="static_gb",required=false)String static_gb,@RequestParam(value="grouping",required=false)String grouping) throws Exception{
+			System.out.println("statistics.do");
+			
+			System.out.println(strdate+"$$"+enddate+"%%"+static_gb+"!!"+grouping);
+			HashMap<String, Object> map = new HashMap<>();
+			List<Map<String,Object>> static_get_offer_no = null;
+			List<Map<String,Object>> static_get_wk01_qty= null;
+			List<Map<String,Object>> static_get_wk01 = null;
+			
+			if(grouping!=null) {
+				map.put("strdate", strdate);
+				map.put("enddate", enddate);
+				map.put("static_gb", static_gb);
+				map.put("grouping", grouping);
+				
+				static_get_offer_no = adminService.static_get_offer_no(map);
+//				System.out.println("----------------------------");
+//				System.out.println(static_get_offer_no);
+				
+				static_get_wk01 = adminService.static_get_wk01(map);
+//				System.out.println("----------------------------");
+//				System.out.println(static_get_wk01);
+				
+				for(int i = 0 ; i < static_get_wk01.size(); i++) {
+//					System.out.println("for="+i+"번째 : " + static_get_wk01.get(i).get("CODE_B"));
+					
+					map.put("code_b",static_get_wk01.get(i).get("CODE_B"));
+//					System.out.println("code_b ="+ map.get("code_b"));
+					
+					if(i==0) {
+						static_get_wk01_qty = adminService.static_get_wk01_qty(map);
+					}else {
+						static_get_wk01_qty.addAll(adminService.static_get_wk01_qty(map));
+					}
+					
+//					System.out.println("----------------------------");
+//					System.out.println(static_get_wk01_qty);
+					
+					
+					
+				}
+				
+				
+			}
+			
+			ModelAndView mv = new ModelAndView("/admin/statistics");
+			mv.addObject("static_get_offer_no", static_get_offer_no);
+			mv.addObject("static_get_wk01", static_get_wk01);
+			mv.addObject("static_get_wk01_qty", static_get_wk01_qty);
+	        mv.addObject("side","statistics");
+	        map.put("strdata",strdate);
+	        map.put("enddate",enddate);
+
+	        mv.addObject("map", map);
+	        
+	        //현재는 입고수량민가능함
+	        mv.addObject("static_gb","입고수량");
+	         
+	        return mv;
+	    }		
 		
 		
 		

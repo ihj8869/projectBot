@@ -999,6 +999,47 @@
 		]]>
 	</insert>
 	
+	<select id="static_get_offer_no" resultMap="CodeList">
+		<![CDATA[
+			SELECT  OFFER_NO
+			FROM    BFS_WORK
+			WHERE   MAGAM_DATE IS NOT NULL
+			AND     OFFER_DATE BETWEEN #{strdate} AND #{enddate}
+			AND     WORK_GB = #{static_gb}
+			AND     MAGAM_GB = '4'
+			ORDER BY OFFER_NO ASC
+		]]>
+	</select>
+	
+	<select id="static_get_wk01" resultMap="CodeList">
+		<![CDATA[
+			SELECT  CODE_B, '['||CODE_B||']'||(SELECT CODE_NM FROM BFS_PROCODE WHERE CODE = A.CODE_B) CODE_B_NM
+			FROM    BFS_IPGO A
+			WHERE   OFFER_NO IN (SELECT  OFFER_NO
+			                    FROM    BFS_WORK
+			                    WHERE   MAGAM_DATE IS NOT NULL
+			                    AND     OFFER_DATE BETWEEN #{strdate} AND #{enddate}
+			                    AND     WORK_GB = #{static_gb}) 
+			GROUP BY CODE_B
+			ORDER BY CODE_B ASC
+		]]>
+	</select>
+	
+	<select id="static_get_wk01_qty" resultMap="CodeList">
+		<![CDATA[
+			SELECT  OFFER_NO , CODE_B, nvl(SUM(QTY_B),0) QTY
+			FROM    BFS_IPGO
+			WHERE   CODE_B = #{code_b}
+			and     OFFER_NO IN (SELECT  OFFER_NO
+			                    FROM    BFS_WORK
+			                    WHERE   MAGAM_DATE IS NOT NULL
+			                    AND     OFFER_DATE BETWEEN #{strdate} AND #{enddate}
+			                    AND     WORK_GB = #{static_gb}) 
+			GROUP BY OFFER_NO, CODE_B
+			ORDER BY OFFER_NO ASC
+		]]>
+	</select>
+	
 
 </mapper>
 

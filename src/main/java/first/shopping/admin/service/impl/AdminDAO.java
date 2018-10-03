@@ -451,5 +451,34 @@ public class AdminDAO extends AbstractDAO{
 		update("admin.jego_update", map);
 	}
 	
+	//통계사용
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> static_get_offer_no(HashMap<String, Object> map) throws Exception{
+		System.out.println("AdminDAO static_get_offer_no");
+		System.out.println("@@@@@ = " + map);
+		
+		
+		return (List<Map<String, Object>>)selectList("admin.static_get_offer_no", map);	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> static_get_wk01(HashMap<String, Object> map) throws Exception{
+		System.out.println("AdminDAO static_get_wk01");
+		System.out.println("@@@@@ = " + map);
+		
+		
+		return (List<Map<String, Object>>)selectList("admin.static_get_wk01", map);	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> static_get_wk01_qty(HashMap<String, Object> map) throws Exception{
+		System.out.println("AdminDAO static_get_wk01_qty");
+		System.out.println("@@@@@ = " + map);
+		update("admin.static_get_wk01_qty", map);
+		
+		return (List<Map<String, Object>>)selectList("admin.static_get_wk01_qty", map);	
+	}
+	
 	
 }
